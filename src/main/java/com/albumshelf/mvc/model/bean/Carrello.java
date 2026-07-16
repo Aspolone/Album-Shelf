@@ -1,63 +1,57 @@
 package main.java.com.albumshelf.mvc.model.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-//serivra' probabilmente spostare la logica dentro la servlets e mantere questa classe un interfaccia, ma per ora va bene cosi
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Carrello {
 
-    private List<RigaCarrello> righe = new ArrayList<>();
+    // chiave: idEsemplare, valore: quantità
+    private Map<Integer, Integer> articoli = new LinkedHashMap<>();
 
     public Carrello() {}
-
-    public void aggiungi(int idEsemplare, int quantita) {
-        Optional<RigaCarrello> esistente = trovaRiga(idEsemplare);
-        if (esistente.isPresent()) {
-            esistente.get().incrementa(quantita);
-        } else {
-            righe.add(new RigaCarrello(idEsemplare, quantita));
-        }
-    }
 
     public void aggiungi(int idEsemplare) {
         aggiungi(idEsemplare, 1);
     }
 
+    public void aggiungi(int idEsemplare, int quantita) {
+        Integer attuale = articoli.get(idEsemplare);
+        if (attuale == null) {
+            articoli.put(idEsemplare, quantita);
+        } else {
+            articoli.put(idEsemplare, attuale + quantita);
+        }
+    }
+
     public void rimuovi(int idEsemplare) {
-        righe.removeIf(r -> r.getIdEsemplare() == idEsemplare);
+        articoli.remove(idEsemplare);
     }
 
     public void aggiornaQuantita(int idEsemplare, int quantita) {
         if (quantita <= 0) {
             rimuovi(idEsemplare);
-            return;
+        } else {
+            articoli.put(idEsemplare, quantita);
         }
-        trovaRiga(idEsemplare).ifPresent(r -> r.setQuantita(quantita));
     }
 
     public void svuota() {
-        righe.clear();
+        articoli.clear();
     }
 
     public boolean isVuoto() {
-        return righe.isEmpty();
+        return articoli.isEmpty();
     }
 
     public int numeroArticoli() {
-        return righe.size();
+        return articoli.size();
     }
 
-    private Optional<RigaCarrello> trovaRiga(int idEsemplare) {
-        return righe.stream().filter(r -> r.getIdEsemplare() == idEsemplare).findFirst();
+    public Map<Integer, Integer> getArticoli() {
+        return articoli;
     }
 
-    public List<RigaCarrello> getRighe() {
-        return righe;
-    }
-
-    public void setRighe(List<RigaCarrello> righe) {
-        this.righe = righe;
+    public void setArticoli(Map<Integer, Integer> articoli) {
+        this.articoli = articoli;
     }
 }
