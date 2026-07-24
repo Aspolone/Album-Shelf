@@ -1,14 +1,16 @@
-package main.java.com.albumshelf.mvc.model.bean;
+package com.albumshelf.mvc.model.bean;
 
 public class Genere {
-    private String genere;      // è la PK stessa, come da schema ER
-    private String descrizione;
 
-    public Genere() {}
+	private String genere;
+	private String descrizione;
 
-    public String getGenere() { return genere; }
-    public void setGenere(String genere) { this.genere = genere; }
+	public Genere() {}
 
-    public String getDescrizione() { return descrizione; }
-    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+	public String getGenere() { return genere; }
+	public void setGenere(String genere) { this.genere = genere; }
+
+	public String getDescrizione() { return descrizione; }
+	public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+
 }

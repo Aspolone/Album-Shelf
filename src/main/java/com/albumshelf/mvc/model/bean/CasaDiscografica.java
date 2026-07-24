@@ -1,18 +1,20 @@
-package main.java.com.albumshelf.mvc.model.bean;
+package com.albumshelf.mvc.model.bean;
 
 public class CasaDiscografica {
-    private int idCasaDiscografica;
-    private String nome;
-    private String sede;
 
-    public CasaDiscografica() {}
+	private int idCasaDiscografica;
+	private String nome;
+	private String sede;
 
-    public int getIdCasaDiscografica() { return idCasaDiscografica; }
-    public void setIdCasaDiscografica(int id) { this.idCasaDiscografica = id; }
+	public CasaDiscografica() {}
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+	public int getIdCasaDiscografica() { return idCasaDiscografica; }
+	public void setIdCasaDiscografica(int idCasaDiscografica) { this.idCasaDiscografica = idCasaDiscografica; }
 
-    public String getSede() { return sede; }
-    public void setSede(String sede) { this.sede = sede; }
+	public String getNome() { return nome; }
+	public void setNome(String nome) { this.nome = nome; }
+
+	public String getSede() { return sede; }
+	public void setSede(String sede) { this.sede = sede; }
+
 }

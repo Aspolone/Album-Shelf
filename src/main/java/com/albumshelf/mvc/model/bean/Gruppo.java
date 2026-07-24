@@ -1,28 +1,34 @@
-package main.java.com.albumshelf.mvc.model.bean;
+package com.albumshelf.mvc.model.bean;
 
 import java.sql.Date;
 
 public class Gruppo {
-    private int idGruppo;
-    private Date dataCreazione;
-    private String nazione;
-    private Date dataScioglimento; // opzionale
-    private String nomeAttuale;     // comodo da avere qui, letto da nome_gruppo con data_fine NULL
 
-    public Gruppo() {}
+	private int idGruppo;
+	private String nome;
+	private Date dataCreazione;
+	private String nazione;
+	private Date dataScioglimento;
+	private int visite;
 
-    public int getIdGruppo() { return idGruppo; }
-    public void setIdGruppo(int idGruppo) { this.idGruppo = idGruppo; }
+	public Gruppo() {}
 
-    public Date getDataCreazione() { return dataCreazione; }
-    public void setDataCreazione(Date dataCreazione) { this.dataCreazione = dataCreazione; }
+	public int getIdGruppo() { return idGruppo; }
+	public void setIdGruppo(int idGruppo) { this.idGruppo = idGruppo; }
 
-    public String getNazione() { return nazione; }
-    public void setNazione(String nazione) { this.nazione = nazione; }
+	public String getNome() { return nome; }
+	public void setNome(String nome) { this.nome = nome; }
 
-    public Date getDataScioglimento() { return dataScioglimento; }
-    public void setDataScioglimento(Date dataScioglimento) { this.dataScioglimento = dataScioglimento; }
+	public Date getDataCreazione() { return dataCreazione; }
+	public void setDataCreazione(Date dataCreazione) { this.dataCreazione = dataCreazione; }
 
-    public String getNomeAttuale() { return nomeAttuale; }
-    public void setNomeAttuale(String nomeAttuale) { this.nomeAttuale = nomeAttuale; }
+	public String getNazione() { return nazione; }
+	public void setNazione(String nazione) { this.nazione = nazione; }
+
+	public Date getDataScioglimento() { return dataScioglimento; }
+	public void setDataScioglimento(Date dataScioglimento) { this.dataScioglimento = dataScioglimento; }
+
+	public int getVisite() { return visite; }
+	public void setVisite(int visite) { this.visite = visite; }
+
 }

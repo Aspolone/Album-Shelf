@@ -1,36 +1,45 @@
-package main.java.com.albumshelf.mvc.model.bean;
+package com.albumshelf.mvc.model.bean;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+
 public class Recensione {
-    private int idRecensione;
-    private Timestamp dataRecensione;
-    private int voto;
-    private String commento;
-    private int idUtente;
-    private Integer idAlbum;   // Integer (non int) perché è nullable
-    private Integer idCanzone; // idem
 
-    public Recensione() {}
+	private int idRecensione;
+	private BigDecimal voto;
+	private String commento;
+	private Timestamp dataRecensione;
+	private int idUtente;
+	private Integer idAlbum;
+	private Integer idCanzone;
 
-    public int getIdRecensione() { return idRecensione; }
-    public void setIdRecensione(int idRecensione) { this.idRecensione = idRecensione; }
+	private String nomeUtente;
 
-    public Timestamp getDataRecensione() { return dataRecensione; }
-    public void setDataRecensione(Timestamp d) { this.dataRecensione = d; }
+	public Recensione() {}
 
-    public int getVoto() { return voto; }
-    public void setVoto(int voto) { this.voto = voto; }
+	public int getIdRecensione() { return idRecensione; }
+	public void setIdRecensione(int idRecensione) { this.idRecensione = idRecensione; }
 
-    public String getCommento() { return commento; }
-    public void setCommento(String commento) { this.commento = commento; }
+	public BigDecimal getVoto() { return voto; }
+	public void setVoto(BigDecimal voto) { this.voto = voto; }
 
-    public int getIdUtente() { return idUtente; }
-    public void setIdUtente(int idUtente) { this.idUtente = idUtente; }
+	public String getCommento() { return commento; }
+	public void setCommento(String commento) { this.commento = commento; }
 
-    public Integer getIdAlbum() { return idAlbum; }
-    public void setIdAlbum(Integer idAlbum) { this.idAlbum = idAlbum; }
+	public Timestamp getDataRecensione() { return dataRecensione; }
+	public void setDataRecensione(Timestamp dataRecensione) { this.dataRecensione = dataRecensione; }
 
-    public Integer getIdCanzone() { return idCanzone; }
-    public void setIdCanzone(Integer idCanzone) { this.idCanzone = idCanzone; }
+	public int getIdUtente() { return idUtente; }
+	public void setIdUtente(int idUtente) { this.idUtente = idUtente; }
+
+	public Integer getIdAlbum() { return idAlbum; }
+	public void setIdAlbum(Integer idAlbum) { this.idAlbum = idAlbum; }
+
+	public Integer getIdCanzone() { return idCanzone; }
+	public void setIdCanzone(Integer idCanzone) { this.idCanzone = idCanzone; }
+
+	public String getNomeUtente() { return nomeUtente; }
+	public void setNomeUtente(String nomeUtente) { this.nomeUtente = nomeUtente; }
+
 }

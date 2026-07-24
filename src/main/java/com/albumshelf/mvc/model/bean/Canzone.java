@@ -1,32 +1,42 @@
-package main.java.com.albumshelf.mvc.model.bean;
+package com.albumshelf.mvc.model.bean;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 public class Canzone {
-    private int idCanzone;
-    private String nome;
-    private String testo;
-    private int durata; // secondi
-    private int idAlbum;
-    private List<String> generi; // popolata dal DAO tramite canzone_genere, non è una colonna diretta
 
-    public Canzone() {}
+	private int idCanzone;
+	private String nome;
+	private String testo;
+	private Integer durata;
+	private int idAlbum;
+	private int visite;
+	private String nomeAlbum; //da recuperare tramite join (nei dao)
+	private BigDecimal mediaVoto;
 
-    public int getIdCanzone() { return idCanzone; }
-    public void setIdCanzone(int idCanzone) { this.idCanzone = idCanzone; }
+	public Canzone() {}
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+	public int getIdCanzone() { return idCanzone; }
+	public void setIdCanzone(int idCanzone) { this.idCanzone = idCanzone; }
 
-    public String getTesto() { return testo; }
-    public void setTesto(String testo) { this.testo = testo; }
+	public String getNome() { return nome; }
+	public void setNome(String nome) { this.nome = nome; }
 
-    public int getDurata() { return durata; }
-    public void setDurata(int durata) { this.durata = durata; }
+	public String getTesto() { return testo; }
+	public void setTesto(String testo) { this.testo = testo; }
 
-    public int getIdAlbum() { return idAlbum; }
-    public void setIdAlbum(int idAlbum) { this.idAlbum = idAlbum; }
+	public Integer getDurata() { return durata; }
+	public void setDurata(Integer durata) { this.durata = durata; }
 
-    public List<String> getGeneri() { return generi; }
-    public void setGeneri(List<String> generi) { this.generi = generi; }
+	public int getIdAlbum() { return idAlbum; }
+	public void setIdAlbum(int idAlbum) { this.idAlbum = idAlbum; }
+
+	public int getVisite() { return visite; }
+	public void setVisite(int visite) { this.visite = visite; }
+
+	public String getNomeAlbum() { return nomeAlbum; }
+	public void setNomeAlbum(String nomeAlbum) { this.nomeAlbum = nomeAlbum; }
+
+	public BigDecimal getMediaVoto() { return mediaVoto; }
+	public void setMediaVoto(BigDecimal mediaVoto) { this.mediaVoto = mediaVoto; }
+
 }
