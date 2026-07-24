@@ -1,0 +1,211 @@
+html, body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    flex-shrink: 0;
+}
+
+.pagina {
+    padding: 0;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.scroll-snap {
+    flex: 1;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #2c3440 #14181c;
+}
+
+.scroll-snap::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-snap::-webkit-scrollbar-track {
+    background: #14181c;
+}
+
+.scroll-snap::-webkit-scrollbar-thumb {
+    background: #2c3440;
+    border-radius: 4px;
+}
+
+.sezione-snap {
+    min-height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    position: relative;
+}
+
+.sezione-hero {
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    padding: 40px 32px;
+}
+
+.logo-hero {
+    max-width: 220px;
+    height: auto;
+}
+
+.titolo-hero {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.sottotitolo-hero {
+    color: #f15f99;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.ribbon {
+    align-self: flex-start;
+    min-width: 320px;
+    text-align: left;
+    background: linear-gradient(90deg, #f15f99 0%, #f15f99 90%, transparent 100%);
+    padding: 8px 24px 8px 32px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+    margin: 0 0 40px 0;
+}
+
+.sezione-carousel {
+    justify-content: flex-start;
+    padding: 0 0 40px 0;
+}
+
+.sezione-carousel .carousel {
+    margin-top: auto;
+}
+
+.sezione-carousel .vedi-altri {
+    margin-bottom: auto;
+    margin-top: 24px;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.traccia-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.freccia-carousel {
+    background: none;
+    border: none;
+    color: #40BCF4;
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: color 0.2s, transform 0.2s;
+    user-select: none;
+}
+
+.freccia-carousel:hover {
+    color: #00E054;
+    transform: scale(1.2);
+}
+
+.freccia-carousel:disabled {
+    color: #2c3440;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.card-album {
+    background-color: #1c2228;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: left;
+    width: 180px;
+    flex-shrink: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    opacity: 0.55;
+}
+
+.card-album .copertina {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #738494;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.card-album h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.card-album p {
+    font-size: 0.75rem;
+    color: #738494;
+    margin-top: 2px;
+}
+
+.card-album .valutazione {
+    display: inline-block;
+    margin-top: 8px;
+    color: #ecc553;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.card-album.in-evidenza {
+    transform: scale(1.15);
+    opacity: 1;
+    background-color: #FFFFFF;
+    color: #14181c;
+    z-index: 2;
+}
+
+.card-album.in-evidenza p {
+    color: #738494;
+}
+
+.vedi-altri {
+    color: #738494;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.vedi-altri:hover {
+    color: #00E054;
+}
