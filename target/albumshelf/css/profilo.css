@@ -1,0 +1,138 @@
+.profilo-avatar {
+    width: 200px;
+    aspect-ratio: 1;
+    background-color: #1c2228;
+    border: 1px solid #2c3440;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.profilo-avatar-img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.4;
+}
+
+.profilo-ruolo {
+    display: inline-block;
+    padding: 3px 12px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #14181c;
+    background-color: #00E054;
+    border-radius: 20px;
+}
+
+.profilo-azioni {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.profilo-stato {
+    display: inline-block;
+    padding: 4px 14px;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.profilo-stato--attivo {
+    color: #00E054;
+    border: 1px solid #00E054;
+}
+
+.profilo-stato--venduto {
+    color: #738494;
+    border: 1px solid #2c3440;
+}
+
+.profilo-stato--confermato {
+    color: #40BCF4;
+    border: 1px solid #40BCF4;
+}
+
+.profilo-stato--spedito {
+    color: #ecc553;
+    border: 1px solid #ecc553;
+}
+
+.profilo-stato--consegnato {
+    color: #00E054;
+    border: 1px solid #00E054;
+}
+
+.profilo-ordine-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profilo-ordine-id {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.profilo-ordine-data {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #738494;
+}
+
+.profilo-ordine-destra {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.recensione__rif {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #738494;
+}
+
+@media (max-width: 1200px) {
+    .profilo-avatar {
+        width: 170px;
+    }
+}
+
+@media (max-width: 900px) {
+    .profilo-avatar {
+        width: 140px;
+    }
+
+    .profilo-ordine-destra {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 600px) {
+    .profilo-avatar {
+        width: 110px;
+    }
+
+    .profilo-azioni {
+        gap: 8px;
+    }
+
+    .profilo-azioni > * {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    .profilo-ordine-id {
+        font-size: 0.8rem;
+    }
+}

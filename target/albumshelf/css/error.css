@@ -1,0 +1,94 @@
+.pagina-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px);
+    text-align: center;
+    padding: 40px 24px;
+    gap: 20px;
+}
+
+.codice-error {
+    font-size: 8rem;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #f15f99 0%, #40BCF4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -4px;
+    margin-bottom: 8px;
+}
+
+.titolo-error {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+}
+
+.messaggio-error {
+    color: #738494;
+    font-size: 1rem;
+    max-width: 480px;
+    line-height: 1.6;
+}
+
+.bottone-error {
+    margin-top: 16px;
+    padding: 12px 28px;
+    background-color: transparent;
+    color: #00E054;
+    border: 1px solid #00E054;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.bottone-error:hover {
+    background-color: #00E054;
+    color: #14181c;
+}
+
+@media (max-width: 900px) {
+    .codice-error {
+        font-size: 6.5rem;
+    }
+
+    .titolo-error {
+        font-size: 1.7rem;
+    }
+
+    .pagina-error {
+        padding: 32px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .codice-error {
+        font-size: 5rem;
+        letter-spacing: -2px;
+    }
+
+    .titolo-error {
+        font-size: 1.4rem;
+    }
+
+    .messaggio-error {
+        font-size: 0.9rem;
+    }
+
+    .pagina-error {
+        padding: 24px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bottone-error {
+        transition: none;
+    }
+}
