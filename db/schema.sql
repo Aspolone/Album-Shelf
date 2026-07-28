@@ -1,4 +1,5 @@
 DROP DATABASE IF EXISTS albumshelf_db;
+CREATE DATABASE albumshelf_db;
 USE albumshelf_db;
 
 
