@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/acquista")
-public class aquista extends HttpServlet {
+public class acquista extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -17,3 +17,5 @@ public class aquista extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/transazioni/acquista.jsp").forward(request, response);
 	}
 }
+
+
