@@ -1,6 +1,12 @@
 <footer class="footer">
-    <p>AlbumShelf.com</p>
-    <p>copyright © 2026</p>
+
+    <p class="footer-titolo">AlbumShelf.com</p>
+
+    <nav class="footer-link">
+        <a href="${pageContext.request.contextPath}/about">Chi siamo</a>
+        <a href="${pageContext.request.contextPath}/transazioni/comevendere">Come vendere</a>
+    </nav>
+
+    <p class="footer-copyright">&copy; 2026</p>
+
 </footer>
-</body>
-</html>

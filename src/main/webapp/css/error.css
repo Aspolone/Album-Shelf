@@ -54,12 +54,41 @@
     color: #14181c;
 }
 
+@media (max-width: 900px) {
+    .codice-error {
+        font-size: 6.5rem;
+    }
+
+    .titolo-error {
+        font-size: 1.7rem;
+    }
+
+    .pagina-error {
+        padding: 32px 20px;
+    }
+}
+
 @media (max-width: 600px) {
     .codice-error {
         font-size: 5rem;
+        letter-spacing: -2px;
     }
 
     .titolo-error {
         font-size: 1.4rem;
+    }
+
+    .messaggio-error {
+        font-size: 0.9rem;
+    }
+
+    .pagina-error {
+        padding: 24px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bottone-error {
+        transition: none;
     }
 }
