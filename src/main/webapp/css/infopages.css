@@ -1,0 +1,264 @@
+:root {
+    --accent-pink: #f15f99;
+    --accent-green: #00E054;
+    --rule: #2c3440;
+    --text: #c8d2dc;
+    --text-muted: #a8b4c0;
+    --text-faint: #738494;
+}
+
+.info-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 20px 24px;
+    font-size: 1.1rem;
+    letter-spacing: 0.8px;
+    line-height: 1.8;
+    color: var(--text);
+}
+
+.info-page a {
+    color: var(--accent-green);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color .18s ease, text-decoration-color .18s ease;
+}
+
+.info-page a:hover,
+.info-page a:focus-visible {
+    color: var(--accent-pink);
+    text-decoration-color: var(--accent-pink);
+    text-decoration-thickness: 2px;
+}
+
+.info-header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+}
+
+.info-eyebrow {
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: var(--accent-pink);
+}
+
+.info-header h1 {
+    font-size: 3.25rem;
+    font-weight: normal;
+    letter-spacing: 1px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    color: #FFFFFF;
+}
+
+.info-lead {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+.info-section {
+    margin-bottom: 40px;
+}
+
+.info-section h2 {
+    font-size: 1.8rem;
+    font-weight: normal;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+}
+
+.info-section p {
+    margin-bottom: 14px;
+}
+
+.info-section p:last-child {
+    margin-bottom: 0;
+}
+
+.info-list {
+    margin: 20px 0;
+}
+
+.info-list dt {
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    margin-top: 18px;
+}
+
+.info-list dt:first-of-type {
+    margin-top: 0;
+}
+
+.info-list dd {
+    margin-top: 2px;
+    color: var(--text-muted);
+}
+
+.info-list-plain {
+    padding-left: 20px;
+}
+
+.info-list-plain li {
+    margin-bottom: 6px;
+}
+
+.info-steps {
+    list-style: none;
+    counter-reset: step;
+}
+
+.info-steps > li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 52px;
+    padding-bottom: 28px;
+}
+
+.info-steps > li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    color: var(--accent-pink);
+}
+
+.info-steps > li::after {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 30px;
+    bottom: 8px;
+    width: 1px;
+    background-color: var(--rule);
+}
+
+.info-steps > li:last-child {
+    padding-bottom: 0;
+}
+
+.info-steps > li:last-child::after {
+    display: none;
+}
+
+.info-steps h3 {
+    font-size: 1.4rem;
+    font-weight: normal;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    color: #FFFFFF;
+}
+
+.info-steps p {
+    margin-bottom: 10px;
+}
+
+.info-step-link {
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.info-next {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+}
+
+.info-next h2 {
+    font-size: 0.85rem;
+    font-weight: normal;
+    letter-spacing: 3px;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+}
+
+.info-next ul {
+    list-style: none;
+    line-height: 2.2;
+}
+
+@media (max-width: 1200px) {
+    .info-page {
+        max-width: 680px;
+    }
+
+    .info-header h1 {
+        font-size: 2.8rem;
+    }
+
+    .info-section h2 {
+        font-size: 1.65rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .info-header h1 {
+        font-size: 2.4rem;
+    }
+
+    .info-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .info-steps > li {
+        padding-left: 38px;
+    }
+
+    .info-steps > li::after {
+        left: 8px;
+    }
+
+    .footer-link {
+        gap: 8px 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .info-page {
+        padding: 12px 14px 20px;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .info-header {
+        padding-bottom: 20px;
+        margin-bottom: 26px;
+    }
+
+    .info-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .info-lead {
+        font-size: 1.05rem;
+    }
+
+    .info-section {
+        margin-bottom: 30px;
+    }
+
+    .info-section h2 {
+        font-size: 1.3rem;
+    }
+
+    .info-list dt {
+        font-size: 1.1rem;
+    }
+
+    .info-steps > li {
+        padding-left: 32px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .info-page a {
+        transition: none;
+    }
+}

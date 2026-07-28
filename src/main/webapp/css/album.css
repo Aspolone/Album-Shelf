@@ -1,0 +1,409 @@
+.album-colonna {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.pagina-album {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: clamp(24px, 3vw, 40px);
+    align-items: start;
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding: 32px clamp(24px, 5vw, 64px) 48px;
+}
+
+.album-testata {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 28px;
+}
+
+.album-cover {
+    width: 200px;
+    aspect-ratio: 1;
+    background-color: #d6d6d6;
+    border-radius: 3px;
+}
+
+.album-titolo {
+    margin-bottom: 14px;
+    font-size: 2.4rem;
+    font-weight: normal;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.album-dato {
+    font-size: 0.85rem;
+    line-height: 2;
+    letter-spacing: 1px;
+    color: #738494;
+}
+
+.album-testo {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    line-height: 1.9;
+    letter-spacing: 0.5px;
+    color: #c8d2dc;
+}
+
+.nastro {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 6px 26px 6px 14px;
+    font-size: 1.1rem;
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #14181c;
+    background-color: #f15f99;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+
+.album-azione,
+.copia__azione {
+    display: inline-block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-radius: 20px;
+}
+
+.album-azione {
+    margin-top: 14px;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    color: #00e054;
+    border: 1px solid #00e054;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.copia__azione {
+    padding: 9px 18px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    color: #14181c;
+    background-color: #00e054;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.album-azione:hover,
+.album-azione:focus-visible {
+    background-color: #00e054;
+    color: #14181c;
+}
+
+.copia__azione:hover,
+.copia__azione:focus-visible {
+    background-color: #f15f99;
+}
+
+.album-dato a,
+.copia__venditore a {
+    color: #00e054;
+}
+
+.album-dato a:hover,
+.album-dato a:focus-visible,
+.copia__venditore a:hover,
+.copia__venditore a:focus-visible,
+.recensione__autore a:hover,
+.recensione__autore a:focus-visible,
+.recensione__link:hover,
+.recensione__link:focus-visible {
+    color: #f15f99;
+    text-decoration: underline;
+}
+
+.copie,
+.elenco,
+.tracklist {
+    list-style: none;
+    border: 1px solid #2c3440;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.copia + .copia,
+.elenco li + li,
+.tracklist__voce + .tracklist__voce {
+    border-top: 1px solid #2c3440;
+}
+
+.copia:nth-child(odd) {
+    background-color: rgba(0, 224, 84, 0.05);
+}
+
+.tracklist__voce:nth-child(odd) {
+    background-color: rgba(0, 224, 84, 0.07);
+}
+
+.copia {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 18px;
+    padding: 14px;
+}
+
+.elenco a,
+.tracklist__voce a {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: #c8d2dc;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.elenco a {
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.tracklist__voce a {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+}
+
+.elenco a:hover,
+.elenco a:focus-visible,
+.tracklist__voce a:hover,
+.tracklist__voce a:focus-visible {
+    background-color: #1c2228;
+    color: #00e054;
+}
+
+.copia__condizione,
+.copia__prezzo {
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.copia__condizione {
+    font-size: 0.95rem;
+}
+
+.copia__prezzo {
+    font-size: 1.3rem;
+    white-space: nowrap;
+}
+
+.copia__edizione,
+.copia__venditore,
+.elenco__meta,
+.tracklist__num,
+.tracklist__durata {
+    color: #738494;
+}
+
+.copia__edizione,
+.copia__venditore {
+    font-size: 0.75rem;
+    line-height: 1.9;
+    letter-spacing: 1px;
+}
+
+.elenco__meta,
+.tracklist__durata {
+    font-size: 0.8rem;
+}
+
+.recensioni {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: start;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.recensioni__pannello {
+    padding: 16px;
+    background-color: #1c2228;
+    border: 1px solid #2c3440;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.recensione + .recensione {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #2c3440;
+}
+
+.recensione__autore {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.recensione__voto {
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: #ecc553;
+}
+
+.recensione__testo {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+    color: #c8d2dc;
+}
+
+.recensione__link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #738494;
+}
+
+.recensioni__azione {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #00e054;
+    border: 1px solid #00e054;
+    border-radius: 20px;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.recensioni__azione:hover,
+.recensioni__azione:focus-visible {
+    background-color: #00e054;
+    color: #14181c;
+}
+
+@media (max-width: 1200px) {
+    .pagina-album {
+        grid-template-columns: minmax(0, 1fr) 280px;
+        padding: 28px clamp(20px, 4vw, 40px) 44px;
+    }
+
+    .album-testata {
+        grid-template-columns: 170px minmax(0, 1fr);
+        gap: 22px;
+    }
+
+    .album-cover {
+        width: 170px;
+    }
+
+    .album-titolo {
+        font-size: 2.1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .pagina-album {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 24px 16px 40px;
+    }
+
+    .recensioni {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .recensioni__azione {
+        max-width: 320px;
+    }
+
+    .album-testata {
+        grid-template-columns: 140px minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .album-cover {
+        width: 140px;
+    }
+
+    .album-titolo {
+        font-size: 1.8rem;
+    }
+
+    .copia {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+
+    .copia__azione {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+}
+
+@media (max-width: 600px) {
+    .pagina-album {
+        padding: 20px 12px 32px;
+        gap: 24px;
+    }
+
+    .album-testata {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .album-cover {
+        width: 160px;
+    }
+
+    .album-titolo {
+        font-size: 1.5rem;
+    }
+
+    .album-azione,
+    .recensioni__azione {
+        width: 100%;
+        text-align: center;
+    }
+
+    .copia {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    .copia__azione {
+        width: 100%;
+        justify-self: stretch;
+        text-align: center;
+    }
+
+    .copia__prezzo {
+        font-size: 1.15rem;
+    }
+
+    .tracklist__voce a {
+        grid-template-columns: 26px minmax(0, 1fr) auto;
+        gap: 8px;
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+
+    .elenco a {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .elenco a,
+    .tracklist__voce a,
+    .album-azione,
+    .copia__azione,
+    .recensioni__azione {
+        transition: none;
+    }
+}

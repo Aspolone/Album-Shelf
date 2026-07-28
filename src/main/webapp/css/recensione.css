@@ -1,0 +1,151 @@
+.recensione-testata {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    margin-bottom: 36px;
+    background-color: #1c2228;
+    border: 1px solid #2c3440;
+    border-radius: 8px;
+}
+
+.recensione-cover {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    background-color: #d6d6d6;
+    border-radius: 4px;
+}
+
+.recensione-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.recensione-titolo {
+    font-size: 2rem;
+    font-weight: normal;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.recensione-dato {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    line-height: 2;
+    color: #738494;
+}
+
+.recensione-dato a {
+    color: #00E054;
+}
+
+.recensione-dato a:hover {
+    color: #f15f99;
+    text-decoration: underline;
+}
+
+.recensione-stelle {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 8px 0;
+}
+
+.recensione-stelle input {
+    display: none;
+}
+
+.recensione-stelle label {
+    font-size: 2.8rem;
+    color: #2c3440;
+    cursor: pointer;
+    transition: color 0.15s;
+    line-height: 1;
+}
+
+.recensione-stelle label:hover,
+.recensione-stelle label:hover ~ label {
+    color: #ecc553;
+}
+
+.recensione-stelle input:checked ~ label {
+    color: #ecc553;
+}
+
+.recensione-stelle input:focus-visible + label {
+    outline: 2px solid #40BCF4;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+@media (max-width: 1200px) {
+    .recensione-testata {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .recensione-cover {
+        width: 130px;
+        height: 130px;
+    }
+
+    .recensione-titolo {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .recensione-testata {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .recensione-cover {
+        width: 120px;
+        height: 120px;
+    }
+
+    .recensione-titolo {
+        font-size: 1.6rem;
+    }
+
+    .recensione-stelle label {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .recensione-testata {
+        gap: 14px;
+        padding: 16px;
+        margin-bottom: 24px;
+    }
+
+    .recensione-cover {
+        width: 100px;
+        height: 100px;
+    }
+
+    .recensione-titolo {
+        font-size: 1.35rem;
+    }
+
+    .recensione-dato {
+        font-size: 0.78rem;
+        line-height: 1.8;
+    }
+
+    .recensione-stelle label {
+        font-size: 1.9rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .recensione-stelle label {
+        transition: none;
+    }
+}

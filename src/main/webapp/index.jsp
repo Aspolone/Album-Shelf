@@ -1,6 +1,0 @@
-<html>
-	<body>
-		<h1>AlbumShelf funziona!</h1>
-	</body>
-</html>
-		
