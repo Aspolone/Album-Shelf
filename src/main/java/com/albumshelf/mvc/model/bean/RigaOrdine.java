@@ -2,7 +2,6 @@ package com.albumshelf.mvc.model.bean;
 
 import java.math.BigDecimal;
 
-// mappa la tabella riga_ordine
 public class RigaOrdine {
 
 	private int idRigaOrdine;

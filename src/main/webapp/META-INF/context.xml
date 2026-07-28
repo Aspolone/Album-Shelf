@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
 <Context>
-    <Resource name="jdbc/AlbumShelfDB"
+    <Resource name="jdbc/albumshelf_db"
         auth="Container"
-        type="javax.sql.DataSource"
-        maxTotal="20"
-        maxIdle="10"
-        maxWaitMillis="10000"
-        username="root"
-        password="bruno1999"
         driverClassName="com.mysql.cj.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/albumshelf_db?useSSL=false&amp;serverTimezone=UTC"/>
+        type="javax.sql.DataSource"
+        username="root"
+        password="root"
+        url="jdbc:mysql://localhost:3306/albumshelf_db"/>
 </Context>

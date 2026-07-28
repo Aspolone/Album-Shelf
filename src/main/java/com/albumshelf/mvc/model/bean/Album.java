@@ -3,7 +3,6 @@ package com.albumshelf.mvc.model.bean;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-// mappa la tabella album
 public class Album {
 
 	private int idAlbum;
