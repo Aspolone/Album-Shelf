@@ -16,46 +16,51 @@
 
 <main class="pagina-album">
 
-    <div class="album-colonna">
-
-        <section class="album-testata">
-            <div class="album-cover">
-                <img src="${pageContext.request.contextPath}/img/copertine/<%= album.getFileCopertina() %>"
-                     alt="Copertina di <%= album.getNomeAlbum() %>">
-            </div>
-            <div class="album-dati">
-                <h1 class="album-titolo"><%= album.getNomeAlbum() %></h1>
-                <p class="album-dato">
-                    Gruppo: <span class="valore-dato">
-                        <a href="${pageContext.request.contextPath}/musica/gruppo?id=<%= album.getIdGruppo() %>">
-                            <%= album.getNomeGruppo() %>
-                        </a>
-                    </span>
-                </p>
-                <p class="album-dato">
-                    Data incisione: <span class="valore-dato">
-                        <%= FormatUtil.formatData(album.getDataInizioRegistrazione()) %>
-                        <% if (album.getDataFineRegistrazione() != null) { %>
-                            &ndash; <%= FormatUtil.formatData(album.getDataFineRegistrazione()) %>
-                        <% } %>
-                    </span>
-                </p>
-                <p class="album-dato">Data rilascio: <span class="valore-dato"><%= FormatUtil.formatData(album.getDataRilascio()) %></p></span>
-                <p class="album-dato">
-                    Genere: <span class="valore-dato">
-                        <%
-                            boolean primo = true;
-                            for (String genere : generi) {
-                                if (!primo) { %>, <% }
-                        %>
-                        <%= genere %>
-                        <% primo = false;
-                            }
-                        %>
-                    </span>
-                </p>
-                <p class="album-dato">Descrizione: <span class="valore-dato"> <%= album.getDescrittori() %></p></span>
-            </div>
+        <div class="album-colonna">
+            <section class="album-testata">
+                <div class="album-cover">
+                    <img src="${pageContext.request.contextPath}/img/copertine/<%= album.getFileCopertina() %>"
+                        alt="Copertina di <%= album.getNomeAlbum() %>">
+                </div>
+                <div class="album-dati">
+                    <h1 class="album-titolo"><%= album.getNomeAlbum() %></h1>
+                    <p class="album-dato">
+                        Gruppo: <span class="valore-dato">
+                            <a href="${pageContext.request.contextPath}/musica/gruppo?id=<%= album.getIdGruppo() %>">
+                                <%= album.getNomeGruppo() %>
+                            </a>
+                        </span>
+                    </p>
+                    <p class="album-dato">
+                        Data incisione: <span class="valore-dato">
+                            <%= FormatUtil.formatData(album.getDataInizioRegistrazione()) %>
+                            <% if (album.getDataFineRegistrazione() != null) { %>
+                                &ndash; <%= FormatUtil.formatData(album.getDataFineRegistrazione()) %>
+                            <% } %>
+                        </span>
+                    </p>
+                    <p class="album-dato">
+                        Data rilascio: <span class="valore-dato"><%= FormatUtil.formatData(album.getDataRilascio()) %></span>
+                    </p>
+                    <p class="album-dato">
+                        Genere: <span class="valore-dato">
+                            <%
+                                boolean primo = true;
+                                for (String genere : generi) {
+                                    if (!primo) { %>, <% }
+                            %>
+                            <%= genere %>
+                            <% primo = false;
+                                }
+                            %>
+                        </span>
+                    </p>
+                    <p class="album-dato">
+                        Descrizione: <span class="valore-dato"><%= album.getDescrittori() %></span>
+                    </p>
+                </div>
+            </section>
+        </div>
         </section>
 
         <section class="album-blocco">

@@ -8,6 +8,7 @@
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/carrello.css">
 
+
 <%
     Carrello carrello = (Carrello) session.getAttribute("carrello");
     List<RigaCarrello> righe = carrello != null ? carrello.getRighe() : java.util.Collections.emptyList();
@@ -15,16 +16,16 @@
 
 <main class="pagina-carrello">
 
-    <div class="pagina-carrello__lista">
+<div class="pagina-carrello__lista">
 
-        <% if (righe.isEmpty()) { %>
+    <% if (righe == null || righe.isEmpty()) { %>
         <p class="pagina-carrello__vuoto">Il carrello è vuoto.</p>
-        <% } else { %>
-            <% for (RigaCarrello riga : righe) { %>
+    <% } else { %>
+        <% for (RigaCarrello riga : righe) { %>
         <article class="riga">
             <div class="riga__cover">
-                <% if (riga.getFileCopertina() != null) { %>
-                <img src="${pageContext.request.contextPath}/img/copertine/<%= riga.getFileCopertina() %>" alt="">
+                <% if (riga.getFileCopertina() != null && !riga.getFileCopertina().isEmpty()) { %>
+                <img src="${pageContext.request.contextPath}/img/copertine/<%= riga.getFileCopertina() %>" alt="<%= riga.getNomeAlbum() %>">
                 <% } %>
             </div>
             <div class="riga__info">
@@ -41,10 +42,10 @@
                 </button>
             </form>
         </article>
-            <% } %>
         <% } %>
+    <% } %>
 
-    </div>
+</div>
 
     <aside class="riepilogo">
         <% if (!righe.isEmpty()) {
@@ -61,7 +62,7 @@
         <p class="riepilogo__riga">Subtotale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(subtotale) %></span></p>
         <p class="riepilogo__riga">IVA 22% <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(iva) %></span></p>
         <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(totaleIva) %></span></h2>
-        <form action="${pageContext.request.contextPath}/carrello/checkout" method="post">
+        <form action="${pageContext.request.contextPath}/carrello/checkout" method="post" onsubmit="alert('Ordine effettuato con successo!');">
             <button class="riepilogo__azione" type="submit">Procedi all'acquisto</button>
         </form>
         <form action="${pageContext.request.contextPath}/carrello/svuota" method="post">

@@ -66,8 +66,7 @@ public class CarrelloServlet extends HttpServlet {
 		try (OrdineDAO dao = new OrdineDAO()) {
 			Ordine ordine = dao.doSaveOrdine(utente.getIdUtente(), carrello, null);
 			carrello.svuota();
-			response.sendRedirect(request.getContextPath()
-					+ "/carrello?successo=1&ordine=" + ordine.getIdOrdine());
+			response.sendRedirect(request.getContextPath() + "/");  //reinderizza alla home adesso
 			return true;
 		} catch (EsemplareNonDisponibileException e) {
 			response.sendRedirect(request.getContextPath()
