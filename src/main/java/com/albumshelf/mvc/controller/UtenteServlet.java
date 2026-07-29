@@ -86,7 +86,6 @@ public class UtenteServlet extends HttpServlet {
     }
 
     private String mostraModificaProfilo(HttpServletRequest request) {
-        // authfilter garantisce che l'utente sia loggato
         Utente utenteLoggato = (Utente) request.getSession().getAttribute("utente");
         request.setAttribute("utenteProfilo", utenteLoggato);
         return "/WEB-INF/view/utente/modificaprofilo.jsp";
@@ -119,8 +118,6 @@ public class UtenteServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-
-        // authfilter garantisce la presenza dell'utente in sessione per tutti i POST che arrivano qui
         Utente utenteLoggato = (Utente) request.getSession().getAttribute("utente");
         String azione = request.getParameter("azione");
 

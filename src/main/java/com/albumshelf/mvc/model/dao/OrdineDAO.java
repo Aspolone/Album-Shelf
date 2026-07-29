@@ -1,6 +1,7 @@
 package com.albumshelf.mvc.model.dao;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +45,9 @@ public class OrdineDAO extends AbstractDAO implements DAOInterface<Ordine, Integ
 		try {
 			connection.setAutoCommit(false);
 
-			BigDecimal totale = carrello.getTotale();
+			BigDecimal subtotale = carrello.getTotale();
+			BigDecimal totale = subtotale
+					.add(subtotale.multiply(quota).divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
 
 			int idOrdine;
 			String queryOrdine = "INSERT INTO ordine (totale_pagato, stato_ordine, id_utente)"

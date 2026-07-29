@@ -59,7 +59,7 @@
           acquistabile.
         </p>
         <p class="info-step-link">
-          <a href="${pageContext.request.contextPath}/utente/aggiungiprodotto">Aggiungi un prodotto</a>
+          <a href="${pageContext.request.contextPath}/vendi">Aggiungi un prodotto</a>
         </p>
       </li>
 
@@ -72,7 +72,7 @@
           la prima cosa che finisce nelle recensioni.
         </p>
         <p class="info-step-link">
-          <a href="${pageContext.request.contextPath}/utente/mioordine">Vai ai tuoi ordini</a>
+          <a href="${pageContext.request.contextPath}/profilo">Vai ai tuoi ordini</a>
         </p>
       </li>
     </ol>
@@ -101,7 +101,7 @@
     <h2>Da qui puoi</h2>
     <ul>
       <li>
-        <a href="${pageContext.request.contextPath}/utente/aggiungiprodotto">Pubblicare la tua prima inserzione</a>
+        <a href="${pageContext.request.contextPath}/vendi">Pubblicare la tua prima inserzione</a>
       </li>
       <li>
         <a href="${pageContext.request.contextPath}/acquista">Acquistare il tuo primo prodotto</a>

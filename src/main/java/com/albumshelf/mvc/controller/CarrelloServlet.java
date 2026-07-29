@@ -11,9 +11,11 @@ import java.io.IOException;
 
 import com.albumshelf.mvc.model.bean.*;
 import com.albumshelf.mvc.model.dao.EsemplareDAO;
+import com.albumshelf.mvc.model.dao.OrdineDAO;
+import com.albumshelf.mvc.model.dao.EsemplareNonDisponibileException;
 
 @WebServlet(name = "Carrello", urlPatterns = {
-	"/carrello", "/carrello/aggiungi", "/carrello/rimuovi", "/carrello/svuota"
+	"/carrello", "/carrello/aggiungi", "/carrello/rimuovi", "/carrello/svuota", "/carrello/checkout"
 })
 public class CarrelloServlet extends HttpServlet {
 
@@ -34,6 +36,9 @@ public class CarrelloServlet extends HttpServlet {
 				case "/carrello/aggiungi" -> aggiungi(request);
 				case "/carrello/rimuovi"  -> rimuovi(request);
 				case "/carrello/svuota"   -> svuota(request);
+				case "/carrello/checkout" -> {
+					if (checkout(request, response)) return;
+				}
 				default -> { response.sendError(HttpServletResponse.SC_NOT_FOUND); return; }
 			}
 		} catch (Exception e) {
@@ -41,6 +46,34 @@ public class CarrelloServlet extends HttpServlet {
 		}
 
 		response.sendRedirect(request.getContextPath() + "/carrello");
+	}
+
+	private boolean checkout(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		Utente utente = (Utente) request.getSession().getAttribute("utente");
+		if (utente == null) {
+			response.sendRedirect(request.getContextPath() + "/auth");
+			return true;
+		}
+
+		Carrello carrello = getCarrello(request);
+		if (carrello.isVuoto()) {
+			response.sendRedirect(request.getContextPath() + "/carrello?errore=vuoto");
+			return true;
+		}
+
+		try (OrdineDAO dao = new OrdineDAO()) {
+			Ordine ordine = dao.doSaveOrdine(utente.getIdUtente(), carrello, null);
+			carrello.svuota();
+			response.sendRedirect(request.getContextPath()
+					+ "/carrello?successo=1&ordine=" + ordine.getIdOrdine());
+			return true;
+		} catch (EsemplareNonDisponibileException e) {
+			response.sendRedirect(request.getContextPath()
+					+ "/carrello?errore=nondisponibile&esemplare=" + e.getIdEsemplare());
+			return true;
+		}
 	}
 
 	private Carrello getCarrello(HttpServletRequest request) {

@@ -82,32 +82,32 @@
 
     </div>
 
-    <aside class="prodotto-acquisto">
-        <div class="prodotto-acquisto__box">
-            <p class="prodotto-acquisto__prezzo"><%= FormatUtil.formatPrezzo(esemplare.getPrezzo()) %></p>
+    <aside class="recensioni">
+        <div class="prodotto-acquisto">
+            <p class="prodotto-prezzo-grande"><%= FormatUtil.formatPrezzo(esemplare.getPrezzo()) %></p>
 
             <% if (esemplare.isDisponibile()) { %>
             <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post">
                 <input type="hidden" name="esemplare" value="<%= esemplare.getIdEsemplare() %>">
-                <button class="prodotto-acquisto__azione" type="submit">Aggiungi al carrello</button>
+                <button class="prodotto-btn-carrello" type="submit">Aggiungi al carrello</button>
             </form>
             <% } else { %>
-            <p class="prodotto-acquisto__venduto">Questa copia è stata venduta.</p>
+            <p class="prodotto-iva">Questa copia è stata venduta.</p>
             <% } %>
         </div>
 
         <div class="prodotto-venditore">
-            <h2 class="nastro">Venditore</h2>
-            <p class="album-dato">
-                <a class="valore-dato" href="${pageContext.request.contextPath}/utente/profilo?id=<%= venditore.getIdUtente() %>">
+            <h2 class="prodotto-venditore-titolo">Venditore</h2>
+            <p class="prodotto-venditore-nome">
+                <a href="${pageContext.request.contextPath}/utente/profilo?id=<%= venditore.getIdUtente() %>">
                     <%= venditore.getNomeUtente() %>
                 </a>
             </p>
             <% if (venditore.getNazione() != null) { %>
-            <p class="album-dato">Nazione: <span class="valore-dato"><%= venditore.getNazione() %></span></p>
+            <p class="prodotto-venditore-dato">Nazione: <%= venditore.getNazione() %></p>
             <% } %>
-            <p class="album-dato">
-                Iscritto dal: <span class="valore-dato"><%= FormatUtil.formatData(venditore.getDataIscrizione()) %></span>
+            <p class="prodotto-venditore-dato">
+                Iscritto dal: <%= FormatUtil.formatData(venditore.getDataIscrizione()) %>
             </p>
         </div>
     </aside>

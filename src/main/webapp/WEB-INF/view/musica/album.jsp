@@ -134,7 +134,7 @@
             <% } %>
         </div>
         <a class="recensioni__azione"
-           href="${pageContext.request.contextPath}/utente/<%= recensioneUtente != null ? "modificarecensione" : "aggiungirecensione" %>?album=<%= album.getIdAlbum() %>">
+           href="${pageContext.request.contextPath}/aggiungirecensione?album=<%= album.getIdAlbum() %>">
             <%= recensioneUtente != null ? "Modifica la tua recensione" : "Aggiungi recensione" %>
         </a>
     </aside>
