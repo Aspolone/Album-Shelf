@@ -13,7 +13,7 @@ import com.albumshelf.mvc.model.bean.Utente;
 import com.albumshelf.mvc.model.dao.UtenteDAO;
 
 @WebServlet("/admin/utenti")
-public class adminutenti extends HttpServlet {
+public class AdminUtentiServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,7 +43,6 @@ public class adminutenti extends HttpServlet {
             return;
         }
 
-        // no auto-lesionismo
         if (sessione != null && sessione.getIdUtente() == idUtente) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;

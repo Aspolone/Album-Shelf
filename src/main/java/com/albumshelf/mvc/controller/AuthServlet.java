@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,8 +15,8 @@ import com.albumshelf.mvc.model.bean.Utente;
 import com.albumshelf.mvc.model.dao.UtenteDAO;
 import com.albumshelf.mvc.util.PasswordHashingUtil;
 
-@WebServlet("/auth")
-public class auth extends HttpServlet {
+@WebServlet(name = "Auth", urlPatterns = { "/auth", "/auth/logout" })
+public class AuthServlet extends HttpServlet {
 
     private static final Pattern USERNAME_PATTERN =
             Pattern.compile("^[A-Za-z0-9_]{3,30}$");
@@ -28,13 +29,19 @@ public class auth extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getSession().getAttribute("utente") != null) {
+        if ("/auth/logout".equals(request.getServletPath())) {
+            HttpSession session = request.getSession(false);
+            if (session != null) session.invalidate();
             response.sendRedirect(request.getContextPath() + "/");
             return;
         }
 
-        request.getRequestDispatcher("/WEB-INF/view/utente/auth.jsp")
-               .forward(request, response);
+        if (request.getSession().getAttribute("utente") != null) {
+            response.sendRedirect(request.getContextPath() + "/esplora");
+            return;
+        }
+
+        request.getRequestDispatcher("/WEB-INF/view/utente/auth.jsp").forward(request, response);
     }
 
     @Override
@@ -48,9 +55,9 @@ public class auth extends HttpServlet {
             if ("login".equals(action)) {
                 login(request, response);
             } else if ("register".equals(action)) {
-                register(request, response);
+                registrati(request, response);
             } else {
-                response.sendRedirect(request.getContextPath() + "/auth");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }
         } catch (SQLException e) {
             throw new ServletException(e);
@@ -60,85 +67,88 @@ public class auth extends HttpServlet {
     private void login(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
-        String usernameOrEmail = request.getParameter("usernameOrEmail");
+        String input = request.getParameter("usernameOrEmail");
         String password = request.getParameter("password");
 
-        if (usernameOrEmail == null || usernameOrEmail.isBlank()
-                || password == null || password.isBlank()) {
-            errore(request, response, "Compila tutti i campi.");
+        if (input == null || input.isBlank() || password == null || password.isBlank()) {
+            mostraErrore(request, response, "Compila tutti i campi.");
             return;
         }
 
-        Utente utente;
         try (UtenteDAO dao = new UtenteDAO()) {
-            utente = dao.doRetrieveByNomeUtenteOEmail(usernameOrEmail);
-        }
+            Utente candidato = dao.doRetrieveByNomeUtenteOEmail(input.trim());
 
-        if (utente == null || !PasswordHashingUtil.verifica(password, utente.getPassword())) {
-            errore(request, response, "Credenziali non valide.");
-            return;
-        }
+            if (candidato == null || !PasswordHashingUtil.verifica(password, candidato.getPassword())) {
+                mostraErrore(request, response, "Nome utente/email o password non validi.");
+                return;
+            }
 
-        request.getSession().setAttribute("utente", utente);
-        response.sendRedirect(request.getContextPath() + "/");
+            request.getSession().setAttribute("utente", candidato);
+
+            String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
+            if (redirectUrl != null) {
+                request.getSession().removeAttribute("redirectUrl");
+                response.sendRedirect(redirectUrl);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/");
+            }
+        }
     }
 
-    private void register(HttpServletRequest request, HttpServletResponse response)
+    private void registrati(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
-        String username = request.getParameter("username");
+        String nomeUtente = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (username == null || username.isBlank()
+        if (nomeUtente == null || nomeUtente.isBlank()
                 || email == null || email.isBlank()
                 || password == null || password.isBlank()) {
-            errore(request, response, "Compila tutti i campi.");
+            mostraErrore(request, response, "Compila tutti i campi.");
             return;
         }
 
-        if (!USERNAME_PATTERN.matcher(username).matches()) {
-            errore(request, response,
+        if (!USERNAME_PATTERN.matcher(nomeUtente).matches()) {
+            mostraErrore(request, response,
                     "Nome utente non valido: 3-30 caratteri, solo lettere, cifre e underscore.");
             return;
         }
 
         if (!EMAIL_PATTERN.matcher(email).matches()) {
-            errore(request, response, "Email non valida.");
+            mostraErrore(request, response, "Email non valida.");
             return;
         }
 
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            errore(request, response,
+            mostraErrore(request, response,
                     "Password troppo debole: minimo 8 caratteri, almeno una lettera e una cifra.");
             return;
         }
 
         try (UtenteDAO dao = new UtenteDAO()) {
-            if (dao.esisteNomeUtenteOEmail(username, email)) {
-                errore(request, response, "Username o email già in uso.");
+            if (dao.esisteNomeUtenteOEmail(nomeUtente.trim(), email.trim())) {
+                mostraErrore(request, response, "Nome utente o email già in uso.");
                 return;
             }
 
             Utente utente = new Utente();
-            utente.setNomeUtente(username);
-            utente.setEmail(email);
+            utente.setNomeUtente(nomeUtente.trim());
+            utente.setEmail(email.trim());
             utente.setPassword(PasswordHashingUtil.hash(password));
             utente.setRuolo("cliente");
 
-            long id = dao.doSave(utente);
-            utente.setIdUtente((int) id);
+            dao.doSave(utente);
 
-            request.getSession().setAttribute("utente", utente);
+            Utente registrato = dao.doRetrieveByNomeUtenteOEmail(nomeUtente.trim());
+            request.getSession().setAttribute("utente", registrato);
+            response.sendRedirect(request.getContextPath() + "/");
         }
-
-        response.sendRedirect(request.getContextPath() + "/");
     }
 
-    private void errore(HttpServletRequest request, HttpServletResponse response,
-                        String messaggio) throws ServletException, IOException {
+    private void mostraErrore(HttpServletRequest request, HttpServletResponse response, String messaggio)
+            throws ServletException, IOException {
         request.setAttribute("errorMessage", messaggio);
-        request.getRequestDispatcher("/WEB-INF/view/utente/auth.jsp")
-               .forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/utente/auth.jsp").forward(request, response);
     }
 }

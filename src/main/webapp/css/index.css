@@ -21,38 +21,6 @@ body {
     min-height: 0;
 }
 
-.scroll-snap {
-    flex: 1;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: #2c3440 #14181c;
-}
-
-.scroll-snap::-webkit-scrollbar {
-    width: 8px;
-}
-
-.scroll-snap::-webkit-scrollbar-track {
-    background: #14181c;
-}
-
-.scroll-snap::-webkit-scrollbar-thumb {
-    background: #2c3440;
-    border-radius: 4px;
-}
-
-.sezione-snap {
-    min-height: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    position: relative;
-}
 
 .sezione-hero {
     justify-content: center;
@@ -284,61 +252,10 @@ body {
     }
 }
 
-@media (max-width: 600px) {
-    .sezione-hero {
-        padding: 24px 14px;
-    }
-
-    .titolo-hero {
-        font-size: 1.45rem;
-    }
-
-    .logo-hero {
-        max-width: 130px;
-    }
-
-    .ribbon {
-        min-width: 180px;
-        padding: 6px 16px 6px 18px;
-        font-size: 0.85rem;
-        margin-bottom: 20px;
-    }
-
-    .card-album {
-        width: 120px;
-        padding: 10px;
-    }
-
-    .card-album h3 {
-        font-size: 0.8rem;
-    }
-
-    .card-album p {
-        font-size: 0.68rem;
-    }
-
-    .card-album.in-evidenza {
-        transform: scale(1.08);
-    }
-
-    .freccia-carousel {
-        font-size: 1.6rem;
-        padding: 6px;
-    }
+.sezione-hero .logo-hero {
+    cursor: pointer;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .scroll-snap {
-        scroll-behavior: auto;
-    }
-
-    .card-album,
-    .freccia-carousel,
-    .vedi-altri {
-        transition: none;
-    }
-
-    .freccia-carousel:hover {
-        transform: none;
-    }
+.sezione-hero--unica {
+    flex: 1;
 }

@@ -1,13 +1,15 @@
-package com.albumshelf.mvc.controller;
+package com.albumshelf.mvc.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,25 +17,21 @@ import java.sql.SQLException;
 import com.albumshelf.mvc.model.bean.Utente;
 import com.albumshelf.mvc.model.dao.UtenteDAO;
 
-/**
- * Unica sentinella per l'accesso alle pagine protette.
- *
- * Regole:
- *  - URL sotto /admin* : richiedono utente loggato con ruolo 'admin' (ruolo riletto dal DB
- *    per non fidarsi della sessione che potrebbe essere vecchia).
- *  - /profilo          : richiede login SOLO per POST (GET e' pubblico con ?id=...).
- *  - Altri URL mappati : richiedono utente loggato, qualsiasi ruolo.
- */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {
     "/vendi",
     "/modificaprofilo",
     "/carrello",
+    "/carrello/checkout",
     "/aggiungirecensione",
     "/profilo",
+    "/utente/*",
     "/admin",
     "/admin/*"
 })
-public class authfilter implements Filter {
+public class AuthFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {}
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -43,19 +41,16 @@ public class authfilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         String path = request.getServletPath();
-        String method = request.getMethod();
         boolean areaAdmin = path != null && (path.equals("/admin") || path.startsWith("/admin/"));
-        boolean richiedeLogin = areaAdmin
-                || !path.equals("/profilo")
-                || "POST".equalsIgnoreCase(method);
 
-        if (!richiedeLogin) {
-            chain.doFilter(request, response);
-            return;
-        }
+        HttpSession session = request.getSession(false);
+        Utente utente = session != null ? (Utente) session.getAttribute("utente") : null;
 
-        Utente utente = (Utente) request.getSession().getAttribute("utente");
         if (utente == null) {
+            String urlOriginale = request.getRequestURI();
+            String query = request.getQueryString();
+            if (query != null) urlOriginale += "?" + query;
+            request.getSession().setAttribute("redirectUrl", urlOriginale);
             response.sendRedirect(request.getContextPath() + "/auth");
             return;
         }
@@ -82,4 +77,7 @@ public class authfilter implements Filter {
 
         chain.doFilter(request, response);
     }
+
+    @Override
+    public void destroy() {}
 }

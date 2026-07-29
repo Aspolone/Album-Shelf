@@ -1,133 +1,124 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.albumshelf.mvc.model.bean.*" %>
+<%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
+<%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
 
+<%
+    Canzone canzone = (Canzone) request.getAttribute("canzone");
+    Collection<String> generi = (Collection<String>) request.getAttribute("generi");
+    Collection<Recensione> recensioni = (Collection<Recensione>) request.getAttribute("recensioni");
+    Recensione recensioneUtente = (Recensione) request.getAttribute("recensioneUtente");
+    Collection<Esemplare> copieInVendita = (Collection<Esemplare>) request.getAttribute("copieInVendita");
+%>
+
+
 <main class="pagina-album">
 
-    <section class="album-testata">
-        <div class="album-cover"></div>
-        <div class="album-dati">
-            <h1 class="album-titolo">Titolo Canzone</h1>
-            <p class="album-dato">
-                Album:
-                <a href="${pageContext.request.contextPath}/musica/album?id=1">Example Title</a>
-            </p>
-            <p class="album-dato">
-                Gruppo:
-                <a href="${pageContext.request.contextPath}/musica/gruppo?id=1">Nome Gruppo</a>
-                &middot;
-                <a href="${pageContext.request.contextPath}/musica/artista?id=1">Nome Artista</a>
-            </p>
-            <p class="album-dato">Durata:</p>
-            <p class="album-dato">Genere:</p>
-            <p class="album-dato">Traccia n.:</p>
-        </div>
-    </section>
+    <div class="album-colonna">
 
-    <section class="album-blocco">
-        <h2 class="nastro">Descrizione</h2>
-        <p class="album-testo">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
-    </section>
+        <section class="album-testata">
+            <div class="album-dati">
+                <h1 class="album-titolo"><%= canzone.getNome() %></h1>
+                <p class="album-dato">
+                    Album:
+                    <a class="valore-dato" href="${pageContext.request.contextPath}/musica/album?id=<%= canzone.getIdAlbum() %>">
+                        <%= canzone.getNomeAlbum() %>
+                    </a>
+                </p>
+                <p class="album-dato">
+                    Durata: <span class="valore-dato"><%= FormatUtil.formatDurata(canzone.getDurata()) %></span>
+                </p>
+                <% if (generi != null && !generi.isEmpty()) { %>
+                <p class="album-dato">
+                    Genere:
+                    <span class="valore-dato">
+                    <%
+                        boolean primo = true;
+                        for (String genere : generi) {
+                            if (!primo) { %>, <% }
+                    %>
+                    <%= genere %>
+                    <% primo = false;
+                        }
+                    %>
+                    </span>
+                </p>
+                <% } %>
+                <% if (canzone.getMediaVoto() != null) { %>
+                <p class="album-dato">
+                    Voto medio: <span class="valore-dato"><%= FormatUtil.formatVotoBreve(canzone.getMediaVoto()) %></span>
+                </p>
+                <% } %>
+            </div>
+        </section>
 
-    <section class="album-blocco">
-        <h2 class="nastro">Presente in</h2>
-        <ul class="elenco">
-            <li>
-                <a href="${pageContext.request.contextPath}/musica/album?id=1">
-                    Example Title <span class="elenco__meta">Album</span>
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/musica/album?id=2">
-                    Raccolta Example <span class="elenco__meta">Compilation</span>
-                </a>
-            </li>
-        </ul>
-    </section>
-	<section class="album-blocco">
-        <h2 class="nastro">Acquista</h2>
-        <ul class="copie">
+        <section class="album-blocco canzone-acquista">
+            <h2 class="nastro">
+                Acquista &quot;<%= canzone.getNomeAlbum() %>&quot;
+            </h2>
+            <ul class="copie">
+                <% for (Esemplare esemplare : copieInVendita) { %>
+                <li class="copia">
+                    <div class="copia__dati">
+                        <p class="copia__condizione"><%= esemplare.getCondizioneDisco() %></p>
+                        <p class="copia__edizione"><%= esemplare.getFormato() %></p>
+                        <p class="copia__venditore">
+                            Venduto da
+                            <a href="${pageContext.request.contextPath}/utente/profilo?id=<%= esemplare.getIdUtente() %>">
+                                <%= esemplare.getNomeVenditore() %>
+                            </a>
+                        </p>
+                    </div>
+                    <p class="copia__prezzo"><%= FormatUtil.formatPrezzo(esemplare.getPrezzo()) %></p>
+                    <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post">
+                        <input type="hidden" name="esemplare" value="<%= esemplare.getIdEsemplare() %>">
+                        <button class="copia__azione" type="submit">Aggiungi al carrello</button>
+                    </form>
+                </li>
+                <% } %>
+                <% if (copieInVendita.isEmpty()) { %>
+                <li class="copia copia--vuota">Nessuna copia disponibile al momento.</li>
+                <% } %>
+            </ul>
+            <a class="canzone-acquista__link-album"
+               href="${pageContext.request.contextPath}/musica/album?id=<%= canzone.getIdAlbum() %>">
+                Vai alla pagina dell'album completo &rarr;
+            </a>
+        </section>
 
-            <li class="copia">
-                <div class="copia__dati">
-                    <p class="copia__condizione">Ottime condizioni</p>
-                    <p class="copia__edizione">Prima stampa 1998 &middot; Vinile 33 giri</p>
-                    <p class="copia__venditore">
-                        Venduto da
-                        <a href="${pageContext.request.contextPath}/utente/profilo?id=1">Username</a>
-                    </p>
-                </div>
-                <p class="copia__prezzo">20,25 &euro;</p>
-                <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post">
-                    <input type="hidden" name="esemplare" value="1">
-                    <button class="copia__azione" type="submit">Aggiungi al carrello</button>
-                </form>
-            </li>
+        <% if (canzone.getTesto() != null && !canzone.getTesto().isEmpty()) { %>
+        <section class="album-blocco">
+            <h2 class="nastro">Testo</h2>
+            <p class="album-testo"><%= canzone.getTesto() %></p>
+        </section>
+        <% } %>
 
-            <li class="copia">
-                <div class="copia__dati">
-                    <p class="copia__condizione">Buone condizioni</p>
-                    <p class="copia__edizione">Ristampa 2012 &middot; CD</p>
-                    <p class="copia__venditore">
-                        Venduto da
-                        <a href="${pageContext.request.contextPath}/utente/profilo?id=2">Username</a>
-                    </p>
-                </div>
-                <p class="copia__prezzo">14,90 &euro;</p>
-                <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post">
-                    <input type="hidden" name="esemplare" value="2">
-                    <button class="copia__azione" type="submit">Aggiungi al carrello</button>
-                </form>
-            </li>
+    </div>
 
-            <li class="copia">
-                <div class="copia__dati">
-                    <p class="copia__condizione">Accettabile</p>
-                    <p class="copia__edizione">Edizione limitata &middot; Cassetta</p>
-                    <p class="copia__venditore">
-                        Venduto da
-                        <a href="${pageContext.request.contextPath}/utente/profilo?id=3">Username</a>
-                    </p>
-                </div>
-                <p class="copia__prezzo">9,50 &euro;</p>
-                <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post">
-                    <input type="hidden" name="esemplare" value="3">
-                    <button class="copia__azione" type="submit">Aggiungi al carrello</button>
-                </form>
-            </li>
-
-        </ul>
-    </section>
-<aside class="recensioni">
+    <aside class="recensioni">
         <div class="recensioni__pannello">
             <h2 class="nastro">Recensioni</h2>
+            <% for (Recensione recensione : recensioni) { %>
             <article class="recensione">
                 <p class="recensione__autore">
-                    <a href="${pageContext.request.contextPath}/utente/profilo?id=1">Nome Utente</a>
+                    <a href="${pageContext.request.contextPath}/utente/profilo?id=<%= recensione.getIdUtente() %>">
+                        <%= recensione.getNomeUtente() %>
+                    </a>
                 </p>
-                <p class="recensione__voto">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                <p class="recensione__testo">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.
-                </p>
+                <p class="recensione__voto"><%= FormatUtil.formatVotoBreve(recensione.getVoto()) %> / 5</p>
+                <p class="recensione__testo"><%= recensione.getCommento() %></p>
             </article>
-            <article class="recensione">
-                <p class="recensione__autore">
-                    <a href="${pageContext.request.contextPath}/utente/profilo?id=2">Nome Utente</a>
-                </p>
-                <p class="recensione__voto">&#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                <p class="recensione__testo">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.
-                </p>
-            </article>
+            <% } %>
+            <% if (recensioni.isEmpty()) { %>
+            <p class="recensioni__vuoto">Ancora nessuna recensione per questa canzone.</p>
+            <% } %>
         </div>
         <a class="recensioni__azione"
-           href="${pageContext.request.contextPath}/utente/aggiungirecensione?album=1">Aggiungi recensione</a>
+           href="${pageContext.request.contextPath}/utente/<%= recensioneUtente != null ? "modificarecensione" : "aggiungirecensione" %>?canzone=<%= canzone.getIdCanzone() %>">
+            <%= recensioneUtente != null ? "Modifica la tua recensione" : "Aggiungi recensione" %>
+        </a>
     </aside>
 
 </main>

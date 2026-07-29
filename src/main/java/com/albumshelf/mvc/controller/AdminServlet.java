@@ -15,7 +15,7 @@ import com.albumshelf.mvc.model.dao.RecensioneDAO;
 import com.albumshelf.mvc.model.dao.UtenteDAO;
 
 @WebServlet("/admin")
-public class admin extends HttpServlet {
+public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -16,7 +16,7 @@ import com.albumshelf.mvc.model.bean.Ordine;
 import com.albumshelf.mvc.model.dao.OrdineDAO;
 
 @WebServlet("/admin/ordini")
-public class adminordini extends HttpServlet {
+public class AdminOrdiniServlet extends HttpServlet {
 
     private static final List<String> STATI_VALIDI =
             Arrays.asList("confermato", "spedito", "consegnato", "annullato");

@@ -79,14 +79,15 @@ public class GruppoDAO extends AbstractDAO implements DAOInterface<Gruppo, Integ
 
 	@Override
 	public long doSave(Gruppo gruppo) throws SQLException {
-		String query = "INSERT INTO gruppo (nome, data_creazione, nazione, data_scioglimento)"
-				+ " VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO gruppo (nome, data_creazione, nazione, data_scioglimento, file_immagine)"
+				+ " VALUES (?, ?, ?, ?, ?)";
 		long generatedKey = -1;
 		try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, gruppo.getNome());
 			statement.setDate(2, gruppo.getDataCreazione());
 			statement.setString(3, gruppo.getNazione());
 			statement.setDate(4, gruppo.getDataScioglimento());
+			statement.setString(5, gruppo.getFileImmagine());
 			if (statement.executeUpdate() > 0) {
 				try (ResultSet rs = statement.getGeneratedKeys()) {
 					if (rs.next()) generatedKey = rs.getLong(1);
@@ -98,14 +99,15 @@ public class GruppoDAO extends AbstractDAO implements DAOInterface<Gruppo, Integ
 
 	@Override
 	public void doUpdate(Gruppo gruppo) throws SQLException {
-		String query = "UPDATE gruppo SET nome = ?, data_creazione = ?, nazione = ?, data_scioglimento = ?"
-				+ " WHERE id_gruppo = ?";
+		String query = "UPDATE gruppo SET nome = ?, data_creazione = ?, nazione = ?, data_scioglimento = ?,"
+				+ " file_immagine = ? WHERE id_gruppo = ?";
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, gruppo.getNome());
 			statement.setDate(2, gruppo.getDataCreazione());
 			statement.setString(3, gruppo.getNazione());
 			statement.setDate(4, gruppo.getDataScioglimento());
-			statement.setInt(5, gruppo.getIdGruppo());
+			statement.setString(5, gruppo.getFileImmagine());
+			statement.setInt(6, gruppo.getIdGruppo());
 			statement.executeUpdate();
 		}
 	}
@@ -159,19 +161,21 @@ public class GruppoDAO extends AbstractDAO implements DAOInterface<Gruppo, Integ
 	}
 
 	public Collection<Composizione> doRetrieveFormazione(int idGruppo) throws SQLException {
-		String query = "SELECT c.*, comp.nome AS nome_componente, comp.cognome AS cognome_componente"
+		String query = "SELECT c.*, comp.nome AS nome_componente, comp.cognome AS cognome_componente,"
+				+ " comp.data_morte AS data_morte_componente"
 				+ " FROM composizione c JOIN componente comp ON c.id_componente = comp.id_componente"
 				+ " WHERE c.id_gruppo = ? ORDER BY c.data_ingresso";
 		return eseguiFormazione(query, idGruppo);
 	}
 
 	public Collection<Composizione> doRetrieveFormazioneAttuale(int idGruppo) throws SQLException {
-		String query = "SELECT c.*, comp.nome AS nome_componente, comp.cognome AS cognome_componente"
+		String query = "SELECT c.*, comp.nome AS nome_componente, comp.cognome AS cognome_componente,"
+				+ " comp.data_morte AS data_morte_componente"
 				+ " FROM composizione c JOIN componente comp ON c.id_componente = comp.id_componente"
 				+ " WHERE c.id_gruppo = ? AND c.data_uscita IS NULL ORDER BY comp.cognome, comp.nome";
 		return eseguiFormazione(query, idGruppo);
 	}
-
+	
 	public Collection<Composizione> doRetrieveGruppiDiComponente(int idComponente) throws SQLException {
 		List<Composizione> formazione = new ArrayList<>();
 		String query = "SELECT c.*, g.nome AS nome_gruppo FROM composizione c"
@@ -223,6 +227,7 @@ public class GruppoDAO extends AbstractDAO implements DAOInterface<Gruppo, Integ
 					Composizione c = extractComposizioneFromResultSet(rs);
 					c.setNomeComponente(rs.getString("nome_componente"));
 					c.setCognomeComponente(rs.getString("cognome_componente"));
+					c.setDataMorteComponente(rs.getDate("data_morte_componente"));
 					formazione.add(c);
 				}
 			}
@@ -247,6 +252,7 @@ public class GruppoDAO extends AbstractDAO implements DAOInterface<Gruppo, Integ
 		gruppo.setDataCreazione(rs.getDate("data_creazione"));
 		gruppo.setNazione(rs.getString("nazione"));
 		gruppo.setDataScioglimento(rs.getDate("data_scioglimento"));
+		gruppo.setFileImmagine(rs.getString("file_immagine"));
 		gruppo.setVisite(rs.getInt("visite"));
 		return gruppo;
 	}

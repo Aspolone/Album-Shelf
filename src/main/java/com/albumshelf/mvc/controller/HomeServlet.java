@@ -14,7 +14,7 @@ import com.albumshelf.mvc.model.bean.Album;
 import com.albumshelf.mvc.model.dao.AlbumDAO;
 
 @WebServlet(urlPatterns = {"", "/home"})
-public class home extends HttpServlet {
+public class HomeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 

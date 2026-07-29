@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import com.albumshelf.mvc.model.dao.RecensioneDAO;
 
 @WebServlet("/admin/recensioni")
-public class adminrecensioni extends HttpServlet {
+public class AdminRecensioniServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

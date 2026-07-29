@@ -1,173 +1,106 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.albumshelf.mvc.model.bean.*" %>
+<%@ page import="java.util.Collection" %>
+<% request.setAttribute("titoloPagina", "Vendi"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
 
-<main class="pagina">
-    <div class="form-pagina">
+<%
+    Collection<Album> albums = (Collection<Album>) request.getAttribute("albums");
+    Album albumScelto = (Album) request.getAttribute("albumScelto");
+    Collection<Edizione> edizioni = (Collection<Edizione>) request.getAttribute("edizioni");
+    String errore = request.getParameter("errore");
+    String successo = request.getParameter("successo");
+%>
 
-        <header class="info-header">
-            <h1>Metti in vendita</h1>
-            <p class="info-lead">
-                Seleziona l'album e l'edizione del disco che vuoi vendere,
-                poi descrivi le condizioni del tuo esemplare.
-                I campi con * sono obbligatori.
-            </p>
-        </header>
+<main class="pagina-form">
 
-        <form action="${pageContext.request.contextPath}/vendi"
-              method="post" enctype="multipart/form-data" class="form-vendi">
+    <h1 class="form__titolo">Metti in vendita</h1>
 
-            <fieldset class="form-sezione">
-                <legend class="nastro">Album</legend>
-                <div class="form-griglia">
-                    <div class="form-campo form-campo--intero">
-                        <label for="idAlbum">Cerca l'album nel catalogo *</label>
-                        <select id="idAlbum" name="idAlbum" required>
-                            <option value="">Seleziona un album</option>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
+    <% if ("true".equals(successo)) { %>
+    <p class="form__messaggio form__messaggio--ok">Esemplare messo in vendita con successo.</p>
+    <% } %>
+    <% if ("dati".equals(errore)) { %>
+    <p class="form__messaggio form__messaggio--errore">Controlla i dati inseriti (prezzo e quantità).</p>
+    <% } %>
+    <% if ("formato".equals(errore)) { %>
+    <p class="form__messaggio form__messaggio--errore">Formato non valido per prezzo o quantità.</p>
+    <% } %>
 
-            <fieldset class="form-sezione">
-                <legend class="nastro">Edizione</legend>
-                <p class="form-sezione-intro">
-                    Se l'edizione che possiedi è già presente selezionala,
-                    altrimenti compila i campi sotto per crearne una nuova.
-                </p>
-                <div class="form-griglia">
-                    <div class="form-campo form-campo--intero">
-                        <label for="idEdizione">Edizione esistente</label>
-                        <select id="idEdizione" name="idEdizione">
-                            <option value="">Nessuna — ne creo una nuova</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="nuovaEdizione" class="form-griglia form-griglia--sotto">
-                    <div class="form-campo">
-                        <label for="formato">Formato *</label>
-                        <select id="formato" name="formato" required>
-                            <option value="">Seleziona</option>
-                            <option value="Vinile 33 giri">Vinile 33 giri</option>
-                            <option value="Vinile 45 giri">Vinile 45 giri</option>
-                            <option value="CD">CD</option>
-                            <option value="Cassetta">Cassetta</option>
-                            <option value="MiniDisc">MiniDisc</option>
-                            <option value="Altro">Altro</option>
-                        </select>
-                    </div>
-                    <div class="form-campo">
-                        <label for="annoStampa">Anno di stampa</label>
-                        <input type="number" id="annoStampa" name="annoStampa"
-                               min="1900" max="2026" placeholder="es. 1998">
-                    </div>
-                    <div class="form-campo">
-                        <label for="etichetta">Etichetta</label>
-                        <input type="text" id="etichetta" name="etichetta"
-                               placeholder="es. Columbia Records">
-                    </div>
-                    <div class="form-campo">
-                        <label for="paeseEdizione">Paese di stampa</label>
-                        <input type="text" id="paeseEdizione" name="paeseEdizione"
-                               placeholder="es. Italia">
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset class="form-sezione">
-                <legend class="nastro">Il tuo esemplare</legend>
-                <div class="form-griglia">
-                    <div class="form-campo">
-                        <label for="prezzo">Prezzo (&euro;) *</label>
-                        <input type="number" id="prezzo" name="prezzo"
-                               step="0.01" min="0.01" required>
-                    </div>
-                    <div class="form-campo">
-                        <label for="iva">IVA (%) *</label>
-                        <input type="number" id="iva" name="iva"
-                               step="0.01" min="0" max="99.99" value="22.00" required>
-                    </div>
-                    <div class="form-campo">
-                        <label for="condizioneSupporto">Stato del supporto *</label>
-                        <select id="condizioneSupporto" name="condizioneSupporto" required>
-                            <option value="">Seleziona</option>
-                            <option value="Mint">Mint (Perfetto)</option>
-                            <option value="Near Mint">Near Mint (Quasi perfetto)</option>
-                            <option value="Good">Good (Buono)</option>
-                            <option value="Fair">Fair (Discreto)</option>
-                            <option value="Poor">Poor (Scarso)</option>
-                        </select>
-                    </div>
-                    <div class="form-campo">
-                        <label for="condizioneConfezione">Stato della confezione *</label>
-                        <select id="condizioneConfezione" name="condizioneConfezione" required>
-                            <option value="">Seleziona</option>
-                            <option value="Mint">Mint (Perfetta)</option>
-                            <option value="Near Mint">Near Mint (Quasi perfetta)</option>
-                            <option value="Good">Good (Buona)</option>
-                            <option value="Fair">Fair (Discreta)</option>
-                            <option value="Poor">Poor (Scarsa)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-campo-singolo">
-                    <label class="form-checkbox">
-                        <input type="checkbox" name="impellicolato" value="true">
-                        <span>L'articolo è ancora impellicolato (sigillato nella confezione originale)</span>
-                    </label>
-                </div>
-            </fieldset>
-
-            <fieldset class="form-sezione">
-                <legend class="nastro">Immagini</legend>
-                <div class="form-campo-singolo">
-                    <label for="immagini">Carica foto dell'esemplare (max 5, formati JPG/PNG)</label>
-                    <div class="form-upload">
-                        <input type="file" id="immagini" name="immagini"
-                               accept="image/jpeg,image/png" multiple>
-                        <div class="form-upload-placeholder">
-                            <span class="form-upload-icona">&#8679;</span>
-                            <span class="form-upload-testo">Trascina qui le immagini o clicca per selezionarle</span>
-                            <span class="form-upload-hint">JPG o PNG, massimo 5 MB ciascuna</span>
-                        </div>
-                    </div>
-                    <div class="form-upload-anteprima" id="anteprimaImmagini"></div>
-                </div>
-            </fieldset>
-
-            <fieldset class="form-sezione">
-                <legend class="nastro">Condizioni di vendita</legend>
-                <p class="form-termini-intro">
-                    Pubblicando questo esemplare accetti le seguenti condizioni:
-                </p>
-                <ol class="form-termini-lista">
-                    <li>L'articolo descritto corrisponde fedelmente alle condizioni
-                        dichiarate e alle fotografie caricate.</li>
-                    <li>La spedizione avverrà entro 5 giorni lavorativi dalla
-                        ricezione del pagamento.</li>
-                    <li>In caso di reso per difetto non dichiarato, il venditore
-                        si impegna al rimborso completo incluse le spese di
-                        spedizione.</li>
-                    <li>Il venditore è responsabile della corretta applicazione
-                        dell'IVA secondo la normativa vigente nel proprio paese.</li>
-                    <li>AlbumShelf si riserva il diritto di rimuovere inserzioni
-                        che violano i termini di servizio della piattaforma.</li>
-                </ol>
-                <div class="form-campo-singolo">
-                    <label class="form-checkbox">
-                        <input type="checkbox" name="accettaTermini" required>
-                        <span>Ho letto e accetto le condizioni di vendita di AlbumShelf</span>
-                    </label>
-                </div>
-            </fieldset>
-
-            <button type="submit" class="form-submit">Pubblica esemplare</button>
-
+    <section class="form__sezione">
+        <h2 class="form__sottotitolo">1. Scegli l'album</h2>
+        <form action="${pageContext.request.contextPath}/vendi" method="get">
+            <select name="album" class="form__select" required onchange="this.form.submit()">
+                <option value="">-- Seleziona un album --</option>
+                <% for (Album a : albums) { %>
+                <option value="<%= a.getIdAlbum() %>"
+                    <%= albumScelto != null && albumScelto.getIdAlbum() == a.getIdAlbum() ? "selected" : "" %>>
+                    <%= a.getNomeAlbum() %> — <%= a.getNomeGruppo() %>
+                </option>
+                <% } %>
+            </select>
         </form>
+    </section>
 
-    </div>
+    <% if (albumScelto != null && edizioni != null) { %>
+
+
+    <section class="form__sezione">
+        <h2 class="form__sottotitolo">2. Dettagli della copia</h2>
+        <form action="${pageContext.request.contextPath}/vendi" method="post">
+
+            <label class="form__label">Edizione
+                <select name="edizione" class="form__select" required>
+                    <option value="">-- Seleziona un'edizione --</option>
+                    <% for (Edizione ed : edizioni) { %>
+                    <option value="<%= ed.getIdEdizione() %>">
+                        <%= ed.getFormato() %> · <%= ed.getAnnoStampa() %>
+                        <% if (ed.getEtichetta() != null) { %> · <%= ed.getEtichetta() %><% } %>
+                        <% if (ed.getPaese() != null) { %> (<%= ed.getPaese() %>)<% } %>
+                    </option>
+                    <% } %>
+                </select>
+            </label>
+
+            <label class="form__label">Prezzo (€)
+                <input type="number" name="prezzo" class="form__input" step="0.01" min="0.01" required
+                       placeholder="es. 25.00">
+            </label>
+
+            <label class="form__label">Condizione disco
+                <select name="condizione_disco" class="form__select" required>
+                    <option value="nuovo">Nuovo</option>
+                    <option value="ottimo">Ottimo</option>
+                    <option value="buono">Buono</option>
+                    <option value="discreto">Discreto</option>
+                    <option value="scarso">Scarso</option>
+                </select>
+            </label>
+
+            <label class="form__label">Condizione confezione
+                <select name="condizione_confezione" class="form__select" required>
+                    <option value="nuovo">Nuovo</option>
+                    <option value="ottimo">Ottimo</option>
+                    <option value="buono">Buono</option>
+                    <option value="discreto">Discreto</option>
+                    <option value="scarso">Scarso</option>
+                </select>
+            </label>
+
+            <label class="form__label form__label--checkbox">
+                <input type="checkbox" name="impellicolato"> Impellicolato
+            </label>
+
+            <label class="form__label">Quantità (copie identiche)
+                <input type="number" name="quantita" class="form__input" value="1" min="1" max="50" required>
+            </label>
+
+            <button type="submit" class="form__azione">Metti in vendita</button>
+        </form>
+    </section>
+
+    <% } %>
+
 </main>
-
-<script src="${pageContext.request.contextPath}/js/immagini.js" defer></script>
 
 <%@ include file="/WEB-INF/view/fragment/footer.jspf" %>

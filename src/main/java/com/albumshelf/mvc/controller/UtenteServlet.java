@@ -15,7 +15,7 @@ import com.albumshelf.mvc.model.bean.*;
 import com.albumshelf.mvc.model.dao.*;
 
 @WebServlet(name = "Utente", urlPatterns = {"/profilo", "/modificaprofilo", "/aggiungirecensione"})
-public class utente extends HttpServlet {
+public class UtenteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
