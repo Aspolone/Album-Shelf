@@ -1,6 +1,6 @@
 <% request.setAttribute("titoloPagina", "Come Vendere"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/infopages.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/infopages.css">
 
 
 <main class="info-page">

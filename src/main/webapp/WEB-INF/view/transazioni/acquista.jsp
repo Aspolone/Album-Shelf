@@ -4,7 +4,7 @@
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <% request.setAttribute("titoloPagina", "Acquista"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css">
 
 <%!
     private String renderCaroselloEsemplari(Collection<Esemplare> esemplari, String ctx) {

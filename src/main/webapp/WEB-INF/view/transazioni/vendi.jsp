@@ -3,7 +3,7 @@
 <%@ page import="java.util.Collection" %>
 <% request.setAttribute("titoloPagina", "Vendi"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css?v=2">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
 
 <%
     Collection<Album> albums = (Collection<Album>) request.getAttribute("albums");
@@ -27,7 +27,6 @@
     <p class="form__messaggio form__messaggio--errore">Formato non valido per prezzo o quantità.</p>
     <% } %>
 
-    <%-- STEP 1: scegli album --%>
     <section class="form__sezione">
         <h2 class="form__sottotitolo">1. Scegli l'album</h2>
         <form action="${pageContext.request.contextPath}/vendi" method="get">
@@ -45,7 +44,7 @@
 
     <% if (albumScelto != null && edizioni != null) { %>
 
-    <%-- STEP 2: scegli edizione e compila i dettagli --%>
+
     <section class="form__sezione">
         <h2 class="form__sottotitolo">2. Dettagli della copia</h2>
         <form action="${pageContext.request.contextPath}/vendi" method="post">

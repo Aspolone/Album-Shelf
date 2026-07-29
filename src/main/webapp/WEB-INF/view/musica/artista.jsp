@@ -3,14 +3,14 @@
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
 
 <%
     Componente artista = (Componente) request.getAttribute("artista");
     Collection<Composizione> gruppi = (Collection<Composizione>) request.getAttribute("gruppi");
 %>
-
 <main class="pagina-album">
+
 
     <div class="album-colonna">
 

@@ -14,7 +14,7 @@ import com.albumshelf.mvc.model.bean.Album;
 import com.albumshelf.mvc.model.dao.AlbumDAO;
 
 @WebServlet(urlPatterns = {"", "/home"})
-public class home extends HttpServlet {
+public class HomeServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,9 +24,9 @@ public class home extends HttpServlet {
 
         try (AlbumDAO dao = new AlbumDAO()) {
 
-            Collection<Album> miglioriSettimana = dao.doRetrievePiuVisitati(3);
-            Collection<Album> miglioriAnno = dao.doRetrieveMeglioRecensiti(3, 1);
-            Collection<Album> piuRecensiti = dao.doRetrieveUltimiUsciti(3);
+            Collection<Album> miglioriSettimana = dao.doRetrievePiuVisitati(7);
+            Collection<Album> miglioriAnno = dao.doRetrieveMeglioRecensiti(7, 1);
+            Collection<Album> piuRecensiti = dao.doRetrieveUltimiUsciti(7);
 
             request.setAttribute("miglioriSettimana", miglioriSettimana);
             request.setAttribute("miglioriAnno", miglioriAnno);

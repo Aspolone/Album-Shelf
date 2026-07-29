@@ -1,0 +1,14 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<aside class="admin-sidebar">
+    <h2>PANNELLO ADMIN</h2>
+    <nav class="admin-nav">
+        <a href="${pageContext.request.contextPath}/admin"
+           class="${sezioneAdmin == 'dashboard' ? 'attivo' : ''}">Dashboard</a>
+        <a href="${pageContext.request.contextPath}/admin/ordini"
+           class="${sezioneAdmin == 'ordini' ? 'attivo' : ''}">Ordini</a>
+        <a href="${pageContext.request.contextPath}/admin/utenti"
+           class="${sezioneAdmin == 'utenti' ? 'attivo' : ''}">Utenti</a>
+        <a href="${pageContext.request.contextPath}/admin/recensioni"
+           class="${sezioneAdmin == 'recensioni' ? 'attivo' : ''}">Recensioni</a>
+    </nav>
+</aside>

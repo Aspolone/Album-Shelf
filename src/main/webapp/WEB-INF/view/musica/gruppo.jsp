@@ -3,7 +3,7 @@
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
 
 <%
     Gruppo gruppo = (Gruppo) request.getAttribute("gruppo");

@@ -3,8 +3,7 @@
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=6">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/canzone.css?v=1">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
 
 <%
     Canzone canzone = (Canzone) request.getAttribute("canzone");
@@ -13,6 +12,7 @@
     Recensione recensioneUtente = (Recensione) request.getAttribute("recensioneUtente");
     Collection<Esemplare> copieInVendita = (Collection<Esemplare>) request.getAttribute("copieInVendita");
 %>
+
 
 <main class="pagina-album">
 
