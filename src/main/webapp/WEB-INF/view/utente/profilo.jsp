@@ -92,6 +92,8 @@
                             <span class="elenco__meta"><%= o.getTotalePagato() %> &euro;</span>
                         </div>
                     </a>
+                    <a href="${pageContext.request.contextPath}/fattura?ordine=<%= o.getIdOrdine() %>"
+                       class="profilo-btn-fattura" title="Scarica fattura">&#128424; Fattura</a>
                 </li>
                 <% } %>
             </ul>

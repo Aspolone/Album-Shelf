@@ -94,6 +94,24 @@
     gap: 14px;
 }
 
+.profilo-btn-fattura {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 14px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #40BCF4;
+    border: 1px solid #40BCF4;
+    border-radius: 20px;
+    transition: background-color 0.18s, color 0.18s;
+}
+
+.profilo-btn-fattura:hover {
+    background-color: #40BCF4;
+    color: #14181c;
+}
+
 .recensione__rif {
     font-size: 0.75rem;
     letter-spacing: 1px;

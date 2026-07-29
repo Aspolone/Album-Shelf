@@ -13,11 +13,28 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+<<<<<<< HEAD
 @WebFilter(urlPatterns = {
 	"/vendi",
 	"/carrello/checkout",
 	"/modificaprofilo",
 	"/aggiungirecensione"
+=======
+import com.albumshelf.mvc.model.bean.Utente;
+import com.albumshelf.mvc.model.dao.UtenteDAO;
+
+@WebFilter(filterName = "AuthFilter", urlPatterns = {
+    "/vendi",
+    "/modificaprofilo",
+    "/carrello",
+    "/carrello/checkout",
+    "/aggiungirecensione",
+    "/fattura",
+    "/profilo",
+    "/utente/*",
+    "/admin",
+    "/admin/*"
+>>>>>>> 673e8d38b7820965a4dc337a2af8c3eba288985f
 })
 public class AuthFilter implements Filter {
 
