@@ -23,6 +23,7 @@ import com.albumshelf.mvc.model.dao.UtenteDAO;
     "/carrello",
     "/carrello/checkout",
     "/aggiungirecensione",
+    "/fattura",
     "/profilo",
     "/utente/*",
     "/admin",

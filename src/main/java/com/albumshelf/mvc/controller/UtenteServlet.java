@@ -9,12 +9,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import com.albumshelf.mvc.model.bean.RigaOrdine;
 
 import com.albumshelf.mvc.util.PasswordHashingUtil;
+import java.math.BigDecimal;
+
 import com.albumshelf.mvc.model.bean.*;
 import com.albumshelf.mvc.model.dao.*;
 
-@WebServlet(name = "Utente", urlPatterns = {"/profilo", "/modificaprofilo", "/aggiungirecensione"})
+@WebServlet(name = "Utente", urlPatterns = {"/profilo", "/modificaprofilo", "/aggiungirecensione", "/fattura"})
 public class UtenteServlet extends HttpServlet {
 
     @Override
@@ -28,6 +31,7 @@ public class UtenteServlet extends HttpServlet {
                 case "/profilo"            -> mostraProfilo(request, id);
                 case "/modificaprofilo"    -> mostraModificaProfilo(request);
                 case "/aggiungirecensione" -> mostraAggiungiRecensione(request);
+                case "/fattura"            -> mostraFattura(request);
                 default                    -> null;
             };
 
@@ -91,6 +95,26 @@ public class UtenteServlet extends HttpServlet {
         return "/WEB-INF/view/utente/modificaprofilo.jsp";
     }
 
+    private String mostraFattura(HttpServletRequest request) throws SQLException {
+        Utente utenteLoggato = (Utente) request.getSession().getAttribute("utente");
+        String idOrdineStr = request.getParameter("ordine");
+        if (idOrdineStr == null || idOrdineStr.isBlank()) return null;
+
+        int idOrdine = Integer.parseInt(idOrdineStr);
+
+        try (OrdineDAO ordineDAO = new OrdineDAO()) {
+            Ordine ordine = ordineDAO.doRetrieveByKey(idOrdine);
+            if (ordine == null || ordine.getIdUtente() != utenteLoggato.getIdUtente()) return null;
+
+            Collection<RigaOrdine> righe = ordineDAO.doRetrieveRighe(idOrdine);
+            request.setAttribute("ordine", ordine);
+            request.setAttribute("righeOrdine", righe);
+            request.setAttribute("utenteProfilo", utenteLoggato);
+        }
+
+        return "/WEB-INF/view/utente/fattura.jsp";
+    }
+
     private String mostraAggiungiRecensione(HttpServletRequest request) throws SQLException {
         String idAlbumStr = request.getParameter("album");
         String idCanzoneStr = request.getParameter("canzone");
@@ -119,9 +143,14 @@ public class UtenteServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         Utente utenteLoggato = (Utente) request.getSession().getAttribute("utente");
-        String azione = request.getParameter("azione");
 
         try {
+            if ("/aggiungirecensione".equals(request.getServletPath())) {
+                salvaRecensione(request, response, utenteLoggato);
+                return;
+            }
+
+            String azione = request.getParameter("azione");
             if ("cambiapassword".equals(azione)) {
                 cambiaPassword(request, response, utenteLoggato);
             } else if ("elimina".equals(azione)) {
@@ -135,17 +164,26 @@ public class UtenteServlet extends HttpServlet {
     }
 
     private void salvaProfilo(HttpServletRequest request, HttpServletResponse response,
-                              Utente utenteLoggato) throws SQLException, IOException {
+                              Utente utenteLoggato) throws SQLException, ServletException, IOException {
 
         String nomeUtente = request.getParameter("nomeUtente");
         String email = request.getParameter("email");
         String nazione = request.getParameter("nazione");
         String descrizione = request.getParameter("descrizione");
 
-        utenteLoggato.setNomeUtente(nomeUtente);
-        utenteLoggato.setEmail(email);
-        utenteLoggato.setNazione(nazione);
-        utenteLoggato.setDescrizione(descrizione);
+        if (nomeUtente == null || nomeUtente.isBlank()
+                || email == null || email.isBlank()) {
+            request.setAttribute("utenteProfilo", utenteLoggato);
+            request.setAttribute("errorMessage", "Nome utente e email sono obbligatori.");
+            request.getRequestDispatcher("/WEB-INF/view/utente/modificaprofilo.jsp")
+                   .forward(request, response);
+            return;
+        }
+
+        utenteLoggato.setNomeUtente(nomeUtente.trim());
+        utenteLoggato.setEmail(email.trim());
+        utenteLoggato.setNazione(nazione != null && !nazione.isBlank() ? nazione.trim() : null);
+        utenteLoggato.setDescrizione(descrizione != null && !descrizione.isBlank() ? descrizione.trim() : null);
 
         try (UtenteDAO dao = new UtenteDAO()) {
             dao.doUpdate(utenteLoggato);
@@ -187,6 +225,46 @@ public class UtenteServlet extends HttpServlet {
         utenteLoggato.setPassword(nuovoHash);
         request.getSession().setAttribute("utente", utenteLoggato);
         response.sendRedirect(request.getContextPath() + "/profilo");
+    }
+
+    private void salvaRecensione(HttpServletRequest request, HttpServletResponse response,
+                                  Utente utenteLoggato) throws SQLException, IOException {
+
+        String votoStr = request.getParameter("voto");
+        String commento = request.getParameter("commento");
+        String idAlbumStr = request.getParameter("idAlbum");
+        String idCanzoneStr = request.getParameter("idCanzone");
+
+        if (votoStr == null || votoStr.isBlank()) {
+            response.sendRedirect(request.getContextPath() + "/");
+            return;
+        }
+
+        Recensione recensione = new Recensione();
+        recensione.setVoto(new BigDecimal(votoStr));
+        recensione.setCommento(commento != null && !commento.isBlank() ? commento.trim() : null);
+        recensione.setIdUtente(utenteLoggato.getIdUtente());
+
+        if (idAlbumStr != null && !idAlbumStr.isBlank()) {
+            recensione.setIdAlbum(Integer.parseInt(idAlbumStr));
+        }
+        if (idCanzoneStr != null && !idCanzoneStr.isBlank()) {
+            recensione.setIdCanzone(Integer.parseInt(idCanzoneStr));
+        }
+
+        try (RecensioneDAO dao = new RecensioneDAO()) {
+            dao.doSave(recensione);
+        }
+
+        if (recensione.getIdAlbum() != null) {
+            response.sendRedirect(request.getContextPath()
+                    + "/musica/album?id=" + recensione.getIdAlbum());
+        } else if (recensione.getIdCanzone() != null) {
+            response.sendRedirect(request.getContextPath()
+                    + "/musica/canzone?id=" + recensione.getIdCanzone());
+        } else {
+            response.sendRedirect(request.getContextPath() + "/");
+        }
     }
 
     private void eliminaAccount(HttpServletRequest request, HttpServletResponse response,
