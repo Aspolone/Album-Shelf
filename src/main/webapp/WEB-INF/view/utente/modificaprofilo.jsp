@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.albumshelf.mvc.model.bean.Utente" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css?v=6">
+
+<%
+    Utente utenteProfilo = (Utente) request.getAttribute("utenteProfilo");
+%>
 
 <main class="pagina">
     <div class="form-pagina">
@@ -14,7 +19,7 @@
             </p>
         </header>
 
-        <form action="${pageContext.request.contextPath}/utente/modifica"
+        <form action="${pageContext.request.contextPath}/modificaprofilo"
               method="post" class="form-vendi">
 
             <fieldset class="form-sezione">
@@ -23,22 +28,23 @@
                     <div class="form-campo">
                         <label for="nomeUtente">Nome utente *</label>
                         <input type="text" id="nomeUtente" name="nomeUtente"
-                               value="" required>
+                               value="<%= utenteProfilo.getNomeUtente() %>" required>
                     </div>
                     <div class="form-campo">
                         <label for="email">Email *</label>
                         <input type="email" id="email" name="email"
-                               value="" required>
+                               value="<%= utenteProfilo.getEmail() %>" required>
                     </div>
                     <div class="form-campo">
                         <label for="nazione">Nazione</label>
                         <input type="text" id="nazione" name="nazione"
-                               value="" placeholder="es. Italia">
+                               value="<%= utenteProfilo.getNazione() != null ? utenteProfilo.getNazione() : "" %>"
+                               placeholder="es. Italia">
                     </div>
                     <div class="form-campo form-campo--intero">
                         <label for="descrizione">Descrizione</label>
                         <textarea id="descrizione" name="descrizione" rows="4"
-                                  placeholder="Racconta qualcosa di te e della tua collezione..."></textarea>
+                                  placeholder="Racconta qualcosa di te e della tua collezione..."><%= utenteProfilo.getDescrizione() != null ? utenteProfilo.getDescrizione() : "" %></textarea>
                     </div>
                 </div>
             </fieldset>
@@ -47,8 +53,9 @@
 
         </form>
 
-        <form action="${pageContext.request.contextPath}/utente/cambiapassword"
+        <form action="${pageContext.request.contextPath}/modificaprofilo"
               method="post" class="form-vendi">
+            <input type="hidden" name="azione" value="cambiapassword">
 
             <fieldset class="form-sezione">
                 <legend class="nastro">Cambia password</legend>
@@ -78,9 +85,10 @@
                 L'eliminazione è permanente. Tutti i tuoi esemplari
                 verranno rimossi dal catalogo e i tuoi dati cancellati.
             </p>
-            <form action="${pageContext.request.contextPath}/utente/elimina"
+            <form action="${pageContext.request.contextPath}/modificaprofilo"
                   method="post"
                   onsubmit="return confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.');">
+                <input type="hidden" name="azione" value="elimina">
                 <button type="submit" class="form-submit form-submit--pericolo">Elimina il mio account</button>
             </form>
         </div>

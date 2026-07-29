@@ -10,23 +10,29 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+# Compiled
 *.class
-
 *.log
 
+# VS Code
 .vscode/
+
+# Eclipse
 .factorypath
 .classpath
 .project
 .settings/
+.metadata/
+bin/
 
-.DS_Store
-Thumbs.db
-
-# context.xml.local
-
+# IntelliJ
 .idea/
 *.iml
 *.iws
-.metadata/
-bin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config
+context.xml.local

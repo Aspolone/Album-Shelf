@@ -15,7 +15,11 @@ import com.albumshelf.mvc.model.bean.Recensione;
 public class RecensioneDAO extends AbstractDAO implements DAOInterface<Recensione, Integer> {
 
 	private static final String SELECT_BASE =
-			"SELECT r.*, u.nome_utente FROM recensione r JOIN utente u ON r.id_utente = u.id_utente";
+	        "SELECT r.*, u.nome_utente, a.nome_album, c.nome AS nome_canzone"
+	        + " FROM recensione r"
+	        + " JOIN utente u ON r.id_utente = u.id_utente"
+	        + " LEFT JOIN album a ON r.id_album = a.id_album"
+	        + " LEFT JOIN canzone c ON r.id_canzone = c.id_canzone";
 
 	public RecensioneDAO() throws SQLException {
 		super();
@@ -205,7 +209,9 @@ public class RecensioneDAO extends AbstractDAO implements DAOInterface<Recension
 		int idCanzone = rs.getInt("id_canzone");
 		recensione.setIdCanzone(rs.wasNull() ? null : idCanzone);
 		recensione.setNomeUtente(rs.getString("nome_utente"));
-		return recensione;
+		recensione.setNomeAlbum(rs.getString("nome_album"));
+	    recensione.setNomeCanzone(rs.getString("nome_canzone"));
+	    return recensione;
 	}
 
 	private String ordinamento(String order) {
