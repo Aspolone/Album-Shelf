@@ -110,6 +110,18 @@ public class UtenteDAO extends AbstractDAO implements DAOInterface<Utente, Integ
 		}
 	}
 
+	public Collection<Utente> doRetrieveByTesto(String testo) throws SQLException {
+    List<Utente> utenti = new ArrayList<>();
+    String query = "SELECT * FROM utente WHERE nome_utente LIKE ? ORDER BY nome_utente";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, "%" + testo + "%");
+        try (ResultSet rs = statement.executeQuery()) {
+            while (rs.next()) utenti.add(extractUtenteFromResultSet(rs));
+        }
+    }
+    return utenti;
+}
+
 	public void doUpdatePassword(int idUtente, String nuovoHash) throws SQLException {
 		String query = "UPDATE utente SET password = ? WHERE id_utente = ?";
 		try (PreparedStatement statement = connection.prepareStatement(query)) {

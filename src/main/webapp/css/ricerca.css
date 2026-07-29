@@ -102,7 +102,7 @@ body {
     padding: 6px 12px;
     border-radius: 3px;
     background-color: rgba(0, 230, 100, 0.1);
-    color: var(--accent-green);
+    color: #40BCF4;
     border: 1px solid var(--accent-green);
     letter-spacing: 0.5px;
     white-space: nowrap;

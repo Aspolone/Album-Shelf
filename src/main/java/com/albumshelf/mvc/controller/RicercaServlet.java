@@ -17,9 +17,6 @@ import com.albumshelf.mvc.model.dao.*;
 @WebServlet(name = "Ricerca", urlPatterns = { "/ricerca" })
 public class RicercaServlet extends HttpServlet {
 
-	// numero massimo di risultati per tipo nella modalita' AJAX (dropdown
-	// live): pochi, solo un'anteprima. la pagina di ricerca completa non ha
-	// questo limite.
 	private static final int LIMITE_SUGGERIMENTI_PER_TIPO = 5;
 
 	@Override
@@ -65,7 +62,8 @@ public class RicercaServlet extends HttpServlet {
 		try (AlbumDAO albumDAO = new AlbumDAO();
 		     GruppoDAO gruppoDAO = new GruppoDAO();
 		     CanzoneDAO canzoneDAO = new CanzoneDAO();
-		     ComponenteDAO componenteDAO = new ComponenteDAO()) {
+		     ComponenteDAO componenteDAO = new ComponenteDAO();
+		     UtenteDAO utenteDAO = new UtenteDAO()) {
 
 			int aggiunti = 0;
 			for (Album a : albumDAO.doRetrieveByTesto(testo)) {
@@ -97,6 +95,14 @@ public class RicercaServlet extends HttpServlet {
 				risultati.add(new RisultatoRicerca(
 						"Artista", comp.getNome() + " " + comp.getCognome(), null,
 						"/musica/artista?id=" + comp.getIdComponente()));
+			}
+
+			aggiunti = 0;
+			for (Utente u : utenteDAO.doRetrieveByTesto(testo)) {
+				if (aggiunti++ >= limitePerTipo) break;
+				risultati.add(new RisultatoRicerca(
+						"Utente", u.getNomeUtente(), u.getNazione(),
+						"/profilo?id=" + u.getIdUtente()));
 			}
 		}
 
