@@ -28,9 +28,18 @@
         <% } %>
     </nav>
 
-    <form class="barra-ricerca" action="${pageContext.request.contextPath}/ricerca" method="get">
-        <input type="search" name="q" placeholder="Cerca...">
-    </form>
+    <div class="barra-ricerca">
+        <form action="${pageContext.request.contextPath}/ricerca" method="GET">
+            <input type="text" id="campo-ricerca" name="q" autocomplete="off" placeholder="Cerca...">
+        </form>
+        
+        <ul id="risultati-ricerca" hidden></ul>
+    </div>
+
+    <script>
+        const MY_CONTEXT_PATH = '${pageContext.request.contextPath}';
+    </script>
+    <script src="${pageContext.request.contextPath}/js/ricerca.js"></script>
 
     <a href="${pageContext.request.contextPath}/carrello" class="carrello">
         <img src="${pageContext.request.contextPath}/img/icons-shopping-cart.png" class="icona-carrello" alt="">
