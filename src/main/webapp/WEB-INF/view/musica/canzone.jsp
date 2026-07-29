@@ -3,7 +3,7 @@
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=6">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/canzone.css?v=1">
 
 <%
@@ -23,18 +23,17 @@
                 <h1 class="album-titolo"><%= canzone.getNome() %></h1>
                 <p class="album-dato">
                     Album:
-                    <a href="${pageContext.request.contextPath}/musica/album?id=<%= canzone.getIdAlbum() %>">
+                    <a class="valore-dato" href="${pageContext.request.contextPath}/musica/album?id=<%= canzone.getIdAlbum() %>">
                         <%= canzone.getNomeAlbum() %>
                     </a>
                 </p>
                 <p class="album-dato">
-                    Durata: <span class="valore-dato">
-                         <%= FormatUtil.formatDurata(canzone.getDurata()) %>
-                    </span>
+                    Durata: <span class="valore-dato"><%= FormatUtil.formatDurata(canzone.getDurata()) %></span>
                 </p>
                 <% if (generi != null && !generi.isEmpty()) { %>
                 <p class="album-dato">
-                    Genere: <span class="valore-dato">
+                    Genere:
+                    <span class="valore-dato">
                     <%
                         boolean primo = true;
                         for (String genere : generi) {
@@ -49,10 +48,7 @@
                 <% } %>
                 <% if (canzone.getMediaVoto() != null) { %>
                 <p class="album-dato">
-                    Voto medio: 
-                    <span class="valore-dato">
-                        <%= FormatUtil.formatVotoNumerico(canzone.getMediaVoto()) %>
-                    </span>
+                    Voto medio: <span class="valore-dato"><%= FormatUtil.formatVotoNumerico(canzone.getMediaVoto()) %></span>
                 </p>
                 <% } %>
             </div>
@@ -88,7 +84,7 @@
             </ul>
             <a class="canzone-acquista__link-album"
                href="${pageContext.request.contextPath}/musica/album?id=<%= canzone.getIdAlbum() %>">
-                Vai alla pagina dell'album completo
+                Vai alla pagina dell'album completo &rarr;
             </a>
         </section>
 
@@ -111,8 +107,7 @@
                         <%= recensione.getNomeUtente() %>
                     </a>
                 </p>
-                <p class="recensione__voto stelle"
-                   style="--indice: <%= FormatUtil.getIndiceStelleSprite(recensione.getVoto()) %>;"></p>
+                <p class="recensione__voto"><%= FormatUtil.formatVotoBreve(recensione.getVoto()) %> / 5</p>
                 <p class="recensione__testo"><%= recensione.getCommento() %></p>
             </article>
             <% } %>

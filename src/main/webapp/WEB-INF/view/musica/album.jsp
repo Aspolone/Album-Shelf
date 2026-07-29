@@ -3,7 +3,7 @@
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=6">
 
 <%
     Album album = (Album) request.getAttribute("album");
@@ -26,38 +26,32 @@
             <div class="album-dati">
                 <h1 class="album-titolo"><%= album.getNomeAlbum() %></h1>
                 <p class="album-dato">
-                    Gruppo: <span class="valore-dato">
+                    Gruppo:
                     <a href="${pageContext.request.contextPath}/musica/gruppo?id=<%= album.getIdGruppo() %>">
                         <%= album.getNomeGruppo() %>
                     </a>
-                    </span>
                 </p>
                 <p class="album-dato">
-                    Data incisione: <span class="valore-dato">
+                    Data incisione:
                     <%= FormatUtil.formatData(album.getDataInizioRegistrazione()) %>
                     <% if (album.getDataFineRegistrazione() != null) { %>
                         &ndash; <%= FormatUtil.formatData(album.getDataFineRegistrazione()) %>
                     <% } %>
                 </p>
-                <p class="album-dato">Data rilascio: 
-                <span class="valore-dato">
-                    <%= FormatUtil.formatData(album.getDataRilascio()) %>
-                </span>
-                </p>
+                <p class="album-dato">Data rilascio: <%= FormatUtil.formatData(album.getDataRilascio()) %></p>
                 <p class="album-dato">
-                    Genere: <span class="valore-dato">
-                        <%
-                            boolean primo = true;
-                            for (String genere : generi) {
-                                if (!primo) { %>, <% }
-                        %>
-                        <%= genere %>
-                        <% primo = false;
-                            }
-                        %>
-                    </p>
-                </span>
-                <p class="album-dato">Descrizione: <span class="valore-dato"><%= album.getDescrittori() %></span></p>
+                    Genere:
+                    <%
+                        boolean primo = true;
+                        for (String genere : generi) {
+                            if (!primo) { %>, <% }
+                    %>
+                    <%= genere %>
+                    <% primo = false;
+                        }
+                    %>
+                </p>
+                <p class="album-dato">Descrizione: <%= album.getDescrittori() %></p>
             </div>
         </section>
 
@@ -131,7 +125,7 @@
                         <%= recensione.getNomeUtente() %>
                     </a>
                 </p>
-                <p class="recensione__voto stelle" style="--indice: <%= FormatUtil.getIndiceStelleSprite(recensione.getVoto()) %>;"></p>
+                <p class="recensione__voto"><%= FormatUtil.formatVotoBreve(recensione.getVoto()) %> / 5</p>
                 <p class="recensione__testo"><%= recensione.getCommento() %></p>
             </article>
             <% } %>

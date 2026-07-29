@@ -48,12 +48,9 @@
                         <label for="formato">Formato *</label>
                         <select id="formato" name="formato" required>
                             <option value="">Seleziona</option>
-                            <option value="Vinile 33 giri">Vinile 33 giri</option>
-                            <option value="Vinile 45 giri">Vinile 45 giri</option>
+                            <option value="Vinile">Vinile</option>
                             <option value="CD">CD</option>
                             <option value="Cassetta">Cassetta</option>
-                            <option value="MiniDisc">MiniDisc</option>
-                            <option value="Altro">Altro</option>
                         </select>
                     </div>
                     <div class="form-campo">
@@ -91,22 +88,22 @@
                         <label for="condizioneSupporto">Stato del supporto *</label>
                         <select id="condizioneSupporto" name="condizioneSupporto" required>
                             <option value="">Seleziona</option>
-                            <option value="Mint">Mint (Perfetto)</option>
-                            <option value="Near Mint">Near Mint (Quasi perfetto)</option>
-                            <option value="Good">Good (Buono)</option>
-                            <option value="Fair">Fair (Discreto)</option>
-                            <option value="Poor">Poor (Scarso)</option>
+                            <option value="Nuovo">Nuovo</option>
+                            <option value="Ottimo">Ottimo</option>
+                            <option value="Buono">Buono</option>
+                            <option value="Discreto">Discreto</option>
+                            <option value="Scarso">Scarso</option>
                         </select>
                     </div>
                     <div class="form-campo">
                         <label for="condizioneConfezione">Stato della confezione *</label>
                         <select id="condizioneConfezione" name="condizioneConfezione" required>
                             <option value="">Seleziona</option>
-                            <option value="Mint">Mint (Perfetta)</option>
-                            <option value="Near Mint">Near Mint (Quasi perfetta)</option>
-                            <option value="Good">Good (Buona)</option>
-                            <option value="Fair">Fair (Discreta)</option>
-                            <option value="Poor">Poor (Scarsa)</option>
+                            <option value="Nuovo">Nuovo</option>
+                            <option value="Ottimo">Ottimo</option>
+                            <option value="Buono">Buono</option>
+                            <option value="Discreto">Discreto</option>
+                            <option value="Scarso">Scarso</option>
                         </select>
                     </div>
                 </div>

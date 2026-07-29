@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="com.albumshelf.mvc.model.bean.Album" %>
+<%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <% request.setAttribute("titoloPagina", "Home"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css?v=7">
@@ -17,9 +18,7 @@
             String link = ctx + "/musica/album?id=" + a.getIdAlbum();
             String nome = a.getNomeAlbum() != null ? a.getNomeAlbum() : "";
             String gruppo = a.getNomeGruppo() != null ? a.getNomeGruppo() : "";
-            String voto = a.getMediaVoto() != null
-                ? a.getMediaVoto().setScale(1).toPlainString()
-                : "-";
+            String voto = FormatUtil.formatVotoBreve(a.getMediaVoto());
             String classe = (i == evidenza) ? "card-album in-evidenza" : "card-album";
 
             sb.append("<article class=\"").append(classe).append("\">");
@@ -56,7 +55,7 @@
 
     <% if (miglioriSettimana != null && !miglioriSettimana.isEmpty()) { %>
     <section class="sezione-snap sezione-carousel">
-        <h2 class="ribbon">MIGLIORI QUESTA SETTIMANA</h2>
+        <h2 class="ribbon">I Pi&ugrave; Visitati</h2>
         <div class="carousel">
             <button class="freccia-carousel prev" aria-label="Precedente">&#9665;</button>
             <div class="traccia-carousel">
@@ -70,7 +69,7 @@
 
     <% if (miglioriAnno != null && !miglioriAnno.isEmpty()) { %>
     <section class="sezione-snap sezione-carousel">
-        <h2 class="ribbon">MIGLIORI QUESTO ANNO</h2>
+        <h2 class="ribbon">I Classici</h2>
         <div class="carousel">
             <button class="freccia-carousel prev" aria-label="Precedente">&#9665;</button>
             <div class="traccia-carousel">
@@ -84,7 +83,7 @@
 
     <% if (piuRecensiti != null && !piuRecensiti.isEmpty()) { %>
     <section class="sezione-snap sezione-carousel">
-        <h2 class="ribbon">I PI&Ugrave; RECENSITI</h2>
+        <h2 class="ribbon">Ultime uscite/h2>
         <div class="carousel">
             <button class="freccia-carousel prev" aria-label="Precedente">&#9665;</button>
             <div class="traccia-carousel">

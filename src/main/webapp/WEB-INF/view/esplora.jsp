@@ -2,9 +2,10 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="com.albumshelf.mvc.model.bean.Album" %>
 <%@ page import="com.albumshelf.mvc.model.bean.Gruppo" %>
+<%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <% request.setAttribute("titoloPagina", "Esplora"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css?v=8">
 
 <%!
     private String renderCaroselloAlbum(Collection<Album> albums, String ctx) {
@@ -17,9 +18,7 @@
             String link = ctx + "/musica/album?id=" + a.getIdAlbum();
             String nome = a.getNomeAlbum() != null ? a.getNomeAlbum() : "";
             String gruppo = a.getNomeGruppo() != null ? a.getNomeGruppo() : "";
-            String voto = a.getMediaVoto() != null
-                ? a.getMediaVoto().setScale(1).toPlainString()
-                : "-";
+            String voto = FormatUtil.formatVotoBreve(a.getMediaVoto());
 
             sb.append("<article class=\"card\">");
             sb.append("<a href=\"").append(link).append("\">");

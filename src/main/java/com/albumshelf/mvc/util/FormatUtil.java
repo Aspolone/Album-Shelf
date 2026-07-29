@@ -36,10 +36,11 @@ public class FormatUtil {
 		return formatter.format(prezzo);
 	}
 	
+	/*
 	public static String formatVotoNumerico(BigDecimal voto) {
 		if (voto == null) return "N/D";
-		return voto.setScale(1, java.math.RoundingMode.HALF_UP) + " / 5";
-	}
+		return voto.setScale(1, java.math.RoundingMode.HALF_UP).toPlainString();
+	}*/
 
 	public static String formatData(Date data) {
 		if (data == null) return "";
@@ -50,4 +51,8 @@ public class FormatUtil {
 		if (data == null) return "";
 		return new SimpleDateFormat("d MMMM yyyy", Locale.ITALIAN).format(data);
 	}
+    public static String formatVotoBreve(BigDecimal voto) {
+        if (voto == null) return "-";
+        return voto.setScale(1, java.math.RoundingMode.HALF_UP).toPlainString();
+    }
 }
