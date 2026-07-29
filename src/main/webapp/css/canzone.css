@@ -1,0 +1,24 @@
+
+.canzone-acquista {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.canzone-acquista__link-album {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #00e054;
+    text-decoration: none;
+}
+
+.canzone-acquista__link-album:hover {
+    text-decoration: underline;
+}
+
+.copia--vuota {
+    color: #888;
+    font-style: italic;
+    padding: 0.75rem 0;
+}
