@@ -1,75 +1,67 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.albumshelf.mvc.model.bean.*" %>
+<%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
+<%@ page import="java.util.List" %>
 <% request.setAttribute("titoloPagina", "Carrello"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/carrello.css?v=6">
 
+<%
+    Carrello carrello = (Carrello) session.getAttribute("carrello");
+    List<RigaCarrello> righe = carrello != null ? carrello.getRighe() : java.util.Collections.emptyList();
+%>
 
 <main class="pagina-carrello">
 
     <div class="pagina-carrello__lista">
 
+        <% if (righe.isEmpty()) { %>
+        <p class="carrello-vuoto">Il carrello è vuoto.</p>
+        <% } else { %>
+            <% for (RigaCarrello riga : righe) { %>
         <article class="riga">
-            <div class="riga__cover"></div>
-            <div class="riga__info">
-                <h2 class="riga__titolo">
-                    Title Example
-                    <span class="riga__voto">4,8 <span class="riga__stella">&#9733;</span></span>
-                </h2>
-                <p class="riga__dato">Condizioni:</p>
-                <p class="riga__dato">Venduto da:</p>
-                <p class="riga__dato">Corriere:</p>
+            <div class="riga__cover">
+                <% if (riga.getFileCopertina() != null) { %>
+                <img src="${pageContext.request.contextPath}/img/copertine/<%= riga.getFileCopertina() %>" alt="">
+                <% } %>
             </div>
-            <p class="riga__prezzo">20,25 &euro;</p>
-            <button class="riga__elimina" type="button" aria-label="Rimuovi dal carrello">
-                <img src="${pageContext.request.contextPath}/img/icons-trash.png" alt="">
-            </button>
-        </article>
-
-        <article class="riga">
-            <div class="riga__cover"></div>
             <div class="riga__info">
-                <h2 class="riga__titolo">
-                    Title Example
-                    <span class="riga__voto">4,8 <span class="riga__stella">&#9733;</span></span>
-                </h2>
-                <p class="riga__dato">Condizioni:</p>
-                <p class="riga__dato">Venduto da:</p>
-                <p class="riga__dato">Corriere:</p>
+                <h2 class="riga__titolo"><%= riga.getNomeAlbum() %></h2>
+                <p class="riga__dato">Formato: <span class="valore-dato"><%= riga.getFormato() %></span></p>
+                <p class="riga__dato">Condizioni: <span class="valore-dato"><%= riga.getCondizioneDisco() %></span></p>
+                <p class="riga__dato">Venduto da: <span class="valore-dato"><%= riga.getNomeVenditore() %></span></p>
             </div>
-            <p class="riga__prezzo">20,35 &euro;</p>
-            <button class="riga__elimina" type="button" aria-label="Rimuovi dal carrello">
-                <img src="${pageContext.request.contextPath}/img/icons-trash.png" alt="">
-            </button>
+            <p class="riga__prezzo"><%= FormatUtil.formatPrezzo(riga.getPrezzo()) %></p>
+            <form action="${pageContext.request.contextPath}/carrello/rimuovi" method="post">
+                <input type="hidden" name="esemplare" value="<%= riga.getIdEsemplare() %>">
+                <button class="riga__elimina" type="submit" aria-label="Rimuovi dal carrello">
+                    <img src="${pageContext.request.contextPath}/img/icons-trash.png" alt="">
+                </button>
+            </form>
         </article>
-
-        <article class="riga">
-            <div class="riga__cover"></div>
-            <div class="riga__info">
-                <h2 class="riga__titolo">
-                    Title Example
-                    <span class="riga__voto">4,8 <span class="riga__stella">&#9733;</span></span>
-                </h2>
-                <p class="riga__dato">Condizioni:</p>
-                <p class="riga__dato">Venduto da:</p>
-                <p class="riga__dato">Corriere:</p>
-            </div>
-            <p class="riga__prezzo">26,40 &euro;</p>
-            <button class="riga__elimina" type="button" aria-label="Rimuovi dal carrello">
-                <img src="${pageContext.request.contextPath}/img/icons-trash.png" alt="">
-            </button>
-        </article>
+            <% } %>
+        <% } %>
 
     </div>
 
     <aside class="riepilogo">
-        <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra">104,67 &euro;</span></h2>
+        <% if (!righe.isEmpty()) { %>
+        <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(carrello.getTotale()) %></span></h2>
         <ul class="riepilogo__voci">
-            <li>Album 1: 20,25 &euro;</li>
-            <li>Album 2: 20,35 &euro;</li>
-            <li>Album 3: 26,40 &euro;</li>
+            <% for (RigaCarrello riga : righe) { %>
+            <li><%= riga.getNomeAlbum() %>: <%= FormatUtil.formatPrezzo(riga.getPrezzo()) %></li>
+            <% } %>
         </ul>
-        <p class="riepilogo__spedizione">Spedizione: 37,67 &euro;</p>
-        <a class="riepilogo__azione" href="${pageContext.request.contextPath}/transazioni/acquista">Procedi all'acquisto</a>
+        <form action="${pageContext.request.contextPath}/carrello/checkout" method="post">
+            <button class="riepilogo__azione" type="submit">Procedi all'acquisto</button>
+        </form>
+        <form action="${pageContext.request.contextPath}/carrello/svuota" method="post">
+            <button class="riepilogo__svuota" type="submit">Svuota carrello</button>
+        </form>
+        <% } else { %>
+        <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra">0,00 &euro;</span></h2>
+        <a class="riepilogo__azione" href="${pageContext.request.contextPath}/acquista">Vai al marketplace</a>
+        <% } %>
     </aside>
 
 </main>

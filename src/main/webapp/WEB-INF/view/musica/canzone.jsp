@@ -48,7 +48,7 @@
                 <% } %>
                 <% if (canzone.getMediaVoto() != null) { %>
                 <p class="album-dato">
-                    Voto medio: <span class="valore-dato"><%= FormatUtil.formatVotoNumerico(canzone.getMediaVoto()) %></span>
+                    Voto medio: <span class="valore-dato"><%= FormatUtil.formatVotoBreve(canzone.getMediaVoto()) %></span>
                 </p>
                 <% } %>
             </div>
