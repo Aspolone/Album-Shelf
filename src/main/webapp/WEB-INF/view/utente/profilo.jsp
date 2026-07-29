@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profilo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
 
 <%
     Utente utenteProfilo = (Utente) request.getAttribute("utenteProfilo");
@@ -45,6 +46,13 @@
                class="album-azione">Modifica profilo</a>
             <a href="${pageContext.request.contextPath}/vendi"
                class="album-azione">Metti in vendita</a>
+        </section>
+        <section>
+            <div class="form-logout" style="margin-top: 2rem;">
+                <form action="${pageContext.request.contextPath}/logout" method="post">
+                    <button type="submit" class="form-submit form-submit--pericolo">Disconnettiti</button>
+                </form>
+            </div>
         </section>
         <% } %>
 
