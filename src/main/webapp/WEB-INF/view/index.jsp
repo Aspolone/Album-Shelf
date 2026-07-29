@@ -3,7 +3,7 @@
 <%@ page import="com.albumshelf.mvc.model.bean.Album" %>
 <% request.setAttribute("titoloPagina", "Home"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
 
 <%!
     private String renderCardHome(Collection<Album> albums, String ctx, int evidenza) {
@@ -58,11 +58,15 @@
     <section class="sezione-snap sezione-carousel">
         <h2 class="ribbon">MIGLIORI QUESTA SETTIMANA</h2>
         <div class="carousel">
-            <button class="freccia-carousel prev" aria-label="Precedente">&#9665;</button>
+            <button class="freccia-carousel prev" aria-label="Precedente">
+                <img src="${pageContext.request.contextPath}/img/icons-chevron-down.png" alt="" class="icona-freccia icona-freccia--prev">
+            </button>
             <div class="traccia-carousel">
-                <%= renderCardHome(miglioriSettimana, ctx, 1) %>
+                <%= renderCardHome(miglioriSettimana, ctx, miglioriSettimana.size() / 2) %>
             </div>
-            <button class="freccia-carousel next" aria-label="Successivo">&#9655;</button>
+            <button class="freccia-carousel next" aria-label="Successivo">
+                <img src="${pageContext.request.contextPath}/img/icons-chevron-down.png" alt="" class="icona-freccia icona-freccia--next">
+            </button>
         </div>
         <a href="${pageContext.request.contextPath}/esplora" class="vedi-altri">vedine altri</a>
     </section>
@@ -72,11 +76,15 @@
     <section class="sezione-snap sezione-carousel">
         <h2 class="ribbon">MIGLIORI QUESTO ANNO</h2>
         <div class="carousel">
-            <button class="freccia-carousel prev" aria-label="Precedente">&#9665;</button>
+            <button class="freccia-carousel prev" aria-label="Precedente">
+                <img src="${pageContext.request.contextPath}/img/icons-chevron-down.png" alt="" class="icona-freccia icona-freccia--prev">
+            </button>
             <div class="traccia-carousel">
-                <%= renderCardHome(miglioriAnno, ctx, 1) %>
+                <%= renderCardHome(miglioriAnno, ctx, miglioriAnno.size() / 2) %>
             </div>
-            <button class="freccia-carousel next" aria-label="Successivo">&#9655;</button>
+            <button class="freccia-carousel next" aria-label="Successivo">
+                <img src="${pageContext.request.contextPath}/img/icons-chevron-down.png" alt="" class="icona-freccia icona-freccia--next">
+            </button>
         </div>
         <a href="${pageContext.request.contextPath}/esplora" class="vedi-altri">vedine altri</a>
     </section>
@@ -86,11 +94,15 @@
     <section class="sezione-snap sezione-carousel">
         <h2 class="ribbon">I PI&Ugrave; RECENSITI</h2>
         <div class="carousel">
-            <button class="freccia-carousel prev" aria-label="Precedente">&#9665;</button>
+            <button class="freccia-carousel prev" aria-label="Precedente">
+                <img src="${pageContext.request.contextPath}/img/icons-chevron-down.png" alt="" class="icona-freccia icona-freccia--prev">
+            </button>
             <div class="traccia-carousel">
-                <%= renderCardHome(piuRecensiti, ctx, 1) %>
+                <%= renderCardHome(piuRecensiti, ctx, piuRecensiti.size() / 2) %>
             </div>
-            <button class="freccia-carousel next" aria-label="Successivo">&#9655;</button>
+            <button class="freccia-carousel next" aria-label="Successivo">
+                <img src="${pageContext.request.contextPath}/img/icons-chevron-down.png" alt="" class="icona-freccia icona-freccia--next">
+            </button>
         </div>
         <a href="${pageContext.request.contextPath}/esplora" class="vedi-altri">vedine altri</a>
     </section>

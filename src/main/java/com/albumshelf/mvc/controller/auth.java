@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import com.albumshelf.mvc.model.bean.Utente;
 import com.albumshelf.mvc.model.dao.UtenteDAO;
@@ -15,6 +16,13 @@ import com.albumshelf.mvc.util.PasswordHashingUtil;
 
 @WebServlet("/auth")
 public class auth extends HttpServlet {
+
+    private static final Pattern USERNAME_PATTERN =
+            Pattern.compile("^[A-Za-z0-9_]{3,30}$");
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d).{8,}$");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -86,6 +94,23 @@ public class auth extends HttpServlet {
                 || email == null || email.isBlank()
                 || password == null || password.isBlank()) {
             errore(request, response, "Compila tutti i campi.");
+            return;
+        }
+
+        if (!USERNAME_PATTERN.matcher(username).matches()) {
+            errore(request, response,
+                    "Nome utente non valido: 3-30 caratteri, solo lettere, cifre e underscore.");
+            return;
+        }
+
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            errore(request, response, "Email non valida.");
+            return;
+        }
+
+        if (!PASSWORD_PATTERN.matcher(password).matches()) {
+            errore(request, response,
+                    "Password troppo debole: minimo 8 caratteri, almeno una lettera e una cifra.");
             return;
         }
 

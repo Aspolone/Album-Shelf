@@ -7,49 +7,39 @@ document.querySelectorAll('.carousel').forEach(function (carousel) {
         return;
     }
 
-    const carte = Array.prototype.slice.call(traccia.querySelectorAll('.card-album'));
-
-    if (carte.length === 0) {
+    const totale = traccia.querySelectorAll('.card-album').length;
+    if (totale === 0) {
         return;
     }
 
-    let corrente = carte.findIndex(function (carta) {
-        return carta.classList.contains('in-evidenza');
-    });
+    const posizioneFocus = Math.floor(totale / 2);
 
-    if (corrente < 0) {
-        corrente = Math.floor(carte.length / 2);
-    }
-
-    function aggiorna() {
+    function aggiornaFocus() {
+        const carte = traccia.querySelectorAll('.card-album');
         carte.forEach(function (carta, i) {
-            carta.classList.toggle('in-evidenza', i === corrente);
+            carta.classList.toggle('in-evidenza', i === posizioneFocus);
         });
-
-        prev.disabled = corrente === 0;
-        next.disabled = corrente === carte.length - 1;
     }
 
-    prev.addEventListener('click', function () {
-        if (corrente > 0) {
-            corrente--;
-            aggiorna();
+    function ruotaAvanti() {
+        const prima = traccia.querySelector('.card-album');
+        if (prima) {
+            traccia.appendChild(prima);
+            aggiornaFocus();
         }
-    });
+    }
 
-    next.addEventListener('click', function () {
-        if (corrente < carte.length - 1) {
-            corrente++;
-            aggiorna();
+    function ruotaIndietro() {
+        const carte = traccia.querySelectorAll('.card-album');
+        const ultima = carte[carte.length - 1];
+        if (ultima) {
+            traccia.insertBefore(ultima, traccia.querySelector('.card-album'));
+            aggiornaFocus();
         }
-    });
+    }
 
-    carte.forEach(function (carta, i) {
-        carta.addEventListener('click', function () {
-            corrente = i;
-            aggiorna();
-        });
-    });
+    next.addEventListener('click', ruotaAvanti);
+    prev.addEventListener('click', ruotaIndietro);
 
-    aggiorna();
+    aggiornaFocus();
 });

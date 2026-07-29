@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.albumshelf.mvc.model.bean.*" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css?v=6">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/recensione.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/recensione.css">
 
 <%
     String tipo = (String) request.getAttribute("tipo");

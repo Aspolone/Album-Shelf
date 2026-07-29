@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${titoloPagina != null ? titoloPagina : 'AlbumShelf'} - AlbumShelf</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=6">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/logo-noback.png">
 </head>
 <body>
@@ -19,6 +19,13 @@
         <a href="${pageContext.request.contextPath}/esplora">ESPLORA</a>
         <a href="${pageContext.request.contextPath}/acquista">ACQUISTA</a>
         <a href="${pageContext.request.contextPath}/vendi">VENDI</a>
+        <%
+            com.albumshelf.mvc.model.bean.Utente utenteHeader =
+                (com.albumshelf.mvc.model.bean.Utente) session.getAttribute("utente");
+            if (utenteHeader != null && "admin".equals(utenteHeader.getRuolo())) {
+        %>
+            <a href="${pageContext.request.contextPath}/admin" style="color:#f15f99;">ADMIN</a>
+        <% } %>
     </nav>
 
     <form class="barra-ricerca" action="${pageContext.request.contextPath}/ricerca" method="get">

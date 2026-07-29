@@ -3,7 +3,7 @@
 <%@ page import="com.albumshelf.mvc.model.bean.Album" %>
 <% request.setAttribute("titoloPagina", "Acquista"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css">
 
 <%!
     private String renderCarosello(Collection<Album> albums, String ctx) {

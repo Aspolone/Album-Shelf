@@ -4,7 +4,7 @@
 <%@ page import="com.albumshelf.mvc.model.bean.Gruppo" %>
 <% request.setAttribute("titoloPagina", "Esplora"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css?v=7">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/esplora.css">
 
 <%!
     private String renderCaroselloAlbum(Collection<Album> albums, String ctx) {

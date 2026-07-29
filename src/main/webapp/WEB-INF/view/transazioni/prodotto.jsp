@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=6">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/prodotto.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/prodotto.css">
 
 <main class="pagina-album">
 

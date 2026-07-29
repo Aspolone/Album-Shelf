@@ -129,23 +129,30 @@ body {
 .freccia-carousel {
     background: none;
     border: none;
-    color: #40BCF4;
-    font-size: 2.5rem;
     cursor: pointer;
     padding: 8px 16px;
-    transition: color 0.2s, transform 0.2s;
+    transition: transform 0.2s;
     user-select: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.freccia-carousel:hover {
-    color: #00E054;
-    transform: scale(1.2);
+.icona-freccia {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    transition: filter 0.2s;
 }
 
-.freccia-carousel:disabled {
-    color: #2c3440;
-    cursor: not-allowed;
-    transform: none;
+.icona-freccia--prev { transform: rotate(90deg); }
+.icona-freccia--next { transform: rotate(-90deg); }
+
+.freccia-carousel:hover { transform: scale(1.2); }
+
+.freccia-carousel:hover .icona-freccia {
+    filter: brightness(0) saturate(100%) invert(59%) sepia(97%) saturate(1234%) hue-rotate(96deg) brightness(96%) contrast(101%);
 }
 
 .card-album {

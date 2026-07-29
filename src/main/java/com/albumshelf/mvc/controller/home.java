@@ -24,9 +24,9 @@ public class home extends HttpServlet {
 
         try (AlbumDAO dao = new AlbumDAO()) {
 
-            Collection<Album> miglioriSettimana = dao.doRetrievePiuVisitati(3);
-            Collection<Album> miglioriAnno = dao.doRetrieveMeglioRecensiti(3, 1);
-            Collection<Album> piuRecensiti = dao.doRetrieveUltimiUsciti(3);
+            Collection<Album> miglioriSettimana = dao.doRetrievePiuVisitati(7);
+            Collection<Album> miglioriAnno = dao.doRetrieveMeglioRecensiti(7, 1);
+            Collection<Album> piuRecensiti = dao.doRetrieveUltimiUsciti(7);
 
             request.setAttribute("miglioriSettimana", miglioriSettimana);
             request.setAttribute("miglioriAnno", miglioriAnno);

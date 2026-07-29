@@ -3,8 +3,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.albumshelf.mvc.model.bean.*" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=6">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/profilo.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/profilo.css">
 
 <%
     Utente utenteProfilo = (Utente) request.getAttribute("utenteProfilo");

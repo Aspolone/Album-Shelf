@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accedi o registrati - AlbumShelf</title>
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/logo-noback.png">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css?v=6">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth.css">
 </head>
 <body class="auth-body">
 
@@ -62,14 +62,24 @@
                 <input type="hidden" name="action" value="register">
 
                 <label for="suUsername">Nome utente</label>
-                <input type="text" id="suUsername" name="username" placeholder="Keresael" required autocomplete="username">
+                <input type="text" id="suUsername" name="username" placeholder="Keresael" required
+                       autocomplete="username"
+                       pattern="[A-Za-z0-9_]{3,30}"
+                       title="3-30 caratteri: lettere, cifre e underscore.">
 
                 <label for="suEmail">Email</label>
-                <input type="email" id="suEmail" name="email" placeholder="keresael@proton.me" required autocomplete="email">
+                <input type="email" id="suEmail" name="email" placeholder="keresael@proton.me" required
+                       autocomplete="email"
+                       pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}"
+                       title="Inserisci un indirizzo email valido.">
 
                 <label for="suPwd">Password</label>
                 <div class="auth-pwd-wrap">
-                    <input type="password" id="suPwd" name="password" placeholder="********" required autocomplete="new-password">
+                    <input type="password" id="suPwd" name="password" placeholder="********" required
+                           autocomplete="new-password"
+                           minlength="8"
+                           pattern="(?=.*[A-Za-z])(?=.*\d).{8,}"
+                           title="Minimo 8 caratteri, almeno una lettera e una cifra.">
                     <button type="button" class="auth-eye" aria-label="Mostra password" data-target="suPwd"
                             data-icona-mostra="${pageContext.request.contextPath}/img/icons-eye.png"
                             data-icona-nascondi="${pageContext.request.contextPath}/img/icons-eye-off.png">
