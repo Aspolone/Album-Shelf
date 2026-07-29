@@ -2,6 +2,8 @@
 <%@ page import="com.albumshelf.mvc.model.bean.*" %>
 <%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.math.RoundingMode" %>
 <% request.setAttribute("titoloPagina", "Carrello"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/carrello.css">
@@ -16,7 +18,7 @@
     <div class="pagina-carrello__lista">
 
         <% if (righe.isEmpty()) { %>
-        <p class="carrello-vuoto">Il carrello è vuoto.</p>
+        <p class="pagina-carrello__vuoto">Il carrello è vuoto.</p>
         <% } else { %>
             <% for (RigaCarrello riga : righe) { %>
         <article class="riga">
@@ -45,13 +47,20 @@
     </div>
 
     <aside class="riepilogo">
-        <% if (!righe.isEmpty()) { %>
-        <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(carrello.getTotale()) %></span></h2>
+        <% if (!righe.isEmpty()) {
+            BigDecimal subtotale = carrello.getTotale();
+            BigDecimal aliquota = new BigDecimal("22.00");
+            BigDecimal iva = subtotale.multiply(aliquota).divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
+            BigDecimal totaleIva = subtotale.add(iva);
+        %>
         <ul class="riepilogo__voci">
             <% for (RigaCarrello riga : righe) { %>
             <li><%= riga.getNomeAlbum() %>: <%= FormatUtil.formatPrezzo(riga.getPrezzo()) %></li>
             <% } %>
         </ul>
+        <p class="riepilogo__riga">Subtotale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(subtotale) %></span></p>
+        <p class="riepilogo__riga">IVA 22% <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(iva) %></span></p>
+        <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(totaleIva) %></span></h2>
         <form action="${pageContext.request.contextPath}/carrello/checkout" method="post">
             <button class="riepilogo__azione" type="submit">Procedi all'acquisto</button>
         </form>

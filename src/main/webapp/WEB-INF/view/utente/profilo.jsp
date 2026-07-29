@@ -80,7 +80,7 @@
             <ul class="elenco">
                 <% for (Ordine o : ordini) { %>
                 <li>
-                    <a href="${pageContext.request.contextPath}/utente/mioordine?id=<%= o.getIdOrdine() %>">
+                    <a href="${pageContext.request.contextPath}/profilo?ordine=<%= o.getIdOrdine() %>">
                         <div class="profilo-ordine-info">
                             <span class="profilo-ordine-id">Ordine #<%= o.getIdOrdine() %></span>
                             <span class="profilo-ordine-data"><%= sdf.format(o.getDataOrdine()) %></span>

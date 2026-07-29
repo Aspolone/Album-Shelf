@@ -3,6 +3,7 @@
 <%@ page import="java.util.Collection" %>
 <% request.setAttribute("titoloPagina", "Vendi"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/infopages.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
 
 <%
@@ -13,94 +14,118 @@
     String successo = request.getParameter("successo");
 %>
 
-<main class="pagina-form">
+<main class="pagina">
+    <div class="form-pagina">
 
-    <h1 class="form__titolo">Metti in vendita</h1>
+        <header class="info-header">
+            <h1>Metti in vendita</h1>
+            <p class="info-lead">
+                Seleziona l'album e l'edizione del disco che vuoi vendere,
+                poi descrivi le condizioni del tuo esemplare.
+            </p>
+        </header>
 
-    <% if ("true".equals(successo)) { %>
-    <p class="form__messaggio form__messaggio--ok">Esemplare messo in vendita con successo.</p>
-    <% } %>
-    <% if ("dati".equals(errore)) { %>
-    <p class="form__messaggio form__messaggio--errore">Controlla i dati inseriti (prezzo e quantità).</p>
-    <% } %>
-    <% if ("formato".equals(errore)) { %>
-    <p class="form__messaggio form__messaggio--errore">Formato non valido per prezzo o quantità.</p>
-    <% } %>
+        <% if ("true".equals(successo)) { %>
+        <p class="form-messaggio form-messaggio--ok">Esemplare messo in vendita con successo.</p>
+        <% } %>
+        <% if ("dati".equals(errore)) { %>
+        <p class="form-messaggio form-messaggio--errore">Controlla i dati inseriti (prezzo e quantit&agrave;).</p>
+        <% } %>
+        <% if ("formato".equals(errore)) { %>
+        <p class="form-messaggio form-messaggio--errore">Formato non valido per prezzo o quantit&agrave;.</p>
+        <% } %>
 
-    <section class="form__sezione">
-        <h2 class="form__sottotitolo">1. Scegli l'album</h2>
-        <form action="${pageContext.request.contextPath}/vendi" method="get">
-            <select name="album" class="form__select" required onchange="this.form.submit()">
-                <option value="">-- Seleziona un album --</option>
-                <% for (Album a : albums) { %>
-                <option value="<%= a.getIdAlbum() %>"
-                    <%= albumScelto != null && albumScelto.getIdAlbum() == a.getIdAlbum() ? "selected" : "" %>>
-                    <%= a.getNomeAlbum() %> — <%= a.getNomeGruppo() %>
-                </option>
-                <% } %>
-            </select>
-        </form>
-    </section>
+        <fieldset class="form-sezione">
+            <legend class="nastro">1. Scegli l'album</legend>
+            <form action="${pageContext.request.contextPath}/vendi" method="get">
+                <div class="form-griglia">
+                    <div class="form-campo form-campo--intero">
+                        <label for="album">Album *</label>
+                        <select id="album" name="album" required onchange="this.form.submit()">
+                            <option value="">-- Seleziona un album --</option>
+                            <% for (Album a : albums) { %>
+                            <option value="<%= a.getIdAlbum() %>"
+                                <%= albumScelto != null && albumScelto.getIdAlbum() == a.getIdAlbum() ? "selected" : "" %>>
+                                <%= a.getNomeAlbum() %> — <%= a.getNomeGruppo() %>
+                            </option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
 
-    <% if (albumScelto != null && edizioni != null) { %>
+        <% if (albumScelto != null && edizioni != null) { %>
 
+        <fieldset class="form-sezione">
+            <legend class="nastro">2. Dettagli della copia</legend>
+            <form action="${pageContext.request.contextPath}/vendi" method="post" class="form-vendi">
 
-    <section class="form__sezione">
-        <h2 class="form__sottotitolo">2. Dettagli della copia</h2>
-        <form action="${pageContext.request.contextPath}/vendi" method="post">
+                <div class="form-griglia">
 
-            <label class="form__label">Edizione
-                <select name="edizione" class="form__select" required>
-                    <option value="">-- Seleziona un'edizione --</option>
-                    <% for (Edizione ed : edizioni) { %>
-                    <option value="<%= ed.getIdEdizione() %>">
-                        <%= ed.getFormato() %> · <%= ed.getAnnoStampa() %>
-                        <% if (ed.getEtichetta() != null) { %> · <%= ed.getEtichetta() %><% } %>
-                        <% if (ed.getPaese() != null) { %> (<%= ed.getPaese() %>)<% } %>
-                    </option>
-                    <% } %>
-                </select>
-            </label>
+                    <div class="form-campo form-campo--intero">
+                        <label for="edizione">Edizione *</label>
+                        <select id="edizione" name="edizione" required>
+                            <option value="">-- Seleziona un'edizione --</option>
+                            <% for (Edizione ed : edizioni) { %>
+                            <option value="<%= ed.getIdEdizione() %>">
+                                <%= ed.getFormato() %> · <%= ed.getAnnoStampa() %>
+                                <% if (ed.getEtichetta() != null) { %> · <%= ed.getEtichetta() %><% } %>
+                                <% if (ed.getPaese() != null) { %> (<%= ed.getPaese() %>)<% } %>
+                            </option>
+                            <% } %>
+                        </select>
+                    </div>
 
-            <label class="form__label">Prezzo (€)
-                <input type="number" name="prezzo" class="form__input" step="0.01" min="0.01" required
-                       placeholder="es. 25.00">
-            </label>
+                    <div class="form-campo">
+                        <label for="prezzo">Prezzo (&euro;) *</label>
+                        <input type="number" id="prezzo" name="prezzo" step="0.01" min="0.01" required
+                               placeholder="es. 25.00">
+                    </div>
 
-            <label class="form__label">Condizione disco
-                <select name="condizione_disco" class="form__select" required>
-                    <option value="nuovo">Nuovo</option>
-                    <option value="ottimo">Ottimo</option>
-                    <option value="buono">Buono</option>
-                    <option value="discreto">Discreto</option>
-                    <option value="scarso">Scarso</option>
-                </select>
-            </label>
+                    <div class="form-campo">
+                        <label for="quantita">Quantit&agrave; (copie identiche) *</label>
+                        <input type="number" id="quantita" name="quantita" value="1" min="1" max="50" required>
+                    </div>
 
-            <label class="form__label">Condizione confezione
-                <select name="condizione_confezione" class="form__select" required>
-                    <option value="nuovo">Nuovo</option>
-                    <option value="ottimo">Ottimo</option>
-                    <option value="buono">Buono</option>
-                    <option value="discreto">Discreto</option>
-                    <option value="scarso">Scarso</option>
-                </select>
-            </label>
+                    <div class="form-campo">
+                        <label for="condizione_disco">Condizione disco *</label>
+                        <select id="condizione_disco" name="condizione_disco" required>
+                            <option value="nuovo">Nuovo</option>
+                            <option value="ottimo">Ottimo</option>
+                            <option value="buono">Buono</option>
+                            <option value="discreto">Discreto</option>
+                            <option value="scarso">Scarso</option>
+                        </select>
+                    </div>
 
-            <label class="form__label form__label--checkbox">
-                <input type="checkbox" name="impellicolato"> Impellicolato
-            </label>
+                    <div class="form-campo">
+                        <label for="condizione_confezione">Condizione confezione *</label>
+                        <select id="condizione_confezione" name="condizione_confezione" required>
+                            <option value="nuovo">Nuovo</option>
+                            <option value="ottimo">Ottimo</option>
+                            <option value="buono">Buono</option>
+                            <option value="discreto">Discreto</option>
+                            <option value="scarso">Scarso</option>
+                        </select>
+                    </div>
 
-            <label class="form__label">Quantità (copie identiche)
-                <input type="number" name="quantita" class="form__input" value="1" min="1" max="50" required>
-            </label>
+                    <div class="form-campo form-campo--intero">
+                        <label class="form-checkbox">
+                            <input type="checkbox" name="impellicolato">
+                            <span>Impellicolato</span>
+                        </label>
+                    </div>
 
-            <button type="submit" class="form__azione">Metti in vendita</button>
-        </form>
-    </section>
+                </div>
 
-    <% } %>
+                <button type="submit" class="form-submit">Metti in vendita</button>
+            </form>
+        </fieldset>
 
+        <% } %>
+
+    </div>
 </main>
 
 <%@ include file="/WEB-INF/view/fragment/footer.jspf" %>

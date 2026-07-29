@@ -116,7 +116,7 @@
             <% } %>
         </div>
         <a class="recensioni__azione"
-           href="${pageContext.request.contextPath}/utente/<%= recensioneUtente != null ? "modificarecensione" : "aggiungirecensione" %>?canzone=<%= canzone.getIdCanzone() %>">
+           href="${pageContext.request.contextPath}/aggiungirecensione?canzone=<%= canzone.getIdCanzone() %>">
             <%= recensioneUtente != null ? "Modifica la tua recensione" : "Aggiungi recensione" %>
         </a>
     </aside>
