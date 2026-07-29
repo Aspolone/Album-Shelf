@@ -36,11 +36,10 @@ public class FormatUtil {
 		return formatter.format(prezzo);
 	}
 	
-	/*
 	public static String formatVotoNumerico(BigDecimal voto) {
 		if (voto == null) return "N/D";
 		return voto.setScale(1, java.math.RoundingMode.HALF_UP).toPlainString();
-	}*/
+	}
 
 	public static String formatData(Date data) {
 		if (data == null) return "";

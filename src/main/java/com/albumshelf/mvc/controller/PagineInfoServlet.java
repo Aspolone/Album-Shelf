@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "PagineInfoServlet", urlPatterns = {"/about", "/transazioni/comevendere"})
-public class pagineinfo extends HttpServlet {
+public class PagineInfoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
