@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.albumshelf.mvc.model.bean.Album;
 
-// gestisce sia album che la N:N album_genere 
+// gestisce sia album che la N:N album_genere
 public class AlbumDAO extends AbstractDAO implements DAOInterface<Album, Integer> {
 
 	private static final String SELECT_BASE =
@@ -113,14 +113,47 @@ public class AlbumDAO extends AbstractDAO implements DAOInterface<Album, Integer
 
 	//i piu' visti
 	public Collection<Album> doRetrievePiuVisitati(int limite) throws SQLException {
-		return eseguiConIntero(SELECT_BASE + " ORDER BY a.visite DESC, a.nome_album ASC LIMIT ?", limite);
+		List<Album> album = new ArrayList<>();
+		String query = "SELECT a.*, g.nome AS nome_gruppo, cd.nome AS nome_casa_discografica,"
+				+ " (SELECT AVG(r.voto) FROM recensione r WHERE r.id_album = a.id_album) AS media_voto"
+				+ " FROM album a"
+				+ " JOIN gruppo g ON a.id_gruppo = g.id_gruppo"
+				+ " JOIN casa_discografica cd ON a.id_casa_discografica = cd.id_casa_discografica"
+				+ " ORDER BY a.visite DESC, a.nome_album ASC LIMIT ?";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setInt(1, limite);
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {
+					Album a = extractAlbumFromResultSet(rs);
+					a.setMediaVoto(rs.getBigDecimal("media_voto"));
+					album.add(a);
+				}
+			}
+		}
+		return album;
 	}
 
 	//in arrivo / novita'
 	public Collection<Album> doRetrieveUltimiUsciti(int limite) throws SQLException {
-		return eseguiConIntero(
-				SELECT_BASE + " WHERE a.data_rilascio IS NOT NULL ORDER BY a.data_rilascio DESC LIMIT ?",
-				limite);
+		List<Album> album = new ArrayList<>();
+		String query = "SELECT a.*, g.nome AS nome_gruppo, cd.nome AS nome_casa_discografica,"
+				+ " (SELECT AVG(r.voto) FROM recensione r WHERE r.id_album = a.id_album) AS media_voto"
+				+ " FROM album a"
+				+ " JOIN gruppo g ON a.id_gruppo = g.id_gruppo"
+				+ " JOIN casa_discografica cd ON a.id_casa_discografica = cd.id_casa_discografica"
+				+ " WHERE a.data_rilascio IS NOT NULL"
+				+ " ORDER BY a.data_rilascio DESC LIMIT ?";
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setInt(1, limite);
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {
+					Album a = extractAlbumFromResultSet(rs);
+					a.setMediaVoto(rs.getBigDecimal("media_voto"));
+					album.add(a);
+				}
+			}
+		}
+		return album;
 	}
 
 	// i piu' recensiti / i classici
@@ -146,48 +179,6 @@ public class AlbumDAO extends AbstractDAO implements DAOInterface<Album, Integer
 					a.setNumeroRecensioni(rs.getInt("n_recensioni"));
 					album.add(a);
 				}
-			}
-		}
-		return album;
-	}
-
-	//album piu' acquistati (?)
-	public Collection<Album> doRetrievePiuAcquistati(int limite) throws SQLException {
-		String query = "SELECT a.*, g.nome AS nome_gruppo, cd.nome AS nome_casa_discografica,"
-				+ " COUNT(ro.id_riga_ordine) AS n_vendite"
-				+ " FROM album a"
-				+ " JOIN gruppo g ON a.id_gruppo = g.id_gruppo"
-				+ " JOIN casa_discografica cd ON a.id_casa_discografica = cd.id_casa_discografica"
-				+ " JOIN edizione e ON a.id_album = e.id_album"
-				+ " JOIN esemplare es ON e.id_edizione = es.id_edizione"
-				+ " JOIN riga_ordine ro ON es.id_esemplare = ro.id_esemplare"
-				+ " JOIN ordine o ON ro.id_ordine = o.id_ordine"
-				+ " WHERE o.stato_ordine <> 'annullato'"
-				+ " GROUP BY a.id_album, g.nome, cd.nome"
-				+ " ORDER BY n_vendite DESC LIMIT ?";
-		return eseguiConIntero(query, limite);
-	}
-
-	//album acquistabili (?)
-	public Collection<Album> doRetrieveAcquistabili(String formato, int limite) throws SQLException {
-		List<Album> album = new ArrayList<>();
-		StringBuilder query = new StringBuilder(
-				"SELECT DISTINCT a.*, g.nome AS nome_gruppo, cd.nome AS nome_casa_discografica"
-				+ " FROM album a"
-				+ " JOIN gruppo g ON a.id_gruppo = g.id_gruppo"
-				+ " JOIN casa_discografica cd ON a.id_casa_discografica = cd.id_casa_discografica"
-				+ " JOIN edizione e ON a.id_album = e.id_album"
-				+ " JOIN esemplare es ON e.id_edizione = es.id_edizione"
-				+ " WHERE es.disponibile = TRUE");
-		if (formato != null && !formato.isEmpty()) query.append(" AND e.formato = ?");
-		query.append(" ORDER BY a.visite DESC LIMIT ?");
-
-		try (PreparedStatement statement = connection.prepareStatement(query.toString())) {
-			int i = 1;
-			if (formato != null && !formato.isEmpty()) statement.setString(i++, formato);
-			statement.setInt(i, limite);
-			try (ResultSet rs = statement.executeQuery()) {
-				while (rs.next()) album.add(extractAlbumFromResultSet(rs));
 			}
 		}
 		return album;
