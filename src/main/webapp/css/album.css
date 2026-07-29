@@ -23,9 +23,19 @@
 
 .album-cover {
     width: 200px;
+    height: 200px;
+    overflow: hidden;
+    flex-shrink: 0;
     aspect-ratio: 1;
     background-color: #d6d6d6;
     border-radius: 3px;
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .album-titolo {
@@ -41,6 +51,10 @@
     line-height: 2;
     letter-spacing: 1px;
     color: #738494;
+}
+
+.valore-dato {
+    color: #40BCF4;
 }
 
 .album-testo {

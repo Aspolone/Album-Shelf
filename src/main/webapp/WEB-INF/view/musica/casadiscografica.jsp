@@ -1,44 +1,57 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.albumshelf.mvc.model.bean.*" %>
+<%@ page import="com.albumshelf.mvc.util.FormatUtil" %>
+<%@ page import="java.util.Collection" %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=6">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/album.css?v=7">
+
+<%
+    CasaDiscografica casa = (CasaDiscografica) request.getAttribute("casaDiscografica");
+    Collection<Album> catalogo = (Collection<Album>) request.getAttribute("catalogo");
+%>
 
 <main class="pagina-album">
 
     <div class="album-colonna">
 
         <section class="album-testata">
-            <div class="album-cover"></div>
             <div class="album-dati">
-                <h1 class="album-titolo">Nome Etichetta</h1>
-                <p class="album-dato">Sede:</p>
-                <p class="album-dato">Generi:</p>
-                <p class="album-dato">Sito:</p>
+                <h1 class="album-titolo"><%= casa.getNome() %></h1>
+                <% if (casa.getSede() != null && !casa.getSede().isEmpty()) { %>
+                <p class="album-dato">Sede: <span class="valore-dato"><%= casa.getSede() %></span></p>
+                <% } %>
             </div>
         </section>
 
         <section class="album-blocco">
-            <h2 class="nastro">Storia</h2>
-            <p class="album-testo">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </section>
-
-        <section class="album-blocco">
             <h2 class="nastro">Catalogo</h2>
-            <ul class="elenco">
-                <li>
-                    <a href="${pageContext.request.contextPath}/musica/album?id=1">
-                        Example Title <span class="elenco__meta">1998</span>
+            <% if (catalogo.isEmpty()) { %>
+            <p class="album-dato">Nessun album pubblicato da questa etichetta.</p>
+            <% } else { %>
+            <ol class="tracklist">
+                <%
+                    int numero = 1;
+                    for (Album album : catalogo) {
+                %>
+                <li class="tracklist__voce">
+                    <a href="${pageContext.request.contextPath}/musica/album?id=<%= album.getIdAlbum() %>">
+                        <span class="tracklist__num"><%= numero %></span>
+                        <span class="tracklist__nome">
+                            <%= album.getNomeAlbum() %>
+                            &ndash;
+                            <%= album.getNomeGruppo() %>
+                        </span>
+                        <span class="tracklist__durata">
+                            <%= album.getDataRilascio() != null ? FormatUtil.formatData(album.getDataRilascio()) : "" %>
+                        </span>
                     </a>
                 </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/musica/album?id=2">
-                        Example Title <span class="elenco__meta">2001</span>
-                    </a>
-                </li>
-            </ul>
+                <%
+                        numero++;
+                    }
+                %>
+            </ol>
+            <% } %>
         </section>
 
     </div>

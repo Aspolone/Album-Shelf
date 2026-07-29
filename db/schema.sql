@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS albumshelf_db;
+CREATE DATABASE IF NOT EXISTS albumshelf_db;
 USE albumshelf_db;
 
 
@@ -35,12 +35,14 @@ CREATE TABLE gruppo (
     data_creazione     DATE NOT NULL,
     nazione            VARCHAR(100),
     data_scioglimento  DATE,
+    file_immagine      VARCHAR(255),
     visite             INT NOT NULL DEFAULT 0,
-
+ 
     CONSTRAINT chk_date_gruppo
         CHECK (data_scioglimento IS NULL OR data_scioglimento >= data_creazione),
     CONSTRAINT chk_visite_gruppo CHECK (visite >= 0)
 );
+
 
 CREATE INDEX idx_nome_gruppo   ON gruppo(nome);
 CREATE INDEX idx_visite_gruppo ON gruppo(visite);

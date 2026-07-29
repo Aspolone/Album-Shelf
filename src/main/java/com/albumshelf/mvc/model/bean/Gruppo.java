@@ -9,6 +9,7 @@ public class Gruppo {
 	private Date dataCreazione;
 	private String nazione;
 	private Date dataScioglimento;
+	private String fileImmagine;
 	private int visite;
 
 	public Gruppo() {}
@@ -27,6 +28,9 @@ public class Gruppo {
 
 	public Date getDataScioglimento() { return dataScioglimento; }
 	public void setDataScioglimento(Date dataScioglimento) { this.dataScioglimento = dataScioglimento; }
+
+	public String getFileImmagine() { return fileImmagine; }
+	public void setFileImmagine(String fileImmagine) { this.fileImmagine = fileImmagine; }
 
 	public int getVisite() { return visite; }
 	public void setVisite(int visite) { this.visite = visite; }

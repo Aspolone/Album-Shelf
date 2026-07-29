@@ -9,8 +9,10 @@ public class Composizione {
 	private Date dataIngresso;
 	private Date dataUscita;
 	private String ruolo;
+
 	private String nomeComponente;
 	private String cognomeComponente;
+	private Date dataMorteComponente;
 	private String nomeGruppo;
 
 	public Composizione() {}
@@ -35,6 +37,9 @@ public class Composizione {
 
 	public String getCognomeComponente() { return cognomeComponente; }
 	public void setCognomeComponente(String cognomeComponente) { this.cognomeComponente = cognomeComponente; }
+
+	public Date getDataMorteComponente() { return dataMorteComponente; }
+	public void setDataMorteComponente(Date dataMorteComponente) { this.dataMorteComponente = dataMorteComponente; }
 
 	public String getNomeGruppo() { return nomeGruppo; }
 	public void setNomeGruppo(String nomeGruppo) { this.nomeGruppo = nomeGruppo; }
