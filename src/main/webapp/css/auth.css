@@ -243,6 +243,22 @@ body.auth-body{
     outline-offset:2px;
 }
 
+.auth-inline-msg{
+    display:block;
+    font-size:13px;
+    letter-spacing:0.8px;
+    margin:-10px 0 12px;
+    min-height:18px;
+}
+
+.auth-inline-msg--ok{
+    color:var(--as-green);
+}
+
+.auth-inline-msg--errore{
+    color:var(--as-magenta);
+}
+
 @media (max-width: 1200px) {
     .auth-groove-1{ width:300px; height:300px; }
     .auth-groove-2{ width:230px; height:230px; }

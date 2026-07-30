@@ -39,4 +39,59 @@
             }
         });
     });
+
+    var ctx = document.getElementById('formLogin').action.replace(/\/auth$/, '');
+    var suEmail = document.getElementById('suEmail');
+    var suUsername = document.getElementById('suUsername');
+    var checkTimer = null;
+
+    function getOrCreateInline(input, id) {
+        var el = document.getElementById(id);
+        if (!el) {
+            el = document.createElement('span');
+            el.id = id;
+            el.className = 'auth-inline-msg';
+            input.parentNode.insertBefore(el, input.nextSibling);
+        }
+        return el;
+    }
+
+    function checkDisponibilita(input, tipo) {
+        var valore = input.value.trim();
+        var msgId = 'msg-' + tipo;
+        var msg = getOrCreateInline(input, msgId);
+
+        if (!valore) {
+            msg.textContent = '';
+            msg.className = 'auth-inline-msg';
+            return;
+        }
+
+        var params = tipo === 'email' ? 'email=' + encodeURIComponent(valore) : 'username=' + encodeURIComponent(valore);
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', ctx + '/auth/check-email?' + params);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                if (data.disponibile) {
+                    msg.textContent = tipo === 'email' ? 'Email disponibile' : 'Username disponibile';
+                    msg.className = 'auth-inline-msg auth-inline-msg--ok';
+                } else {
+                    msg.textContent = tipo === 'email' ? 'Email già in uso' : 'Username già in uso';
+                    msg.className = 'auth-inline-msg auth-inline-msg--errore';
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function debouncedCheck(input, tipo) {
+        clearTimeout(checkTimer);
+        checkTimer = setTimeout(function () {
+            checkDisponibilita(input, tipo);
+        }, 400);
+    }
+
+    if (suEmail) suEmail.addEventListener('input', function () { debouncedCheck(suEmail, 'email'); });
+    if (suUsername) suUsername.addEventListener('input', function () { debouncedCheck(suUsername, 'username'); });
 })();

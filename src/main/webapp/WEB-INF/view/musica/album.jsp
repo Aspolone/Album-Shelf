@@ -60,11 +60,9 @@
                     </p>
                 </div>
             </section>
-        </div>
-        </section>
 
-        <section class="album-blocco">
-            <h2 class="nastro">Acquista</h2>
+            <section class="album-blocco">
+                <h2 class="nastro">Acquista</h2>
             <ul class="copie">
                 <% for (Esemplare esemplare : copieInVendita) { %>
                 <li class="copia">

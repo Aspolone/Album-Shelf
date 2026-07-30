@@ -19,11 +19,18 @@
             </p>
         </header>
 
+        <% if (request.getAttribute("errorMessage") != null) { %>
+        <p class="form-messaggio form-messaggio--errore">${errorMessage}</p>
+        <% } %>
+        <% if (request.getAttribute("successMessage") != null) { %>
+        <p class="form-messaggio form-messaggio--ok">${successMessage}</p>
+        <% } %>
+
         <form action="${pageContext.request.contextPath}/modificaprofilo"
               method="post" class="form-vendi">
 
-            <fieldset class="form-sezione">
-                <legend class="nastro">Informazioni personali</legend>
+            <section class="form-sezione">
+                <h2 class="nastro">Informazioni personali</h2>
                 <div class="form-griglia">
                     <div class="form-campo">
                         <label for="nomeUtente">Nome utente *</label>
@@ -47,7 +54,7 @@
                                   placeholder="Racconta qualcosa di te e della tua collezione..."><%= utenteProfilo.getDescrizione() != null ? utenteProfilo.getDescrizione() : "" %></textarea>
                     </div>
                 </div>
-            </fieldset>
+            </section>
 
             <button type="submit" class="form-submit">Salva modifiche</button>
 
@@ -57,8 +64,8 @@
               method="post" class="form-vendi">
             <input type="hidden" name="azione" value="cambiapassword">
 
-            <fieldset class="form-sezione">
-                <legend class="nastro">Cambia password</legend>
+            <section class="form-sezione">
+                <h2 class="nastro">Cambia password</h2>
                 <div class="form-griglia">
                     <div class="form-campo form-campo--intero">
                         <label for="passwordAttuale">Password attuale *</label>
@@ -73,7 +80,7 @@
                         <input type="password" id="confermaPassword" name="confermaPassword" required>
                     </div>
                 </div>
-            </fieldset>
+            </section>
 
             <button type="submit" class="form-submit">Aggiorna password</button>
 
@@ -85,12 +92,23 @@
                 L'eliminazione è permanente. Tutti i tuoi esemplari
                 verranno rimossi dal catalogo e i tuoi dati cancellati.
             </p>
-            <form action="${pageContext.request.contextPath}/modificaprofilo"
-                  method="post"
-                  onsubmit="return confirm('Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile.');">
-                <input type="hidden" name="azione" value="elimina">
-                <button type="submit" class="form-submit form-submit--pericolo">Elimina il mio account</button>
-            </form>
+            <button type="button" class="form-submit form-submit--pericolo" id="btn-mostra-elimina"
+                    onclick="document.getElementById('conferma-elimina').style.display='block'; this.style.display='none';">
+                Elimina il mio account
+            </button>
+            <div id="conferma-elimina" class="form-conferma-inline" style="display:none;">
+                <p class="form-conferma-testo">Sei sicuro? Questa azione è irreversibile.</p>
+                <div class="form-conferma-azioni">
+                    <form action="${pageContext.request.contextPath}/modificaprofilo" method="post" style="display:inline;">
+                        <input type="hidden" name="azione" value="elimina">
+                        <button type="submit" class="form-submit form-submit--pericolo">Sì, elimina</button>
+                    </form>
+                    <button type="button" class="form-submit" style="background-color:#2c3440; color:#FFFFFF;"
+                            onclick="document.getElementById('conferma-elimina').style.display='none'; document.getElementById('btn-mostra-elimina').style.display='inline-block';">
+                        Annulla
+                    </button>
+                </div>
+            </div>
         </div>
 
     </div>

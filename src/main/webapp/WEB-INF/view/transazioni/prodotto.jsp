@@ -87,10 +87,23 @@
             <p class="prodotto-prezzo-grande"><%= FormatUtil.formatPrezzo(esemplare.getPrezzo()) %></p>
 
             <% if (esemplare.isDisponibile()) { %>
-            <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post">
+            <form action="${pageContext.request.contextPath}/carrello/aggiungi" method="post"
+                  id="form-aggiungi-carrello">
                 <input type="hidden" name="esemplare" value="<%= esemplare.getIdEsemplare() %>">
                 <button class="prodotto-btn-carrello" type="submit">Aggiungi al carrello</button>
             </form>
+            <div id="msg-carrello" class="prodotto-msg" style="display:none;"></div>
+            <script>
+            (function(){
+                var form = document.getElementById('form-aggiungi-carrello');
+                var msg = document.getElementById('msg-carrello');
+                form.addEventListener('submit', function(){
+                    msg.textContent = 'Aggiunto al carrello!';
+                    msg.className = 'prodotto-msg prodotto-msg--ok';
+                    msg.style.display = 'block';
+                });
+            })();
+            </script>
             <% } else { %>
             <p class="prodotto-iva">Questa copia è stata venduta.</p>
             <% } %>

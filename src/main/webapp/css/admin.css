@@ -214,6 +214,76 @@
     white-space: normal;
 }
 
+.admin-msg {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+
+.admin-msg--ok {
+    background-color: rgba(0, 224, 84, 0.08);
+    border: 1px solid rgba(0, 224, 84, 0.35);
+    color: #00E054;
+}
+
+.admin-msg--errore {
+    background-color: rgba(241, 95, 153, 0.08);
+    border: 1px solid rgba(241, 95, 153, 0.25);
+    color: #f15f99;
+}
+
+.admin-filtri-avanzati {
+    margin-bottom: 18px;
+}
+
+.admin-filtro-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.admin-filtro-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-filtro-campo label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: #738494;
+}
+
+.admin-filtro-campo input {
+    padding: 6px 10px;
+    background-color: #14181c;
+    border: 1px solid #2c3440;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 0.8rem;
+}
+
+.admin-filtro-campo input:focus {
+    outline: none;
+    border-color: #40BCF4;
+}
+
+.admin-conferma-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.admin-conferma-testo {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    color: #c8d2dc;
+}
+
 @media (max-width: 900px) {
     .admin-shell {
         flex-direction: column;

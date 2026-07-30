@@ -1,9 +1,10 @@
 <% request.setAttribute("titoloPagina", "About"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/infopages.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
 
 
-<main class="info-page">
+<main class="pagina">
+  <div class="form-pagina">
 		
   <header class="info-header">
     <p class="info-eyebrow">Informazioni</p>
@@ -83,6 +84,7 @@
     </ul>
   </nav>
 
+  </div>
 </main>
 
 <%@ include file="/WEB-INF/view/fragment/footer.jspf" %>

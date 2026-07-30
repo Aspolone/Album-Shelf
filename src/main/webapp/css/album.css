@@ -80,20 +80,24 @@
 
 .album-azione,
 .copia__azione {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     letter-spacing: 2px;
     text-transform: uppercase;
     white-space: nowrap;
     border-radius: 20px;
+    text-align: center;
 }
 
 .album-azione {
     margin-top: 14px;
-    padding: 10px 20px;
+    padding: 10px 22px 10px 24px;
     font-size: 0.8rem;
     color: #00e054;
     border: 1px solid #00e054;
     transition: background-color 0.18s ease, color 0.18s ease;
+    font-family: inherit;
 }
 
 .copia__azione {

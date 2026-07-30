@@ -94,6 +94,24 @@
     gap: 14px;
 }
 
+.profilo-logout-form {
+    display: inline;
+}
+
+.profilo-btn-logout {
+    font-family: inherit;
+    cursor: pointer;
+    color: #f15f99;
+    border-color: #f15f99;
+    background: none;
+}
+
+.profilo-btn-logout:hover,
+.profilo-btn-logout:focus-visible {
+    background-color: #f15f99;
+    color: #14181c;
+}
+
 .profilo-btn-fattura {
     display: inline-block;
     margin-top: 8px;
@@ -101,15 +119,14 @@
     font-size: 0.7rem;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #40BCF4;
-    border: 1px solid #40BCF4;
+    color: #738494;
+    border: none;
     border-radius: 20px;
-    transition: background-color 0.18s, color 0.18s;
+    transition: color 0.18s;
 }
 
 .profilo-btn-fattura:hover {
-    background-color: #40BCF4;
-    color: #14181c;
+    color: #40BCF4;
 }
 
 .recensione__rif {

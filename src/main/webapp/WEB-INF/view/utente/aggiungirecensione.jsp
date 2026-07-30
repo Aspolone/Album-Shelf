@@ -28,7 +28,12 @@
     <div class="form-pagina">
 
         <div class="recensione-testata">
-            <div class="recensione-cover"></div>
+            <% if ("album".equals(tipo) && album != null && album.getFileCopertina() != null) { %>
+            <div class="recensione-cover recensione-cover--album">
+                <img src="${pageContext.request.contextPath}/img/copertine/<%= album.getFileCopertina() %>"
+                     alt="Copertina di <%= titolo %>" class="recensione-cover-img">
+            </div>
+            <% } %>
             <div class="recensione-info">
                 <p class="info-eyebrow">Stai recensendo</p>
                 <h1 class="recensione-titolo"><%= titolo %></h1>
@@ -52,8 +57,8 @@
             <input type="hidden" name="idAlbum" value="<%= idAlbumVal %>">
             <input type="hidden" name="idCanzone" value="<%= idCanzoneVal %>">
 
-            <fieldset class="form-sezione">
-                <legend class="nastro">Valutazione</legend>
+            <section class="form-sezione">
+                <h2 class="nastro">Valutazione</h2>
                 <p class="form-sezione-intro">
                     Seleziona un voto da 1 a 5 stelle.
                 </p>
@@ -69,10 +74,10 @@
                     <input type="radio" name="voto" id="stella1" value="1.0">
                     <label for="stella1" title="1 stella">&#9733;</label>
                 </div>
-            </fieldset>
+            </section>
 
-            <fieldset class="form-sezione">
-                <legend class="nastro">Commento</legend>
+            <section class="form-sezione">
+                <h2 class="nastro">Commento</h2>
                 <div class="form-campo-singolo">
                     <label for="commento">
                         Descrivi cosa ti è piaciuto o meno di questo disco.
@@ -80,7 +85,7 @@
                     <textarea id="commento" name="commento" rows="6"
                               placeholder="La produzione, il suono, i testi, le emozioni..."></textarea>
                 </div>
-            </fieldset>
+            </section>
 
             <button type="submit" class="form-submit">Pubblica recensione</button>
 

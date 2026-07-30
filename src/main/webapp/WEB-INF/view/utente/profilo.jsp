@@ -46,13 +46,9 @@
                class="album-azione">Modifica profilo</a>
             <a href="${pageContext.request.contextPath}/vendi"
                class="album-azione">Metti in vendita</a>
-        </section>
-        <section>
-            <div class="form-logout" style="margin-top: 2rem;">
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button type="submit" class="form-submit form-submit--pericolo">Disconnettiti</button>
-                </form>
-            </div>
+            <form action="${pageContext.request.contextPath}/logout" method="post" class="profilo-logout-form">
+                <button type="submit" class="album-azione profilo-btn-logout">Disconnettiti</button>
+            </form>
         </section>
         <% } %>
 

@@ -43,7 +43,7 @@ INSERT INTO gruppo (nome, data_creazione, nazione, file_immagine) VALUES
 
 UPDATE gruppo SET data_scioglimento = '1980-05-18' WHERE nome = 'Joy Division';
 
---Radiohead (id_gruppo = 1)
+-- Radiohead (id_gruppo = 1)
 INSERT INTO composizione (id_componente, id_gruppo, data_ingresso, ruolo) VALUES
 (1, 1, '1985-01-01', 'voce'),
 (2, 1, '1985-01-01', 'chitarra'),
@@ -51,7 +51,7 @@ INSERT INTO composizione (id_componente, id_gruppo, data_ingresso, ruolo) VALUES
 (4, 1, '1985-01-01', 'chitarra'),
 (5, 1, '1985-01-01', 'batteria');
 
---Pink Floyd (id_gruppo = 2)
+-- Pink Floyd (id_gruppo = 2)
 INSERT INTO composizione (id_componente, id_gruppo, data_ingresso, ruolo) VALUES
 (6, 2, '1965-01-01', 'basso'),
 (7, 2, '1968-01-01', 'chitarra'),
@@ -61,13 +61,13 @@ INSERT INTO composizione (id_componente, id_gruppo, data_ingresso, ruolo) VALUES
 UPDATE composizione SET data_uscita = '1985-12-15'
 WHERE id_componente = 6 AND id_gruppo = 2;
 
---Nirvana (id_gruppo = 3)
+-- Nirvana (id_gruppo = 3)
 INSERT INTO composizione (id_componente, id_gruppo, data_ingresso, ruolo) VALUES
 (10, 3, '1987-01-01', 'chitarra'),
 (11, 3, '1987-01-01', 'basso'),
 (12, 3, '1990-01-01', 'batteria');
 
---Joy Division (id_gruppo = 4)
+-- Joy Division (id_gruppo = 4)
 INSERT INTO composizione (id_componente, id_gruppo, data_ingresso, ruolo) VALUES
 (13, 4, '1976-01-01', 'voce'),
 (14, 4, '1976-01-01', 'chitarra'),
@@ -119,7 +119,7 @@ INSERT INTO album_genere (id_album, genere) VALUES
 (9, 'Post-Punk'), (9, 'New Wave'),
 (10, 'Post-Punk'), (10, 'New Wave');
 
---OK Computer (id_album = 1)
+-- OK Computer (id_album = 1)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Airbag',                      282, 1),
 ('Paranoid Android',            386, 1),
@@ -134,7 +134,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Lucky',                       271, 1),
 ('The Tourist',                 323, 1);
 
---Kid A (id_album = 2)
+-- Kid A (id_album = 2)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Everything In Its Right Place', 250, 2),
 ('Kid A',                         273, 2),
@@ -147,7 +147,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Morning Bell',                  270, 2),
 ('Motion Picture Soundtrack',     212, 2);
 
---The Bends (id_album = 3)
+-- The Bends (id_album = 3)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Planet Telex',          259, 3),
 ('The Bends',             241, 3),
@@ -162,7 +162,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Sulk',                  220, 3),
 ('Street Spirit (Fade Out)', 253, 3);
 
---The Dark Side of the Moon (id_album = 4)
+-- The Dark Side of the Moon (id_album = 4)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Speak to Me',              68,  4),
 ('Breathe',                  169, 4),
@@ -175,7 +175,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Brain Damage',             228, 4),
 ('Eclipse',                  131, 4);
 
---Wish You Were Here (id_album = 5)
+-- Wish You Were Here (id_album = 5)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Shine On You Crazy Diamond (Parts I-V)',  811, 5),
 ('Welcome to the Machine',                  450, 5),
@@ -183,7 +183,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Wish You Were Here',                      334, 5),
 ('Shine On You Crazy Diamond (Parts VI-IX)',738, 5);
 
---Nevermind (id_album = 7)
+-- Nevermind (id_album = 7)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Smells Like Teen Spirit', 301, 7),
 ('In Bloom',                255, 7),
@@ -198,7 +198,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('On a Plain',              192, 7),
 ('Something in the Way',    232, 7);
 
---In Utero (id_album = 8)
+-- In Utero (id_album = 8)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Serve the Servants',       218, 8),
 ('Scentless Apprentice',     228, 8),
@@ -213,7 +213,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Tourettes',                 95, 8),
 ('All Apologies',            230, 8);
 
---Unknown Pleasures (id_album = 9)
+-- Unknown Pleasures (id_album = 9)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Disorder',                 209, 9),
 ('Day of the Lords',         289, 9),
@@ -226,7 +226,7 @@ INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Interzone',                132, 9),
 ('I Remember Nothing',       358, 9);
 
---Closer (id_album = 10)
+-- Closer (id_album = 10)
 INSERT INTO canzone (nome, durata, id_album) VALUES
 ('Atrocity Exhibition',      362, 10),
 ('Isolation',                171, 10),
@@ -292,7 +292,7 @@ INSERT INTO edizione (anno_stampa, formato, etichetta, paese, id_album) VALUES
 (2007, 'vinile',   'Factory Records', 'Europa',      10);
 
 
---marco_vinyl (id_utente = 1)
+-- marco_vinyl (id_utente = 1)
 INSERT INTO esemplare (prezzo, condizione_disco, condizione_confezione, impellicolato, id_edizione, id_utente) VALUES
 (35.00,  'ottimo',   'buono',    FALSE, 2,  1),   -- OK Computer vinile 2008
 (18.50,  'buono',    'discreto', FALSE, 1,  1),   -- OK Computer cd 1997
@@ -300,71 +300,71 @@ INSERT INTO esemplare (prezzo, condizione_disco, condizione_confezione, impellic
 (85.00,  'ottimo',   'buono',    FALSE, 18, 1),   -- Unknown Pleasures vinile 1979 originale
 (25.00,  'buono',    'buono',    FALSE, 10, 1);   -- Wish You Were Here vinile 1975
 
---anna_cd (id_utente = 2)
+-- anna_cd (id_utente = 2)
 INSERT INTO esemplare (prezzo, condizione_disco, condizione_confezione, impellicolato, id_edizione, id_utente) VALUES
 (12.00, 'nuovo',    'nuovo',    TRUE,  13, 2),   -- Nevermind cd 1991
 (8.50,  'discreto', 'scarso',   FALSE, 13, 2),   -- Nevermind cd 1991 (altra copia)
 (15.00, 'ottimo',   'buono',    FALSE, 16, 2),   -- In Utero cd 1993
 (10.00, 'buono',    'buono',    FALSE, 6,  2);   -- The Bends cd 1995
 
---john_rock (id_utente = 3)
+-- john_rock (id_utente = 3)
 INSERT INTO esemplare (prezzo, condizione_disco, condizione_confezione, impellicolato, id_edizione, id_utente) VALUES
 (45.00, 'nuovo',    'nuovo',    TRUE,  14, 3),   -- Nevermind vinile 2013
 (5.00,  'discreto', 'discreto', FALSE, 15, 3),   -- Nevermind cassetta 1991
 (55.00, 'ottimo',   'ottimo',   TRUE,  3,  3),   -- OK Computer vinile 2017
 (40.00, 'ottimo',   'buono',    FALSE, 19, 3);   -- Unknown Pleasures vinile 2007
 
---laura_jazz (id_utente = 4)
+-- laura_jazz (id_utente = 4)
 INSERT INTO esemplare (prezzo, condizione_disco, condizione_confezione, impellicolato, id_edizione, id_utente) VALUES
 (28.00, 'nuovo',    'nuovo',    TRUE,  5,  4),   -- Kid A vinile 2016
 (95.00, 'ottimo',   'ottimo',   TRUE,  20, 4),   -- Closer vinile 1980 originale
 (22.00, 'buono',    'buono',    FALSE, 21, 4);   -- Closer vinile 2007
 
---OK Computer (id_album = 1)
+-- OK Computer (id_album = 1)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (5.0, 'Capolavoro assoluto, ogni traccia e un mondo.',                            1, 1),
 (4.5, 'Tra i migliori album degli anni 90, mai invecchiato.',                     2, 1),
 (4.0, 'Ottimo ma un po lungo in alcuni punti, Fitter Happier lo skipper sempre.', 3, 1),
 (5.0, 'Il disco che ha cambiato il rock per sempre.',                             4, 1);
 
---Kid A (id_album = 2)
+-- Kid A (id_album = 2)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (4.5, 'Coraggioso e visionario, non facile al primo ascolto.',  1, 2),
 (3.5, 'Interessante ma preferisco i lavori piu chitarristici.', 3, 2);
 
---The Bends (id_album = 3)
+-- The Bends (id_album = 3)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (4.0, 'Fake Plastic Trees e Street Spirit sono poesia.',        2, 3),
 (4.5, 'Il loro disco piu emotivo, sottovalutato.',              4, 3);
 
---Dark Side of the Moon (id_album = 4)
+-- Dark Side of the Moon (id_album = 4)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (5.0, 'Non c e niente da dire, perfezione.',                    1, 4),
 (5.0, 'Lo ascolto da 30 anni, non mi stanca mai.',              3, 4),
 (4.5, 'Time e Money sono tra i brani piu belli mai scritti.',   4, 4);
 
---Wish You Were Here (id_album = 5)
+-- Wish You Were Here (id_album = 5)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (5.0, 'Shine On You Crazy Diamond e il viaggio musicale definitivo.', 1, 5),
 (4.5, 'Piu intimo di Dark Side, forse piu bello.',                   2, 5);
 
---Nevermind (id_album = 7)
+-- Nevermind (id_album = 7)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (4.5, 'Ha cambiato la musica, punto.',                                2, 7),
 (3.5, 'Bello ma preferisco In Utero, piu grezzo e onesto.',          3, 7),
 (4.0, 'Teen Spirit e Lithium sono inni generazionali.',              4, 7);
 
---In Utero (id_album = 8)
+-- In Utero (id_album = 8)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (4.5, 'Il vero Cobain, senza compromessi commerciali.',              1, 8),
 (4.0, 'Heart-Shaped Box vale da solo il prezzo del disco.',          3, 8);
 
---Unknown Pleasures (id_album = 9)
+-- Unknown Pleasures (id_album = 9)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (5.0, 'Disorder e New Dawn Fades: due capolavori assoluti.',         1, 9),
 (4.5, 'Atmosfera irripetibile, Martin Hannett era un genio.',        4, 9);
 
---Closer (id_album = 10)
+-- Closer (id_album = 10)
 INSERT INTO recensione (voto, commento, id_utente, id_album) VALUES
 (5.0, 'Il disco piu oscuro e bello che abbia mai ascoltato.',        1, 10),
 (4.0, 'Denso, quasi soffocante. Non per tutti, ma indimenticabile.', 2, 10),

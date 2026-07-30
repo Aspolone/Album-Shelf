@@ -45,7 +45,11 @@ public class CarrelloServlet extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-		response.sendRedirect(request.getContextPath() + "/carrello");
+		String redirectUrl = request.getContextPath() + "/carrello";
+		if ("/carrello/svuota".equals(azione)) {
+			redirectUrl += "?successo=svuotato";
+		}
+		response.sendRedirect(redirectUrl);
 	}
 
 	private boolean checkout(HttpServletRequest request, HttpServletResponse response)
@@ -66,9 +70,10 @@ public class CarrelloServlet extends HttpServlet {
 		try (OrdineDAO dao = new OrdineDAO()) {
 			Ordine ordine = dao.doSaveOrdine(utente.getIdUtente(), carrello, null);
 			carrello.svuota();
-			response.sendRedirect(request.getContextPath() + "/");  //reinderizza alla home adesso
+			response.sendRedirect(request.getContextPath() + "/carrello?successo=ordine");
 			return true;
 		} catch (EsemplareNonDisponibileException e) {
+			carrello.rimuovi(e.getIdEsemplare());
 			response.sendRedirect(request.getContextPath()
 					+ "/carrello?errore=nondisponibile&esemplare=" + e.getIdEsemplare());
 			return true;

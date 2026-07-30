@@ -11,7 +11,11 @@
     Collection<Ordine> ordini = (Collection<Ordine>) request.getAttribute("ordini");
     List<String> statiValidi = (List<String>) request.getAttribute("statiValidi");
     String statoAttivo = (String) request.getAttribute("statoAttivo");
+    String filtroCliente = request.getParameter("cliente");
+    String filtroDa = request.getParameter("da");
+    String filtroA = request.getParameter("a");
     String ctx = request.getContextPath();
+    String messaggio = request.getParameter("msg");
 %>
 
 <div class="admin-shell">
@@ -20,13 +24,46 @@
     <main class="admin-content">
         <h1 class="admin-titolo">Ordini</h1>
 
+        <% if ("stato_aggiornato".equals(messaggio)) { %>
+        <div class="admin-msg admin-msg--ok">Stato ordine aggiornato con successo.</div>
+        <% } %>
+        <% if ("annullato".equals(messaggio)) { %>
+        <div class="admin-msg admin-msg--ok">Ordine annullato. Gli esemplari sono tornati disponibili.</div>
+        <% } %>
+
         <div class="admin-filtri">
             <a href="${pageContext.request.contextPath}/admin/ordini"
-               class="<%= statoAttivo == null ? "attivo" : "" %>">Tutti</a>
+               class="<%= statoAttivo == null && filtroCliente == null && filtroDa == null ? "attivo" : "" %>">Tutti</a>
             <% for (String s : statiValidi) { %>
                 <a href="<%= ctx %>/admin/ordini?stato=<%= s %>"
                    class="<%= s.equals(statoAttivo) ? "attivo" : "" %>"><%= s %></a>
             <% } %>
+        </div>
+
+        <div class="admin-filtri-avanzati">
+            <form action="${pageContext.request.contextPath}/admin/ordini" method="get" class="admin-filtro-form">
+                <div class="admin-filtro-campo">
+                    <label for="filtro-cliente">Cliente (ID)</label>
+                    <input type="number" id="filtro-cliente" name="cliente" min="1"
+                           value="<%= filtroCliente != null ? filtroCliente : "" %>"
+                           placeholder="ID utente">
+                </div>
+                <div class="admin-filtro-campo">
+                    <label for="filtro-da">Da</label>
+                    <input type="date" id="filtro-da" name="da"
+                           value="<%= filtroDa != null ? filtroDa : "" %>">
+                </div>
+                <div class="admin-filtro-campo">
+                    <label for="filtro-a">A</label>
+                    <input type="date" id="filtro-a" name="a"
+                           value="<%= filtroA != null ? filtroA : "" %>">
+                </div>
+                <% if (statoAttivo != null) { %>
+                <input type="hidden" name="stato" value="<%= statoAttivo %>">
+                <% } %>
+                <button class="admin-btn admin-btn--primario" type="submit">Filtra</button>
+                <a href="${pageContext.request.contextPath}/admin/ordini" class="admin-btn admin-btn--secondario">Reset</a>
+            </form>
         </div>
 
         <% if (ordini == null || ordini.isEmpty()) { %>
@@ -47,8 +84,16 @@
             <tbody>
             <% for (Ordine o : ordini) {
                 String stato = o.getStatoOrdine();
-                String hidStato = statoAttivo == null ? "" :
-                    "<input type=\"hidden\" name=\"stato\" value=\"" + statoAttivo + "\">";
+                StringBuilder hiddenParams = new StringBuilder();
+                if (statoAttivo != null)
+                    hiddenParams.append("<input type=\"hidden\" name=\"stato\" value=\"" + statoAttivo + "\">");
+                if (filtroCliente != null)
+                    hiddenParams.append("<input type=\"hidden\" name=\"cliente\" value=\"" + filtroCliente + "\">");
+                if (filtroDa != null)
+                    hiddenParams.append("<input type=\"hidden\" name=\"da\" value=\"" + filtroDa + "\">");
+                if (filtroA != null)
+                    hiddenParams.append("<input type=\"hidden\" name=\"a\" value=\"" + filtroA + "\">");
+                String hid = hiddenParams.toString();
             %>
                 <tr>
                     <td>#<%= o.getIdOrdine() %></td>
@@ -61,7 +106,7 @@
                             <form action="<%= ctx %>/admin/ordini" method="post" style="display:flex; gap:4px;">
                                 <input type="hidden" name="action" value="stato">
                                 <input type="hidden" name="idOrdine" value="<%= o.getIdOrdine() %>">
-                                <%= hidStato %>
+                                <%= hid %>
                                 <select name="nuovoStato" class="admin-select-inline">
                                     <% for (String s : statiValidi) { %>
                                         <option value="<%= s %>" <%= s.equals(stato) ? "selected" : "" %>><%= s %></option>
@@ -70,13 +115,23 @@
                                 <button class="admin-btn admin-btn--primario" type="submit">Salva</button>
                             </form>
                             <% if (!"annullato".equals(stato)) { %>
-                            <form action="<%= ctx %>/admin/ordini" method="post"
-                                  onsubmit="return confirm('Annullare l\'ordine #<%= o.getIdOrdine() %>? Gli esemplari torneranno disponibili.');">
-                                <input type="hidden" name="action" value="annulla">
-                                <input type="hidden" name="idOrdine" value="<%= o.getIdOrdine() %>">
-                                <%= hidStato %>
-                                <button class="admin-btn admin-btn--pericolo" type="submit">Annulla</button>
-                            </form>
+                            <button class="admin-btn admin-btn--pericolo" type="button"
+                                    onclick="this.style.display='none'; document.getElementById('annulla-<%= o.getIdOrdine() %>').style.display='flex';">
+                                Annulla
+                            </button>
+                            <div id="annulla-<%= o.getIdOrdine() %>" class="admin-conferma-inline" style="display:none;">
+                                <span class="admin-conferma-testo">Annullare #<%= o.getIdOrdine() %>?</span>
+                                <form action="<%= ctx %>/admin/ordini" method="post" style="display:inline;">
+                                    <input type="hidden" name="action" value="annulla">
+                                    <input type="hidden" name="idOrdine" value="<%= o.getIdOrdine() %>">
+                                    <%= hid %>
+                                    <button class="admin-btn admin-btn--pericolo" type="submit">Sì</button>
+                                </form>
+                                <button class="admin-btn admin-btn--secondario" type="button"
+                                        onclick="this.parentElement.style.display='none'; this.parentElement.previousElementSibling.style.display='inline-block';">
+                                    No
+                                </button>
+                            </div>
                             <% } %>
                         </div>
                     </td>

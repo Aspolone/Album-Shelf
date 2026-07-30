@@ -3,7 +3,6 @@
 <%@ page import="java.util.Collection" %>
 <% request.setAttribute("titoloPagina", "Vendi"); %>
 <%@ include file="/WEB-INF/view/fragment/header.jspf" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/infopages.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css">
 
 <%
@@ -35,8 +34,8 @@
         <p class="form-messaggio form-messaggio--errore">Formato non valido per prezzo o quantit&agrave;.</p>
         <% } %>
 
-        <fieldset class="form-sezione">
-            <legend class="nastro">1. Scegli l'album</legend>
+        <section class="form-sezione">
+            <h2 class="nastro">1. Scegli l'album</h2>
             <form action="${pageContext.request.contextPath}/vendi" method="get">
                 <div class="form-griglia">
                     <div class="form-campo form-campo--intero">
@@ -53,12 +52,12 @@
                     </div>
                 </div>
             </form>
-        </fieldset>
+        </section>
 
         <% if (albumScelto != null && edizioni != null) { %>
 
-        <fieldset class="form-sezione">
-            <legend class="nastro">2. Dettagli della copia</legend>
+        <section class="form-sezione">
+            <h2 class="nastro">2. Dettagli della copia</h2>
             <form action="${pageContext.request.contextPath}/vendi" method="post" class="form-vendi">
 
                 <div class="form-griglia">
@@ -121,7 +120,7 @@
 
                 <button type="submit" class="form-submit">Metti in vendita</button>
             </form>
-        </fieldset>
+        </section>
 
         <% } %>
 

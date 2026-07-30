@@ -12,11 +12,26 @@
 <%
     Carrello carrello = (Carrello) session.getAttribute("carrello");
     List<RigaCarrello> righe = carrello != null ? carrello.getRighe() : java.util.Collections.emptyList();
+    String errore = request.getParameter("errore");
+    String successo = request.getParameter("successo");
 %>
 
 <main class="pagina-carrello">
 
 <div class="pagina-carrello__lista">
+
+    <% if ("ordine".equals(successo)) { %>
+    <div class="carrello-msg carrello-msg--ok">Ordine effettuato con successo!</div>
+    <% } %>
+    <% if ("svuotato".equals(successo)) { %>
+    <div class="carrello-msg carrello-msg--ok">Carrello svuotato.</div>
+    <% } %>
+    <% if ("vuoto".equals(errore)) { %>
+    <div class="carrello-msg carrello-msg--errore">Il carrello è vuoto, non puoi procedere.</div>
+    <% } %>
+    <% if ("nondisponibile".equals(errore)) { %>
+    <div class="carrello-msg carrello-msg--errore">Una copia nel carrello non è più disponibile. È stata rimossa.</div>
+    <% } %>
 
     <% if (righe == null || righe.isEmpty()) { %>
         <p class="pagina-carrello__vuoto">Il carrello è vuoto.</p>
@@ -62,12 +77,33 @@
         <p class="riepilogo__riga">Subtotale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(subtotale) %></span></p>
         <p class="riepilogo__riga">IVA 22% <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(iva) %></span></p>
         <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra"><%= FormatUtil.formatPrezzo(totaleIva) %></span></h2>
-        <form action="${pageContext.request.contextPath}/carrello/checkout" method="post" onsubmit="alert('Ordine effettuato con successo!');">
-            <button class="riepilogo__azione" type="submit">Procedi all'acquisto</button>
-        </form>
-        <form action="${pageContext.request.contextPath}/carrello/svuota" method="post">
-            <button class="riepilogo__svuota" type="submit">Svuota carrello</button>
-        </form>
+
+        <div id="conferma-checkout" class="carrello-conferma" style="display:none;">
+            <p class="carrello-conferma__testo">Confermi l'ordine di <strong><%= FormatUtil.formatPrezzo(totaleIva) %></strong>?</p>
+            <form action="${pageContext.request.contextPath}/carrello/checkout" method="post" style="display:inline;">
+                <button class="riepilogo__azione" type="submit">Conferma ordine</button>
+            </form>
+            <button class="riepilogo__svuota" type="button" onclick="document.getElementById('conferma-checkout').style.display='none';">Annulla</button>
+        </div>
+
+        <button class="riepilogo__azione" type="button" id="btn-checkout"
+                onclick="document.getElementById('conferma-checkout').style.display='block'; this.style.display='none';">
+            Procedi all'acquisto
+        </button>
+
+        <div id="conferma-svuota" class="carrello-conferma" style="display:none;">
+            <p class="carrello-conferma__testo">Vuoi davvero svuotare il carrello?</p>
+            <form action="${pageContext.request.contextPath}/carrello/svuota" method="post" style="display:inline;">
+                <button class="riepilogo__svuota" type="submit" style="border-color:#f15f99;">Sì, svuota</button>
+            </form>
+            <button class="riepilogo__svuota" type="button" onclick="document.getElementById('conferma-svuota').style.display='none'; document.getElementById('btn-svuota').style.display='block';">Annulla</button>
+        </div>
+
+        <button class="riepilogo__svuota" type="button" id="btn-svuota"
+                onclick="document.getElementById('conferma-svuota').style.display='block'; this.style.display='none';">
+            Svuota carrello
+        </button>
+
         <% } else { %>
         <h2 class="riepilogo__totale">Totale <span class="riepilogo__cifra">0,00 &euro;</span></h2>
         <a class="riepilogo__azione" href="${pageContext.request.contextPath}/acquista">Vai al marketplace</a>

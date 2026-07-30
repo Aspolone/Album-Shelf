@@ -127,6 +127,44 @@ public class OrdineDAO extends AbstractDAO implements DAOInterface<Ordine, Integ
 		return eseguiConIntero("SELECT * FROM ordine WHERE id_utente = ? ORDER BY data_ordine DESC", idUtente);
 	}
 
+	public Collection<Ordine> doRetrieveFiltrati(String stato, Integer idCliente,
+			Timestamp da, Timestamp a) throws SQLException {
+		List<Ordine> ordini = new ArrayList<>();
+		StringBuilder query = new StringBuilder("SELECT * FROM ordine WHERE 1=1");
+		List<Object> parametri = new ArrayList<>();
+
+		if (stato != null) {
+			query.append(" AND stato_ordine = ?");
+			parametri.add(stato);
+		}
+		if (idCliente != null) {
+			query.append(" AND id_utente = ?");
+			parametri.add(idCliente);
+		}
+		if (da != null) {
+			query.append(" AND data_ordine >= ?");
+			parametri.add(da);
+		}
+		if (a != null) {
+			query.append(" AND data_ordine < ?");
+			parametri.add(a);
+		}
+		query.append(" ORDER BY data_ordine DESC");
+
+		try (PreparedStatement statement = connection.prepareStatement(query.toString())) {
+			for (int i = 0; i < parametri.size(); i++) {
+				Object p = parametri.get(i);
+				if (p instanceof String) statement.setString(i + 1, (String) p);
+				else if (p instanceof Integer) statement.setInt(i + 1, (Integer) p);
+				else if (p instanceof Timestamp) statement.setTimestamp(i + 1, (Timestamp) p);
+			}
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) ordini.add(extractOrdineFromResultSet(rs));
+			}
+		}
+		return ordini;
+	}
+
 	public Collection<Ordine> doRetrieveByStato(String stato) throws SQLException {
 		List<Ordine> ordini = new ArrayList<>();
 		String query = "SELECT * FROM ordine WHERE stato_ordine = ? ORDER BY data_ordine DESC";

@@ -175,6 +175,27 @@
     text-decoration: underline;
 }
 
+.prodotto-msg {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.prodotto-msg--ok {
+    background-color: rgba(0, 224, 84, 0.08);
+    border: 1px solid rgba(0, 224, 84, 0.35);
+    color: #00E054;
+}
+
+.prodotto-msg--errore {
+    background-color: rgba(241, 95, 153, 0.08);
+    border: 1px solid rgba(241, 95, 153, 0.25);
+    color: #f15f99;
+}
+
 @media (max-width: 1200px) {
     .prodotto-galleria {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));

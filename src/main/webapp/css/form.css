@@ -1,3 +1,181 @@
+.info-header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.info-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #f15f99;
+    margin-bottom: 6px;
+}
+
+.info-header h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.info-lead {
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    color: #c8d2dc;
+}
+
+.info-section {
+    margin-bottom: 32px;
+}
+
+.info-section h2 {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+}
+
+.info-section p {
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    color: #c8d2dc;
+}
+
+.info-steps {
+    list-style: none;
+    counter-reset: passo;
+    padding: 0;
+}
+
+.info-steps li {
+    counter-increment: passo;
+    position: relative;
+    padding: 20px 20px 20px 56px;
+    background-color: #1c2228;
+    border: 1px solid #2c3440;
+    margin-bottom: -1px;
+}
+
+.info-steps li:first-child { border-radius: 8px 8px 0 0; }
+.info-steps li:last-child  { border-radius: 0 0 8px 8px; }
+
+.info-steps li::before {
+    content: counter(passo, decimal-leading-zero);
+    position: absolute;
+    left: 16px;
+    top: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #f15f99;
+}
+
+.info-steps h3 {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    margin-bottom: 6px;
+}
+
+.info-steps p {
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    color: #c8d2dc;
+}
+
+.info-step-link {
+    margin-top: 8px;
+}
+
+.info-step-link a {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #00E054;
+}
+
+.info-step-link a:hover {
+    color: #f15f99;
+    text-decoration: underline;
+}
+
+.info-list-plain {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list-plain li {
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    color: #c8d2dc;
+    background-color: #1c2228;
+    border: 1px solid #2c3440;
+    margin-bottom: -1px;
+}
+
+.info-list-plain li:first-child { border-radius: 8px 8px 0 0; }
+.info-list-plain li:last-child  { border-radius: 0 0 8px 8px; }
+
+.info-list {
+    padding: 0;
+    margin: 16px 0;
+}
+
+.info-list dt {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: #00E054;
+    margin-top: 14px;
+}
+
+.info-list dd {
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    color: #c8d2dc;
+    margin-left: 0;
+    margin-top: 4px;
+}
+
+.info-next {
+    margin-top: 32px;
+    padding: 20px;
+    background-color: #1c2228;
+    border: 1px solid #2c3440;
+    border-radius: 8px;
+}
+
+.info-next h2 {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: #738494;
+    margin-bottom: 12px;
+}
+
+.info-next ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-next li {
+    margin-bottom: 6px;
+}
+
+.info-next a {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #00E054;
+}
+
+.info-next a:hover {
+    color: #f15f99;
+    text-decoration: underline;
+}
+
 .form-pagina {
     max-width: 760px;
     margin: 0 auto;
@@ -7,8 +185,8 @@
 .form-vendi {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    margin-top: 36px;
+    gap: 32px;
+    margin-top: 0;
 }
 
 .form-sezione-intro {
@@ -20,13 +198,27 @@
 }
 
 .form-sezione {
-    border: none;
     padding: 0;
     margin: 0;
+    text-align: center;
+}
+
+.form-pagina > .form-sezione + .form-sezione {
+    margin-top: 32px;
 }
 
 .form-sezione .nastro {
-    margin-bottom: 20px;
+    display: inline-block;
+    margin: 0 0 18px;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    padding: 8px 30px 8px 16px;
+}
+
+.form-sezione > form,
+.form-sezione .form-griglia,
+.form-sezione .form-campo-singolo {
+    text-align: left;
 }
 
 .form-griglia {
@@ -66,7 +258,10 @@
 
 .form-campo input,
 .form-campo select,
-.form-campo textarea {
+.form-campo textarea,
+.form-campo-singolo input,
+.form-campo-singolo select,
+.form-campo-singolo textarea {
     width: 100%;
     padding: 11px 14px;
     background-color: #14181c;
@@ -81,9 +276,25 @@
 
 .form-campo input:focus,
 .form-campo select:focus,
-.form-campo textarea:focus {
+.form-campo textarea:focus,
+.form-campo-singolo input:focus,
+.form-campo-singolo select:focus,
+.form-campo-singolo textarea:focus {
     outline: none;
     border-color: #00E054;
+}
+
+.form-campo textarea,
+.form-campo-singolo textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.7;
+}
+
+.form-campo-singolo textarea::placeholder,
+.form-campo textarea::placeholder {
+    color: #738494;
+    font-style: italic;
 }
 
 .form-campo select {
@@ -93,12 +304,6 @@
     background-position: right 14px center;
     background-size: 12px 7px;
     padding-right: 36px;
-}
-
-.form-campo textarea {
-    resize: vertical;
-    min-height: 100px;
-    line-height: 1.6;
 }
 
 .form-radio-gruppo {
@@ -150,11 +355,12 @@
 
 .form-campo--intero .form-checkbox {
     max-width: 100%;
+    align-self: flex-start;
 }
 
 .form-checkbox {
-    display: flex;
-    align-items: flex-start;
+    display: inline-flex;
+    align-items: center;
     justify-content: flex-start;
     gap: 10px;
     cursor: pointer;
@@ -162,16 +368,17 @@
     letter-spacing: 0.5px;
     line-height: 1.6;
     color: #c8d2dc;
+    width: fit-content;
 }
 
 .form-checkbox input {
     flex-shrink: 0;
-    margin-top: 4px;
+    margin: 0;
     accent-color: #00E054;
 }
 
 .form-checkbox span {
-    flex: 1;
+    flex: 0 1 auto;
 }
 
 .form-upload {
@@ -287,8 +494,9 @@
 }
 
 .form-submit {
-    align-self: flex-start;
-    padding: 12px 32px;
+    align-self: center;
+    margin-top: 12px;
+    padding: 14px 40px;
     font-family: inherit;
     font-size: 0.85rem;
     letter-spacing: 2px;
@@ -328,6 +536,27 @@
     background-color: rgba(241, 95, 153, 0.08);
     border: 1px solid rgba(241, 95, 153, 0.25);
     color: #f15f99;
+}
+
+.form-conferma-inline {
+    padding: 16px;
+    margin-top: 12px;
+    background-color: rgba(241, 95, 153, 0.06);
+    border: 1px solid rgba(241, 95, 153, 0.25);
+    border-radius: 8px;
+}
+
+.form-conferma-testo {
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: #c8d2dc;
+    margin-bottom: 12px;
+}
+
+.form-conferma-azioni {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .form-pericolo {

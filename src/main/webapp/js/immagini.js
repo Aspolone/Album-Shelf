@@ -18,10 +18,19 @@ document.getElementById('immagini').addEventListener('change', function() {
     anteprima.innerHTML = '';
     var files = this.files;
     if (files.length > 5) {
-        alert('Puoi caricare al massimo 5 immagini.');
+        var msgEl = document.getElementById('msg-immagini');
+        if (!msgEl) {
+            msgEl = document.createElement('p');
+            msgEl.id = 'msg-immagini';
+            msgEl.className = 'form-messaggio form-messaggio--errore';
+            anteprima.parentNode.insertBefore(msgEl, anteprima);
+        }
+        msgEl.textContent = 'Puoi caricare al massimo 5 immagini.';
         this.value = '';
         return;
     }
+    var msgOld = document.getElementById('msg-immagini');
+    if (msgOld) msgOld.remove();
     for (var i = 0; i < files.length; i++) {
         var reader = new FileReader();
         reader.onload = function(e) {

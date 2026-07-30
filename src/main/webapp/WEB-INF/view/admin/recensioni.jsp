@@ -48,11 +48,23 @@
                     <td>&#9733; <%= r.getVoto() %></td>
                     <td class="admin-commento"><%= commento == null ? "" : commento %></td>
                     <td>
-                        <form action="<%= ctx %>/admin/recensioni" method="post"
-                              onsubmit="return confirm('Eliminare la recensione #<%= r.getIdRecensione() %>?');">
-                            <input type="hidden" name="idRecensione" value="<%= r.getIdRecensione() %>">
-                            <button class="admin-btn admin-btn--pericolo" type="submit">Elimina</button>
-                        </form>
+                        <div class="admin-azioni">
+                            <button class="admin-btn admin-btn--pericolo" type="button"
+                                    onclick="this.style.display='none'; document.getElementById('del-rec-<%= r.getIdRecensione() %>').style.display='flex';">
+                                Elimina
+                            </button>
+                            <div id="del-rec-<%= r.getIdRecensione() %>" class="admin-conferma-inline" style="display:none;">
+                                <span class="admin-conferma-testo">Eliminare #<%= r.getIdRecensione() %>?</span>
+                                <form action="<%= ctx %>/admin/recensioni" method="post" style="display:inline;">
+                                    <input type="hidden" name="idRecensione" value="<%= r.getIdRecensione() %>">
+                                    <button class="admin-btn admin-btn--pericolo" type="submit">Sì</button>
+                                </form>
+                                <button class="admin-btn admin-btn--secondario" type="button"
+                                        onclick="this.parentElement.style.display='none'; this.parentElement.previousElementSibling.style.display='inline-block';">
+                                    No
+                                </button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             <% } %>

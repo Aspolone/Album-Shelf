@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ import com.albumshelf.mvc.model.bean.Utente;
 import com.albumshelf.mvc.model.dao.UtenteDAO;
 import com.albumshelf.mvc.util.PasswordHashingUtil;
 
-@WebServlet(name = "Auth", urlPatterns = { "/auth", "/auth/logout" })
+@WebServlet(name = "Auth", urlPatterns = { "/auth", "/auth/logout", "/auth/check-email" })
 public class AuthServlet extends HttpServlet {
 
     private static final Pattern USERNAME_PATTERN =
@@ -36,12 +37,43 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
+        if ("/auth/check-email".equals(request.getServletPath())) {
+            checkEmail(request, response);
+            return;
+        }
+
         if (request.getSession().getAttribute("utente") != null) {
             response.sendRedirect(request.getContextPath() + "/esplora");
             return;
         }
 
         request.getRequestDispatcher("/WEB-INF/view/utente/auth.jsp").forward(request, response);
+    }
+
+    private void checkEmail(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+
+        if ((email == null || email.isBlank()) && (username == null || username.isBlank())) {
+            out.print("{\"disponibile\":true}");
+            return;
+        }
+
+        try (UtenteDAO dao = new UtenteDAO()) {
+            String e = email != null ? email.trim() : "";
+            String u = username != null ? username.trim() : "";
+            boolean esiste = dao.esisteNomeUtenteOEmail(u, e);
+            out.print("{\"disponibile\":" + !esiste + "}");
+        } catch (SQLException ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.print("{\"errore\":\"Errore interno\"}");
+        }
     }
 
     @Override
